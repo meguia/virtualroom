@@ -14,9 +14,6 @@ from math import radians, pow
 imp.reload(bm)
 imp.reload(uv)
 
-def gray(val,alpha=1):
-    return [val,val,val,alpha]
-
 
 def make_room(dims = [1,1,1,0.1], base=None, frame=None, mats=None, door=[1,0.5, 0.1,0.5], scales=None, with_uv=True):
     # ROOMS
