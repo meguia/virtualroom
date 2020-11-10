@@ -21,12 +21,11 @@ sys.path.append(str(modelsdir))
 import blender_methods as bm
 import clear_utils as cu
 import  room_utils 
-import importlib as imp
 from math import radians
-
-imp.reload(bm)
-imp.reload(room_utils)
 from models.Room import Room
+import importlib as imp
+
+imp.reload(room_utils)
 
 with open(json_file_input) as json_file:
     try:
@@ -90,20 +89,18 @@ names = ['Paredes','Piso','Techo','Puerta','Zocalo']
 paths = [path_mat_paredes,path_mat_piso,path_mat_techo,path_mat_puerta,path_mat_zocalo]
 scales = [1.0, 2.0, 6.0, 5.0, 1.0]
 mats = room_utils.mat_room(paths, names)
-
+print(mats)
 # CREA LA SALA
-sala = room_utils.make_room([room.depth, room.width, room.height, room.wall_thickness],
-                            [room.base.height, room.base.thickness],
-                            [room.door.frame.width, room.door.frame.thickness],
-                            mats,
-                            [room.door.wall_index, room.door.position, room.door.width, room.door.height],
-                            scales)
+sala = room_utils.make_room(room,mats,scales)
 bm.link_all(sala,col_sala)
  
 #Agrega un Parlante en un pie fijo
 filepath = libdir / 'Genelec.blend'
 with bpy.data.libraries.load(str(filepath)) as (data_from, data_to):
-    data_to.objects = [name for name in data_from.objects]
+    try:
+        data_to.objects = [name for name in data_from.objects]
+    except UnicodeDecodeError as exc:
+        print(exc)    
 print('Imported ', str(list(data_to.objects)))
 pie = bpy.data.objects['Stand']
 parlante = bpy.data.objects['Genelec']

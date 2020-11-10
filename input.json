@@ -10,7 +10,7 @@
         "elements": {
             "door": {
                 "wall_index": 3,
-                "position": 2.5,
+                "position": 1.5,
                 "width": 1.2,
                 "height": 2.2,
                 "frame": {
