@@ -5,28 +5,23 @@ import bpy
 import os
 import json
 from pathlib import Path
-#thisdir = Path.home() / 'Google Drive/Blender_Room'
-#thisdir = Path.home() / '/media/camilo/Backup/Google Drive/Blender_Room' 
-# obtener el path desde donde se ejecuta script. Abrir blender en este directorio
-#thisdir = Path(os.path.realpath(__file__)).parents[1]
-thisdir = Path('G:/.shortcut-targets-by-id/10K_cjNBz2oMz6GW3L4B5FBVOHW5zaBMe/Blender proyecto PICT/blender_room_26_10_JE')
-# No tenemos carpeta actualizada
-path_mats = thisdir / 'Textures' # texturas generadas por Substance
-#thisdir = Path('E:') / '/Google Drive/Blender_Room/'
-
-# directorio donde guarda los renders, modificar
-savedir = thisdir / 'Renders'
-utildir = thisdir / 'blender_utils'
+homedir = Path.home() 
+thisdir = homedir / 'virtualroom' 
+savedir = homedir / 'Renders'
+utildir = homedir / 'blender_utils'
 json_file_input = thisdir / 'input.json'
 modelsdir = thisdir / 'models'
+path_mats = homedir / 'Google Drive/Blender_Room/Textures'
+
 sys.path.append(str(utildir))   
 sys.path.append(str(thisdir))   
 sys.path.append(str(modelsdir)) 
 import blender_methods as bm
-import clear_util as cu
+import clear_utils as cu
 import  room_utils 
 import importlib as imp
 from math import radians
+
 imp.reload(bm)
 imp.reload(room_utils)
 from models.Room import Room
@@ -104,7 +99,7 @@ sala = room_utils.make_room([room.depth, room.width, room.height, room.wall_thic
 bm.link_all(sala,col_sala)
  
 #Agrega un Parlante en un pie fijo
-filepath = thisdir / 'Parlante.blend'
+filepath = thisdir / 'Genelec.blend'
 with bpy.data.libraries.load(str(filepath)) as (data_from, data_to):
     data_to.objects = [name for name in data_from.objects]
 print('Imported ', str(list(data_to.objects)))
