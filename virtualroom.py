@@ -13,7 +13,7 @@ json_file_input = thisdir / 'input.json'
 modelsdir = thisdir / 'models'
 # esta seria la unica para ajustar segun donde tenga casa uno, podemos probar algo en la 
 # nube que quede con una referencia fija
-path_mats = homedir / 'Google Drive/Blender_Room/Textures'
+mats_path = homedir / 'Textures'
 
 sys.path.append(str(utildir))   
 sys.path.append(str(thisdir))   
@@ -40,15 +40,15 @@ print(f'{roomString}')
 
 #CARGA LAS RUTAS PARA LAS TEXTURAS
 # Paredes concrete_raw_grey
-path_mat_paredes = path_mats / 'Concrete/concrete_raw_grey'
+path_mat_paredes = mats_path / 'Concrete/concrete_raw_grey'
 # Piso parquet_european_ash_grey
-path_mat_piso = path_mats / 'Wood/parquet_european_ash_grey'
+path_mat_piso = mats_path / 'Wood/parquet_european_ash_grey'
 # Techo plaster_acoustic_ceiling
-path_mat_techo = path_mats / 'Plaster/plaster_acoustic_ceiling'
+path_mat_techo = mats_path / 'Plaster/plaster_acoustic_ceiling'
 # Puerta wood_wenge
-path_mat_puerta = path_mats / 'Wood/wood_wenge'
+path_mat_puerta = mats_path / 'Wood/wood_wenge'
 # Zocalos wood_black_walnut_stripped
-path_mat_zocalo = path_mats / 'Wood/wood_black_walnut_stripped'
+path_mat_zocalo = mats_path / 'Wood/wood_black_walnut_stripped'
 render = False # si va a hacer el render
 
 #PARAMETROS GEOMETRICOS DE LA SALA
