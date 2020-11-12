@@ -1,5 +1,7 @@
 from operator import itemgetter
 
+from validation.schema_validation_methods import validate_speaker_schema
+
 class Speaker:                
     """
     A class to represent a speaker.
@@ -26,6 +28,7 @@ class Speaker:
                 dictionary representing Speaker's information: x, y and z
                 position and rotation
         """
+        validate_speaker_schema(desc)
         (
         self.x,
         self.y,

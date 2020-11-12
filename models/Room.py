@@ -5,6 +5,7 @@ from .Door import Door
 from .Base import Base 
 from .Spot import Spot
 from .Camera import Camera
+from .validation.schema_validation_methods import validate_room_schema 
 
 class Room:
     """
@@ -41,6 +42,7 @@ class Room:
             desc: dict
                 dictionary representing room's information
         """
+        validate_room_schema(desc)
         self.name = desc['name']
         (
         self.depth, 

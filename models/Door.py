@@ -1,6 +1,7 @@
 from operator import itemgetter
 
 from .Frame import Frame
+from validation.schema_validation_methods import validate_door_schema
 
 class Door:
     """
@@ -30,6 +31,7 @@ class Door:
             desc: dict
                 dictionary representing Door's information
         """
+        validate_door_schema(desc)
         (
         self.wall_index,
         self.position,
