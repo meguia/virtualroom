@@ -40,15 +40,15 @@ print(f'{roomString}')
 
 #CARGA LAS RUTAS PARA LAS TEXTURAS
 # Paredes concrete_raw_grey
-path_mat_paredes = mats_path / 'Concrete/concrete_raw_grey'
+#path_mat_paredes = mats_path / 'Concrete/concrete_raw_grey'
 # Piso parquet_european_ash_grey
-path_mat_piso = mats_path / 'Wood/parquet_european_ash_grey'
+#path_mat_piso = mats_path / 'Wood/parquet_european_ash_grey'
 # Techo plaster_acoustic_ceiling
-path_mat_techo = mats_path / 'Plaster/plaster_acoustic_ceiling'
+#path_mat_techo = mats_path / 'Plaster/plaster_acoustic_ceiling'
 # Puerta wood_wenge
-path_mat_puerta = mats_path / 'Wood/wood_wenge'
+#path_mat_puerta = mats_path / 'Wood/wood_wenge'
 # Zocalos wood_black_walnut_stripped
-path_mat_zocalo = mats_path / 'Wood/wood_black_walnut_stripped'
+#path_mat_zocalo = mats_path / 'Wood/wood_black_walnut_stripped'
 render = False # si va a hacer el render
 
 #PARAMETROS GEOMETRICOS DE LA SALA
@@ -84,11 +84,13 @@ bm.link_col(col_sala)
 bm.link_col(col_obj)
 bm.link_col(col_luces)
 
-# MATERIALES CYCLES orden paredes,piso,techo,puerta,zocalos
+# MATERIALES CYCLES orden paredes,piso,techo,puerta,zocalos esto va en el json
 names = ['Paredes','Piso','Techo','Puerta','Zocalo']
-paths = [path_mat_paredes,path_mat_piso,path_mat_techo,path_mat_puerta,path_mat_zocalo]
+sbs_names = ['concrete_raw_grey','parquet_european_ash_grey','plaster_acoustic_ceiling','wood_wenge','wood_black_walnut_striped']
+sbs_types = ['Concrete','Wood','Plaster','Wood','Wood']
+maps = ['color', 'normal','specular','roughness','metal','bump']
 scales = [1.0, 2.0, 6.0, 5.0, 1.0]
-mats = room_utils.mat_room(paths, names)
+mats = room_utils.mat_room(names,mats_path,sbs_names,sbs_types,maps)
 print(mats)
 # CREA LA SALA
 sala = room_utils.make_room(room,mats,scales)

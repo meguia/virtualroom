@@ -3,12 +3,19 @@ import os
 from pathlib import Path
 homedir = Path.home() 
 utildir = homedir / 'blender_utils'
-sys.path.append(str(utildir))   
+thisdir = homedir / 'virtualroom' 
+sys.path.append(str(utildir)) 
+sys.path.append(str(thisdir))  
 
 import blender_methods as bm
 import material_utils as mu
 import uv_utils as uv
+import sbsar_utils as sbs
 from math import radians, pow
+import importlib as imp
+imp.reload(bm)
+imp.reload(mu)
+imp.reload(sbs)
 
 def make_room(room, mats=None, scales=None, with_uv=True):
     # ROOMS
@@ -78,18 +85,26 @@ def make_room(room, mats=None, scales=None, with_uv=True):
     room_ = bm.list_parent('room',room_list)
     return room_
 
-def mat_room(paths, names, scales = None):
+def mat_room(names, path, sbs_names, sbs_types, maps, scales = None):
     mats = []
     matdicts = []
-    maps = []
+    mapscales = []
     if scales is None:
         scales = [[1.0,1.0,1.0]]*len(names)
-    for p in paths:
-        matdicts.append(mu.make_imagedict(p))
+    for n,sbs_name in enumerate(sbs_names):
+        # test if path exist if not creates the folder
+        sbs_path = path / sbs_types[n] / sbs_name
+        if not os.path.exists(sbs_path):
+            os.makedirs(sbs_path)
+        # test if textures are generated if not 
+        # render the sbsar using sbsar_utils
+        if not all(mu.check_imagedict(sbs_path,maps)):
+            sbs.sbsar_render(sbs_path,sbs_name)
+        matdicts.append(mu.make_imagedict(sbs_path))
     for s in scales:
-        maps.append(mu.Mapping(scale=s,coord='UV'))
+        mapscales.append(mu.Mapping(scale=s,coord='UV'))
     for n in range(len(names)):    
-        mats.append(mu.texture_full_material(names[n],matdicts[n],mapping=maps[n]))
+        mats.append(mu.texture_full_material(names[n],matdicts[n],mapping=mapscales[n]))
     return mats
 
 def simple_door(mat_door,dpos,rot,dims):
