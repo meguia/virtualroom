@@ -1,5 +1,7 @@
 from operator import itemgetter
 
+from validation.schema_validation_methods import validate_frame_schema
+
 class Frame:
     """
     A class to represent a door frame.
@@ -21,6 +23,7 @@ class Frame:
             desc: dict
                 dictionary representing Frame's information
         """
+        validate_frame_schema(desc)
         self.width, self.thickness= itemgetter('width','thickness')(desc)
     def __str__(self):
         """

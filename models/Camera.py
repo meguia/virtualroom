@@ -1,4 +1,5 @@
 from operator import itemgetter
+from validation.schema_validation_methods import validate_camera_schema
 
 class Camera:
     """
@@ -25,6 +26,7 @@ class Camera:
             desc: dict
                 dictionary representing Camera's information
         """
+        validate_camera_schema(desc)
         (
         self.x,
         self.y,

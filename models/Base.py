@@ -1,4 +1,5 @@
 from operator import itemgetter
+from validation.schema_validation_methods import validate_base_schema
 
 class Base:
     """
@@ -23,6 +24,7 @@ class Base:
             desc: dict
                 dictionary representing base's information
         """
+        validate_base_schema(desc)
         (
         self.height, 
         self.thickness,

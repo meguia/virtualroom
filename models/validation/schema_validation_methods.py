@@ -165,3 +165,28 @@ def validate_base_schema(desc = {}):
                     '\'thickness\''
                     )
         raise KeyError(error_msg) 
+
+def validate_camera_schema(desc = {}):
+    """
+    Raises an exception if the camera schema used for input is badly formatted 
+    """
+    expected_keys = ['position', 'rotation']
+    keys_status = [key in desc for key in expected_keys]
+    has_keys = reduce((lambda x, y: x and y), keys_status)
+    if not has_keys:
+        error_msg = (
+                    'Wrong schema for camera dictionary keys. '
+                    'Expected keys: \'position\', \'rotation\''
+                    )
+        raise KeyError(error_msg) 
+
+    position_desc = desc['position']
+    expected_keys = ['x', 'y', 'z']
+    keys_status = [key in position_desc for key in expected_keys]
+    has_keys = reduce((lambda x, y: x and y), keys_status)
+    if not has_keys:
+        error_msg = (
+                    'Wrong schema for camera position dictionary keys. '
+                    'Expected keys: \'x\', \'y\', \'z\''
+                    )
+        raise KeyError(error_msg)

@@ -1,5 +1,7 @@
 from operator import itemgetter
 
+from validation.schema_validation_methods import validate_spot_schema
+
 class Spot:
     """
     A class to represent a Blender camera.
@@ -29,6 +31,7 @@ class Spot:
             desc: dict
                 dictionary representing Spot's information
         """
+        validate_spot_schema(desc)
         (
         self.x,
         self.y,
