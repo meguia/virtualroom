@@ -19,7 +19,7 @@
                 }
             },
             "base": {
-              "height": 0.12,
+              "height": "lala",
               "thickness" : 0.025
             },
             "speaker": {

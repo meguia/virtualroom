@@ -1,6 +1,7 @@
 from operator import itemgetter
 
-from validation.schema_validation_methods import validate_spot_schema
+from .validation.schema_validation_methods import validate_spot_schema
+from .validation.NumberValidator import NumberValidator
 
 class Spot:
     """
@@ -21,6 +22,14 @@ class Spot:
     rotZ: float
         spot z rotation in degrees 
     """
+
+    x = NumberValidator(additional_msg="Spot x position")
+    y = NumberValidator(additional_msg="Spot y position")
+    z = NumberValidator(additional_msg="Spot z position")
+    rotX = NumberValidator(additional_msg="Spot x rotation")
+    rotY = NumberValidator(additional_msg="Spot y rotation")
+    rotZ = NumberValidator(additional_msg="Spot z rotation")
+
     def __init__(self, desc = {}):
         """
         Constructs all the necessary attributes for the 

@@ -1,5 +1,6 @@
 from operator import itemgetter
-from validation.schema_validation_methods import validate_base_schema
+from .validation.schema_validation_methods import validate_base_schema
+from .validation.NumberValidator import NumberValidator
 
 class Base:
     """
@@ -9,11 +10,13 @@ class Base:
     ----------
     height: float
         room base's height in meters (Note that to the original value an offset that
-        represents the room's wall thicknness is added)
+        represents the room's wall thickness is added)
     thickness: float
         room base's thickness 
 
     """
+    height = NumberValidator(additional_msg="Base height")
+    thickness= NumberValidator(additional_msg="Base thickness")
     def __init__(self, offset, desc = {}):
         """
         Constructs all the necessary attributes for the base 

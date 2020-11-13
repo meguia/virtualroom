@@ -1,6 +1,7 @@
 from operator import itemgetter
 
-from validation.schema_validation_methods import validate_speaker_schema
+from .validation.schema_validation_methods import validate_speaker_schema
+from .validation.NumberValidator import NumberValidator
 
 class Speaker:                
     """
@@ -17,6 +18,12 @@ class Speaker:
     rotation: float
         speaker's rotation in degrees
     """
+
+    x = NumberValidator(additional_msg="Speaker x position")
+    y = NumberValidator(additional_msg="Speaker y position")
+    z = NumberValidator(additional_msg="Speaker z position")
+    rotation = NumberValidator(additional_msg="Speaker rotation")
+
     def __init__(self, desc = {}):
         """
         Constructs all the necessary attributes for the speaker

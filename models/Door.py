@@ -1,7 +1,8 @@
 from operator import itemgetter
 
 from .Frame import Frame
-from validation.schema_validation_methods import validate_door_schema
+from .validation.schema_validation_methods import validate_door_schema
+from .validation.NumberValidator import NumberValidator
 
 class Door:
     """
@@ -21,6 +22,16 @@ class Door:
     frame: type Frame 
         represent door frame
     """
+    wall_index = NumberValidator(
+                                minvalue=0, 
+                                maxvalue=3, 
+                                int_only= True,
+                                additional_msg="Wall index"
+                                )
+    position = NumberValidator(additional_msg="Door position")
+    width = NumberValidator(additional_msg="Door width")
+    height = NumberValidator(additional_msg="Door height")
+
     def __init__(self, desc = {}):
         """
         Constructs all the necessary attributes for the door 

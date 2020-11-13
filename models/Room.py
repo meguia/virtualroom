@@ -6,6 +6,7 @@ from .Base import Base
 from .Spot import Spot
 from .Camera import Camera
 from .validation.schema_validation_methods import validate_room_schema 
+from .validation.NumberValidator import NumberValidator
 
 class Room:
     """
@@ -33,6 +34,12 @@ class Room:
         represents a camera for Blender present in the room.
 
     """
+
+    depth = NumberValidator(additional_msg="Room depth")
+    width = NumberValidator(additional_msg="Room width")
+    height = NumberValidator(additional_msg="Room height")
+    wall_thickness = NumberValidator(additional_msg="Room wall thickness")
+
     def __init__(self, desc = {}):
         """
         Constructs all the necessary attributes for the room object.

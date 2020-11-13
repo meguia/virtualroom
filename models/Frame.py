@@ -1,6 +1,7 @@
 from operator import itemgetter
 
-from validation.schema_validation_methods import validate_frame_schema
+from .validation.schema_validation_methods import validate_frame_schema
+from .validation.NumberValidator import NumberValidator
 
 class Frame:
     """
@@ -13,6 +14,10 @@ class Frame:
     thickness: float
         door thickness in meters
     """
+
+    width = NumberValidator(additional_msg="Frame width")
+    thickness = NumberValidator(additional_msg="Frame thickness")
+
     def __init__(self, desc = {}):
         """
         Constructs all the necessary attributes for the door 

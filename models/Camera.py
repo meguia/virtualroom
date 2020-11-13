@@ -1,5 +1,7 @@
 from operator import itemgetter
-from validation.schema_validation_methods import validate_camera_schema
+
+from .validation.schema_validation_methods import validate_camera_schema
+from .validation.NumberValidator import NumberValidator
 
 class Camera:
     """
@@ -16,6 +18,12 @@ class Camera:
     rotation: float
         camera rotation in degrees 
     """
+
+    x = NumberValidator(additional_msg="Camera x position")
+    y = NumberValidator(additional_msg="Camera y position")
+    z = NumberValidator(additional_msg="Camera z position")
+    rotation = NumberValidator(additional_msg="Camera rotation")
+
     def __init__(self, desc = {}):
         """
         Constructs all the necessary attributes for the Blender
