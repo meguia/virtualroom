@@ -3,11 +3,13 @@ from pysbs import batchtools
 from pathlib import Path
 import math
 
+aContext = context.Context()
 
-
-def map_render(sbsar_file,output,sbs_name,output_path,resol):
+def map_render(_context,sbsar_file,output,sbs_name,output_path,resol):
+    print(_context.getDefaultPackagePath())
     batchtools.sbsrender_render(
                                 sbsar_file,
+                                includes=_context.getDefaultPackagePath(),
                                 output_path=output_path,
                                 output_name='_'.join([sbs_name,output]),
                                 input_graph_output=output,
@@ -22,7 +24,8 @@ def sbsar_render(sbs_path,sbs_name,resolution=[4096,4096],pars=None):
     # default
     maps = ['basecolor', 'normal','specular','roughness','metallic','height']
     for m in maps:
-        map_render(sbsar_file,m,sbs_name,output_path,[px,py])
+        print(aContext)
+        map_render(aContext,sbsar_file,m,sbs_name,output_path,[px,py])
         
 
    
