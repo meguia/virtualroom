@@ -1,7 +1,10 @@
 from operator import itemgetter
+import glob
+from pathlib import Path
 
 from .validation.schema_validation_methods import validate_speaker_schema
 from .validation.NumberValidator import NumberValidator
+from .validation.StringValidator import StringValidator
 
 class Speaker:                
     """
@@ -23,6 +26,7 @@ class Speaker:
     y = NumberValidator(additional_msg="Speaker y position")
     z = NumberValidator(additional_msg="Speaker z position")
     rotation = NumberValidator(additional_msg="Speaker rotation")
+    mesh_resource_name= StringValidator(minsize=1, additional_msg="Speaker 3d model")
 
     def __init__(self, desc = {}):
         """
@@ -42,6 +46,19 @@ class Speaker:
         self.z,
         ) = itemgetter('x','y','z')(desc['position']) 
         self.rotation = desc.get('rotation')
+        self.mesh_resource_name = itemgetter('3d_model')(desc)
+        self.path_resources = Path.home() / 'virtualroom/lib'
+        self.expected_mesh_path = self.path_resources / f'{self.mesh_resource_name}.blend'
+        matching_paths = glob.glob(str(self.expected_mesh_path))
+        if not matching_paths:
+            error_msg = (
+                        'Could not find '
+                        f'{self.mesh_resource_name}.blend '
+                        f'on {self.path_resources}'
+                        )
+            raise FileNotFoundError(error_msg)
+        if matching_paths:
+            self.mesh_path = Path(matching_paths[0])
 
     def __str__(self):
         """

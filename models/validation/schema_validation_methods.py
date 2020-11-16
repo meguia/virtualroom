@@ -107,13 +107,16 @@ def validate_speaker_schema(desc = {}):
     """
     Raises an exception if the speaker schema used for input is badly formatted 
     """
-    expected_keys = ['position', 'rotation']
+    expected_keys = ['position', 'rotation', '3d_model']
     keys_status = [key in desc for key in expected_keys]
     has_keys = reduce((lambda x, y: x and y), keys_status)
     if not has_keys:
         error_msg = (
                     'Wrong schema for speaker dictionary keys. '
-                    'Expected keys: \'position\', \'rotation\''
+                    'Expected keys: '
+                    '\'position\', '
+                    '\'rotation\', '
+                    '\'3d_model\', '
                     )
         raise KeyError(error_msg) 
 

@@ -97,7 +97,8 @@ sala = room_utils.make_room(room,mats,scales)
 bm.link_all(sala,col_sala)
  
 #Agrega un Parlante en un pie fijo
-filepath = libdir / 'Genelec.blend'
+#filepath = libdir / 'Genelec.blend'
+filepath = room.speaker.mesh_path
 with bpy.data.libraries.load(str(filepath)) as (data_from, data_to):
     try:
         data_to.objects = [name for name in data_from.objects]
