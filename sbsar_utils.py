@@ -14,7 +14,7 @@ def map_render(sbsar_file,output,sbs_name,output_path,resol):
                                 set_value=["$outputsize@{rx},{ry}".format(rx=resol[0],ry=resol[1])]).wait()
 
 
-def sbsar_render(sbs_path,sbs_name,resolution=[4096,4096],pars=None):
+def sbsar_render(sbs_path,sbs_name,resolution=[1024,1024],pars=None):
     px = int(math.log(int(resolution[0]), 2))
     py = int(math.log(int(resolution[1]), 2))
     output_path = str(sbs_path)
