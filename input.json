@@ -44,6 +44,42 @@
                 "z": 0
             }
         },
+        "lighting_elements": [
+          {
+            "type": "spot",
+            "name" : "Spot1",
+            "position": {
+                "x": -5,
+                "y": 1,
+                "z": 2
+            },
+            "rotation": {
+                "x": 50,
+                "y": -60,
+                "z": 0
+            },
+            "energy": 1000,
+            "size": 160.0,
+            "blend": 1
+          },
+          {
+            "type": "spot",
+            "name" : "Spot2",
+            "position": {
+                "x": 5,
+                "y": -1,
+                "z": 2
+            },
+            "rotation": {
+                "x": -50,
+                "y": -60,
+                "z": 0
+            },
+            "energy": 1000,
+            "size": 160.0,
+            "blend": 1
+          }
+        ],
         "camera": {
             "position": {
                 "x": -3,

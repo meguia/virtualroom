@@ -2,6 +2,7 @@ from operator import itemgetter
 
 from .validation.schema_validation_methods import validate_spot_schema
 from .validation.NumberValidator import NumberValidator
+from .validation.StringValidator import StringValidator
 
 class Spot:
     """
@@ -9,6 +10,14 @@ class Spot:
 
     Attributes
     ----------
+    name: string
+        name of spot
+    energy: float
+        spot energy
+    size: float
+        spot size
+    blend: float
+        spot blend
     x: float
         spot's x position in meters
     y: float
@@ -23,6 +32,10 @@ class Spot:
         spot z rotation in degrees 
     """
 
+    name = StringValidator(additional_msg="Spot Name value")
+    energy= NumberValidator(additional_msg="Spot Energy value")
+    size  = NumberValidator(additional_msg="Spot Size value")
+    blend = NumberValidator(additional_msg="Spot Blend value") 
     x = NumberValidator(additional_msg="Spot x position")
     y = NumberValidator(additional_msg="Spot y position")
     z = NumberValidator(additional_msg="Spot z position")
@@ -40,7 +53,18 @@ class Spot:
             desc: dict
                 dictionary representing Spot's information
         """
-        validate_spot_schema(desc)
+        #validate_spot_schema(desc)
+        (
+        self.name,
+        self.energy,
+        self.size,
+        self.blend 
+        ) = itemgetter(
+                      'name'  ,
+                      'energy',
+                      'size'  ,
+                      'blend'
+                      ) (desc)
         (
         self.x,
         self.y,

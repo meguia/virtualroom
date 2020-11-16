@@ -69,7 +69,11 @@ class Room:
             elif(element == 'base'):
                 self.base= Base(self.wall_thickness,elements[element]) 
 
-        self.spot = Spot(desc['spot'])
+        #self.spot = Spot(desc['spot'])
+        self.lighting_elements = []
+        for element in desc['lighting_elements']:
+            if element['type'] == 'spot':
+                self.lighting_elements.append(Spot(element))
         self.camera = Camera(desc['camera'])
 
     def __str__(self):
@@ -93,7 +97,7 @@ class Room:
         speakerString = self.speaker.__str__()
         doorString = self.door.__str__()
         baseString = self.base.__str__()
-        spotString = self.spot.__str__()
+        #spotString = self.spot.__str__()
         cameraString = self.camera.__str__()
         room_info = (
                     f'{roomString}'
