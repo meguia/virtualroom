@@ -46,10 +46,17 @@ class Camera:
         """
         Returns string with Camera object info.
         """
-        return(' Camera\n'
-                '\tPosition:\n'
-              f'\tX:    {self.x}\n'
-              f'\tY:    {self.y}\n'
-              f'\tZ:    {self.z}\n'
-              f'\tRotation:\n\t{self.rotation}\n'
+        return(
+              ' Camera\n'
+              '\tPosition: \n'
+              '\tX:             {:6.2f}\n'
+              '\tY:             {:6.2f}\n'
+              '\tZ:             {:6.2f}\n'
+              '\tRotation:      {:6.2f}\n'
+              .format(
+                     self.x,
+                     self.y,
+                     self.z,
+                     self.rotation,
+                     )
               )

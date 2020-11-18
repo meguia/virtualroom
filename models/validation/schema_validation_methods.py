@@ -71,13 +71,26 @@ def validate_spot_schema(desc = {}):
     """
     Raises an exception if the spot schema used for input is badly formatted 
     """
-    expected_keys = ['position', 'rotation']
+    expected_keys = [
+                    'name',
+                    'energy',
+                    'size',
+                    'blend',
+                    'position', 
+                    'rotation'
+                    ]
     keys_status = [key in desc for key in expected_keys]
     has_keys = reduce((lambda x, y: x and y), keys_status)
     if not has_keys:
         error_msg = (
                     'Wrong schema for spot dictionary keys. '
-                    'Expected keys: \'position\', \'rotation\''
+                    'Expected keys: '
+                    '\'name\', '
+                    '\'energy\', '
+                    '\'size\', '
+                    '\'blend\', '
+                    '\'position\', '
+                    '\'rotation\''
                     )
         raise KeyError(error_msg) 
 

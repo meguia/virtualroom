@@ -38,7 +38,13 @@ class Base:
         """
         Returns string with Speaker object info.
         """
-        return(' Base:\n'
-              f'\tHeight:   {self.height} \n' 
-              f'\tThickness:{self.thickness}\n' )
+        return(
+               ' Base:\n'
+              '\tHeight:        {:6.2f}\n' 
+              '\tThickness:     {:6.2f}\n'
+              .format(
+                     self.height,
+                     self.thickness
+                     )
+              )
 

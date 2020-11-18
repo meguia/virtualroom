@@ -34,6 +34,12 @@ class Frame:
         """
         Returns string with Door object info.
         """
-        return('Frame:\n'
-              f'\t Width:    {self.widt:6.2fh}    \n' 
-              f'\t Thickness:{self.thickness:6.2f}\n' )
+        return(
+              'Frame:\n'
+              '\tWidth:         {:6.2f}\n' 
+              '\tThickness:     {:6.2f}\n'
+              .format(
+                     self.width,
+                     self.thickness
+                     )
+              )

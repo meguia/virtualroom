@@ -53,7 +53,7 @@ class Spot:
             desc: dict
                 dictionary representing Spot's information
         """
-        #validate_spot_schema(desc)
+        validate_spot_schema(desc)
         (
         self.name,
         self.energy,
@@ -80,13 +80,29 @@ class Spot:
         """
         Returns string with Spot object info.
         """
-        return(' Spot\n'
-                '\tPosition:\n'
-              f'\tX:    {self.x:6.2f}\n'
-              f'\tY:    {self.y:6.2f}\n'
-              f'\tZ:    {self.z:6.2f}\n'
-               '\tRotation\n'
-              f'\tX:    {self.rotX:6.2f}\n'
-              f'\tY:    {self.rotY:6.2f}\n'
-              f'\tZ:    {self.rotZ:6.2f}\n'
+        return(
+               ' Spot:\n'
+              f'\tName: {self.name}\n'
+              '\tEnergy:       {:6.2f}\n'
+              '\tSize:          {:6.2f}\n'
+              '\tBlend:         {:6.2f}\n'
+              '\tPosition:\n'
+              '\tX:             {:6.2f}\n'
+              '\tY:             {:6.2f}\n'
+              '\tZ:             {:6.2f}\n'
+              '\tRotation:\n'
+              '\tX:             {:6.2f}\n'
+              '\tY:             {:6.2f}\n'
+              '\tZ:             {:6.2f}\n'
+              .format(
+                     self.energy,
+                     self.size,
+                     self.blend,
+                     self.x,
+                     self.y,
+                     self.z,
+                     self.rotX,
+                     self.rotY,
+                     self.rotZ,
+                     )
               )

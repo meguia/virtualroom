@@ -80,13 +80,20 @@ class Room:
         """
         Returns string with Room object info.
         """
-        return('\nRoom:\n'
-              f' Name: { self.name }.\n'
-               ' Dimensions:\n' 
-              f'\tdepth:         { self.depth:6.2f }\n'  
-              f'\twidth:         { self.width:6.2f }\n'  
-              f'\theight:        { self.height:6.2f }\n'
-              f'\twall thickness:{ self.wall_thickness:6.2f }\n'
+        return(
+              '\nRoom:\n'
+              f' Name: { self.name }\n'
+              'Dimensions:\n' 
+              '\tdepth:         {:6.2f}\n' 
+              '\twidth:         {:6.2f}\n'
+              '\theight:        {:6.2f}\n' 
+              '\twall thickness:{:6.2f}\n'
+              .format(
+                     self.depth, 
+                     self.width,
+                     self.height,
+                     self.wall_thickness
+                     )
               )
 
     def dump_room_info(self):
@@ -97,14 +104,16 @@ class Room:
         speakerString = self.speaker.__str__()
         doorString = self.door.__str__()
         baseString = self.base.__str__()
-        #spotString = self.spot.__str__()
+        lightingString = ""
+        for element in self.lighting_elements:
+            lightingString += f'{element.__str__()}'
         cameraString = self.camera.__str__()
         room_info = (
                     f'{roomString}'
                     f'{speakerString} ' 
                     f'{doorString}'
                     f'{baseString}'
-                    f'{spotString}'
+                    f'{lightingString}'
                     f'{cameraString}'
                     )
         return(room_info)

@@ -56,10 +56,17 @@ class Door:
         Returns string with Door object info.
         """
         frame_string = self.frame.__str__()
-        return('Door:\n'
-              f'\tWall index: {self.wall_index} \n' 
-              f'\tPosition:   {self.position:6.2f}\n' 
-              f'\tWidth:      {self.width:6.2f }  \n' 
-              f'\tHeight:     {self.height:6.2f}  \n'
+        return(
+              'Door:\n'
+              '\tWall index: {:6d} \n' 
+              '\tPosition:      {:6.2f}\n' 
+              '\tWidth:         {:6.2f}\n' 
+              '\tHeight:        {:6.2f}\n'
               f'\t{ frame_string }\n'
+              .format(
+                     self.wall_index,
+                     self.position,
+                     self.width,
+                     self.height
+                     )
               )
