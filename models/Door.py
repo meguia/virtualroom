@@ -58,8 +58,8 @@ class Door:
         frame_string = self.frame.__str__()
         return('Door:\n'
               f'\tWall index: {self.wall_index} \n' 
-              f'\tPosition:   {self.position}\n' 
-              f'\tWidth:      {self.width}    \n' 
-              f'\tHeight:     {self.height}   \n'
+              f'\tPosition:   {self.position:6.2f}\n' 
+              f'\tWidth:      {self.width:6.2f }  \n' 
+              f'\tHeight:     {self.height:6.2f}  \n'
               f'\t{ frame_string }\n'
               )

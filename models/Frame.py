@@ -35,5 +35,5 @@ class Frame:
         Returns string with Door object info.
         """
         return('Frame:\n'
-              f'\t Width:    {self.width}    \n' 
-              f'\t Thickness:{self.thickness}\n' )
+              f'\t Width:    {self.widt:6.2fh}    \n' 
+              f'\t Thickness:{self.thickness:6.2f}\n' )

@@ -83,10 +83,10 @@ class Room:
         return('\nRoom:\n'
               f' Name: { self.name }.\n'
                ' Dimensions:\n' 
-              f'\tdepth:          { self.depth  }\n'  
-              f'\twidth:          { self.width  }\n'  
-              f'\theight:         { self.height }\n'
-              f'\twall thickness: { self.wall_thickness }\n'
+              f'\tdepth:         { self.depth:6.2f }\n'  
+              f'\twidth:         { self.width:6.2f }\n'  
+              f'\theight:        { self.height:6.2f }\n'
+              f'\twall thickness:{ self.wall_thickness:6.2f }\n'
               )
 
     def dump_room_info(self):

@@ -65,7 +65,7 @@ class Speaker:
         Returns string with Speaker object info.
         """
         return(' Speaker:\n'
-               f'\tPos x:    {self.x}\n'
-               f'\tPos y:    {self.y}\n'
-               f'\tPos z:    {self.z}\n'
-               f'\tRotation: {self.rotation}\n')
+               f'\tPos x:    {self.x:6.2f}\n'
+               f'\tPos y:    {self.y:6.2f}\n'
+               f'\tPos z:    {self.z:6.2f}\n'
+               f'\tRotation: {self.rotation:6.2f}\n')
