@@ -9,7 +9,7 @@ def validate_room_schema(desc = {}):
                     'dimensions', 
                     'wall_thickness', 
                     'elements', 
-                    'spot', 
+                    'lighting_elements',
                     'camera'
                     ]
     keys_status = [key in desc for key in expected_keys]
@@ -22,7 +22,7 @@ def validate_room_schema(desc = {}):
                     '\'dimensions\', '
                     '\'wall_thickness\', '
                     '\'elements\', '
-                    '\'spot\' ,'
+                    '\'lighting_elements\' ,'
                     '\'camera\''
                     )
         raise KeyError(error_msg) 

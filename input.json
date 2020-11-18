@@ -23,25 +23,13 @@
               "thickness" : 0.025
             },
             "speaker": {
-                "3d_model": "Genelec",
+                "3d_model": "Genelec.blend",
                 "position": {
                     "x": 2,
                     "y": 0,
                     "z": 0
                 },
                 "rotation": 0
-            }
-        },
-        "spot": {
-            "position": {
-                "x": -5,
-                "y": 1,
-                "z": 2
-            },
-            "rotation": {
-                "x": 50,
-                "y": -60,
-                "z": 0
             }
         },
         "lighting_elements": [
@@ -66,7 +54,7 @@
             "type": "spot",
             "name" : "Spot2",
             "position": {
-                "x": 5,
+                "x": -5,
                 "y": -1,
                 "z": 2
             },

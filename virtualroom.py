@@ -65,9 +65,9 @@ render = False # si va a hacer el render
 #rot_parlante = radians(0)
 # POSICION Y ORIENTACION DE LOS SPOTS
 #pos_spot = [-5,1,2]
-pos_spot = [room.spot.x, room.spot.y, room.spot.z]
+#pos_spot = [room.spot.x, room.spot.y, room.spot.z]
 #rot_spot = [radians(50), radians(-60), 0]
-rot_spot = [radians(room.spot.rotX), radians(room.spot.rotY), radians(room.spot.rotZ)]
+#rot_spot = [radians(room.spot.rotX), radians(room.spot.rotY), radians(room.spot.rotZ)]
 #POSICION DE LA CAMARA 360 (coordenada z en 1.5)
 #pos_camara = [-3,0,1.5]
 # orientacion de la parte frontal, la camara originalmente apunta hacia +y
@@ -98,7 +98,7 @@ bm.link_all(sala,col_sala)
  
 #Agrega un Parlante en un pie fijo
 #filepath = libdir / 'Genelec.blend'
-filepath = room.speaker.mesh_path
+filepath = libdir / room.speaker.mesh_resource_name
 with bpy.data.libraries.load(str(filepath)) as (data_from, data_to):
     try:
         data_to.objects = [name for name in data_from.objects]
@@ -112,24 +112,30 @@ pie.location = [room.speaker.x, room.speaker.y, room.speaker.z]
 pie.rotation_euler = [0,0,radians(room.speaker.rotation)]
 bm.list_link([pie,parlante],col_obj)
 
+room_lighting_elements = []
+for element in room.lighting_elements:
+    if type(element).__name__ == 'Spot': 
+        room_lighting_elements.append(bm.new_spot(**element.to_dict()))
+
 #LUCES crea una diccionario con todos los parametros
-Lp = {
-    'name':'Spot1',
-    'pos': pos_spot,
-    'rot': rot_spot,
-    'energy':1000,
-    'size':radians(160.0),
-    'blend':1
-    }
-spot1 = bm.new_spot(**Lp)    
+#Lp = {
+#    'name':'Spot1',
+#    'pos': pos_spot,
+#    'rot': rot_spot,
+#    'energy':1000,
+#    'size':radians(160.0),
+#    'blend':1
+#    }
+#spot1 = bm.new_spot(**Lp)    
 # Spot simetrico
-pos_spot[1] *= -1
-rot_spot[0] *= -1
-Lp['name']='Spot2'
-Lp['pos']= pos_spot
-Lp['rot']= rot_spot
-spot2 = bm.new_spot(**Lp)
-bm.list_link([spot1,spot2],col_luces)
+#pos_spot[1] *= -1
+#rot_spot[0] *= -1
+#Lp['name']='Spot2'
+#Lp['pos']= pos_spot
+#Lp['rot']= rot_spot
+#spot2 = bm.new_spot(**Lp)
+#bm.list_link([spot1,spot2],col_luces)
+bm.list_link(room_lighting_elements,col_luces)
 
 # Camara 360
 bm.set_cycles()

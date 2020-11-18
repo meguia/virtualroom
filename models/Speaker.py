@@ -47,18 +47,18 @@ class Speaker:
         ) = itemgetter('x','y','z')(desc['position']) 
         self.rotation = desc.get('rotation')
         self.mesh_resource_name = itemgetter('3d_model')(desc)
-        self.path_resources = Path.home() / 'virtualroom/lib'
-        self.expected_mesh_path = self.path_resources / f'{self.mesh_resource_name}.blend'
-        matching_paths = glob.glob(str(self.expected_mesh_path))
-        if not matching_paths:
-            error_msg = (
-                        'Could not find '
-                        f'{self.mesh_resource_name}.blend '
-                        f'on {self.path_resources}'
-                        )
-            raise FileNotFoundError(error_msg)
-        if matching_paths:
-            self.mesh_path = Path(matching_paths[0])
+        #self.path_resources = Path.home() / 'virtualroom/lib'
+        #self.expected_mesh_path = self.path_resources / f'{self.mesh_resource_name}.blend'
+        #matching_paths = glob.glob(str(self.expected_mesh_path))
+        #if not matching_paths:
+        #    error_msg = (
+        #                'Could not find '
+        #                f'{self.mesh_resource_name}.blend '
+        #                f'on {self.path_resources}'
+        #                )
+        #    raise FileNotFoundError(error_msg)
+        #if matching_paths:
+        #    self.mesh_path = Path(matching_paths[0])
 
     def __str__(self):
         """

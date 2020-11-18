@@ -9,8 +9,8 @@ class Base:
     Attributes
     ----------
     height: float
-        room base's height in meters (Note that to the original value an offset that
-        represents the room's wall thickness is added)
+        room base's height in meters (Note that to the original value an offset
+        that represents the room's wall thickness is added)
     thickness: float
         room base's thickness 
 

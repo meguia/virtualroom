@@ -1,4 +1,5 @@
 from operator import itemgetter
+from math import radians
 
 from .validation.schema_validation_methods import validate_spot_schema
 from .validation.NumberValidator import NumberValidator
@@ -75,6 +76,15 @@ class Spot:
         self.rotY,
         self.rotZ
         ) = itemgetter('x','y','z')(desc['rotation'])
+        #convert_to_radians()
+
+    #def convert_to_radians(self):
+    #    """
+    #    Convert rotation giben values to radians
+    #    """
+    #    self.rotX = radians(self.rotX)
+    #    self.rotY = radians(self.rotY)
+    #    self.rotZ = radians(self.rotZ)
 
     def __str__(self):
         """
@@ -106,3 +116,20 @@ class Spot:
                      self.rotZ,
                      )
               )
+    def to_dict(self):
+        """
+        Returns object dict for bpy
+        """
+        Lp = {
+            'name': f'{self.name}',
+            'pos': [self.x, self.y, self.z],
+            'rot': [
+                   radians(self.rotX), 
+                   radians(self.rotY), 
+                   radians(self.rotZ)
+                   ],
+            'energy':self.energy,
+            'size':radians(self.size),
+            'blend': self.blend
+            }
+        return Lp
