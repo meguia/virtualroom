@@ -5,6 +5,7 @@ from .Door import Door
 from .Base import Base 
 from .Spot import Spot
 from .Camera import Camera
+from .Material import Material
 from .validation.schema_validation_methods import validate_room_schema 
 from .validation.NumberValidator import NumberValidator
 
@@ -74,6 +75,11 @@ class Room:
         for element in desc['lighting_elements']:
             if element['type'] == 'spot':
                 self.lighting_elements.append(Spot(element))
+
+        self.materials = []
+        for material in desc['materials']:
+            self.materials.append(Material(material))
+
         self.camera = Camera(desc['camera'])
 
     def __str__(self):
@@ -107,6 +113,9 @@ class Room:
         lightingString = ""
         for element in self.lighting_elements:
             lightingString += f'{element.__str__()}'
+        materialsString = ""
+        for material in self.materials:
+            materialsString += f'{material.__str__()}'
         cameraString = self.camera.__str__()
         room_info = (
                     f'{roomString}'
@@ -115,7 +124,33 @@ class Room:
                     f'{baseString}'
                     f'{lightingString}'
                     f'{cameraString}'
+                    f'{materialsString}'
                     )
         return(room_info)
 
+    def materials_names(self):
+        """
+        Returns an array with room materials name.
+        """
+        names = []
+        for material in self.materials:
+            names.append(material.name)
+        return names
 
+    def materials_textures(self):
+        """
+        Returns an array with room materials textures.
+        """
+        textures_names = []
+        for material in self.materials:
+            textures_names.append(material.texture)
+        return textures_names 
+
+    def materials_categories(self):
+        """
+        Returns an array with room materials categories.
+        """
+        category_names = []
+        for material in self.materials:
+            category_names.append(material.category)
+        return category_names
