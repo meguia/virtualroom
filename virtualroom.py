@@ -75,11 +75,12 @@ rot_camara = radians(-90)
 
 ###===============NO MODIFICAR==========================================
 # borra todo lo anterior
-cu.clear_all()
+cu.clear()
+cu.clear_act()
 # Crea tres colecciones separadas para sala luces y objetos y las linkea a la escena 
-col_sala = bm.iscol('SALA')
+col_sala = bm.iscol('Mesh')
 col_luces = bm.iscol('LUCES')
-col_obj = bm.iscol('OBJ')
+col_obj = bm.iscol('Mesh')
 bm.link_col(col_sala)
 bm.link_col(col_obj)
 bm.link_col(col_luces)
