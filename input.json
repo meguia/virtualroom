@@ -75,6 +75,33 @@
                 "z": 1.5
             },
             "rotation": -90
-        }
+        },
+        "materials": [
+          {
+            "name": "Paredes",
+            "category": "Concrete",
+            "texture": "concrete_raw_grey"
+          },
+          {
+            "name": "Piso",
+            "category": "Wood",
+            "texture": "parquet_european_ash_grey"
+          },
+          {
+            "name": "Techo",
+            "category": "Plaster",
+            "texture": "plaster_acoustic_ceiling"
+          },
+          {
+            "name": "Puerta",
+            "category": "Wood",
+            "texture": "wood_wenge"
+          },
+          {
+            "name": "Zocalo",
+            "category": "Wood",
+            "texture": "wood_black_walnut_striped"
+          }
+        ]
     }
 }

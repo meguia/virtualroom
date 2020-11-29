@@ -86,9 +86,12 @@ bm.link_col(col_obj)
 bm.link_col(col_luces)
 
 # MATERIALES CYCLES orden paredes,piso,techo,puerta,zocalos esto va en el json
-names = ['Paredes','Piso','Techo','Puerta','Zocalo']
-sbs_names = ['concrete_raw_grey','parquet_european_ash_grey','plaster_acoustic_ceiling','wood_wenge','wood_black_walnut_striped']
-sbs_types = ['Concrete','Wood','Plaster','Wood','Wood']
+#names = ['Paredes','Piso','Techo','Puerta','Zocalo']
+names = room.materials_names()
+#sbs_names = ['concrete_raw_grey','parquet_european_ash_grey','plaster_acoustic_ceiling','wood_wenge','wood_black_walnut_striped']
+sbs_names = room.materials_textures()
+#sbs_types = ['Concrete','Wood','Plaster','Wood','Wood']
+sbs_types = room.materials_categories()
 maps = ['color', 'normal','specular','roughness','metal','bump']
 scales = [1.0, 2.0, 6.0, 5.0, 1.0]
 mats = room_utils.mat_room(names,mats_path,sbs_names,sbs_types,maps)
