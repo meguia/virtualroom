@@ -17,10 +17,14 @@ imp.reload(bm)
 imp.reload(mu)
 imp.reload(sbs)
 
-def make_room(room, mats=None, scales=None, with_uv=True):
+def make_room(room, mat_dict=None, scales=None, sbs_names=None, with_uv=True):
     # ROOMS
     # materials walls, floor, ceil, base, door
     print('ROOM:')
+    # temporal para que corra por ahora 
+    mats = []
+    for names in sbs_names: 
+        mats.append(mat_dict[names])
     (l,w,h,t) = [room.depth, room.width, room.height, room.wall_thickness] # length, width, height, thickness
     (dn, dp, dw, dh) = [room.door.wall_index, room.door.position, room.door.width, room.door.height] # wall number, position from border, width, height
     if scales is None:
@@ -85,12 +89,11 @@ def make_room(room, mats=None, scales=None, with_uv=True):
     room_ = bm.list_parent('room',room_list)
     return room_
 
-def mat_room(names, path, sbs_names, sbs_types, maps, scales = None):
-    mats = []
+def mat_room(path, sbs_names, sbs_types, scales = None):
+    mats = dict.fromkeys(sbs_names,0)
     matdicts = []
-    mapscales = []
-    if scales is None:
-        scales = [[1.0,1.0,1.0]]*len(names)
+    #texture names required
+    maps = ['color', 'normal','specular','roughness','metal','bump']
     for n,sbs_name in enumerate(sbs_names):
         # test if path exist if not creates the folder
         sbs_path = path / sbs_types[n] / sbs_name
@@ -99,12 +102,10 @@ def mat_room(names, path, sbs_names, sbs_types, maps, scales = None):
         # test if textures are generated if not 
         # render the sbsar using sbsar_utils
         if not all(mu.check_imagedict(sbs_path,maps)):
-            sbs.sbsar_render(sbs_path,sbs_name)
+            sbs.sbsar_render(sbs_path,sbs_name,maps)
         matdicts.append(mu.make_imagedict(sbs_path))
-    for s in scales:
-        mapscales.append(mu.Mapping(scale=s,coord='UV'))
-    for n in range(len(names)):    
-        mats.append(mu.texture_full_material(names[n],matdicts[n],mapping=mapscales[n]))
+    for n,name in enumerate(sbs_names):    
+        mats[name] = mu.texture_full_material(name,matdicts[n],mapping=mu.Mapping(coord='UV'))
     return mats
 
 def simple_door(mat_door,dpos,rot,dims):

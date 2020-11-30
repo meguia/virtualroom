@@ -36,44 +36,11 @@ with open(json_file_input) as json_file:
 room = Room(input['room'])
 roomString = room.dump_room_info()
 print(f'{roomString}')
-### ==========PARTE DEL SCRIPT PARA MODIFICAR =============================
 
-#CARGA LAS RUTAS PARA LAS TEXTURAS
-# Paredes concrete_raw_grey
-#path_mat_paredes = mats_path / 'Concrete/concrete_raw_grey'
-# Piso parquet_european_ash_grey
-#path_mat_piso = mats_path / 'Wood/parquet_european_ash_grey'
-# Techo plaster_acoustic_ceiling
-#path_mat_techo = mats_path / 'Plaster/plaster_acoustic_ceiling'
-# Puerta wood_wenge
-#path_mat_puerta = mats_path / 'Wood/wood_wenge'
-# Zocalos wood_black_walnut_stripped
-#path_mat_zocalo = mats_path / 'Wood/wood_black_walnut_stripped'
 render = False # si va a hacer el render
 
-#PARAMETROS GEOMETRICOS DE LA SALA
-#(largo,ancho,alto) = [12.10, 7.10, 3.00]
-#(largo, ancho, alto) = [room.depth, room.width, room.height]
-#esp = 0.15 # espesor de las paredes
-#zoc = [esp+0.12, 0.025] # alto y espesor zocalos
-##PARAMETROS DE LA PUERTA posicion < largo/2, ancho, alto
-#puerta = [3, 2.5, 1.20, 2.20]
-#frame = [0.08, 0.03] 
-#POSICION DEL PARLANTE (coordenada z en 0)
-#pos_parlante = [2,0,0]
-# orientacion , el parlante original apunta hacia +x
-#rot_parlante = radians(0)
-# POSICION Y ORIENTACION DE LOS SPOTS
-#pos_spot = [-5,1,2]
-#pos_spot = [room.spot.x, room.spot.y, room.spot.z]
-#rot_spot = [radians(50), radians(-60), 0]
-#rot_spot = [radians(room.spot.rotX), radians(room.spot.rotY), radians(room.spot.rotZ)]
-#POSICION DE LA CAMARA 360 (coordenada z en 1.5)
-#pos_camara = [-3,0,1.5]
-# orientacion de la parte frontal, la camara originalmente apunta hacia +y
 rot_camara = radians(-90)
 
-###===============NO MODIFICAR==========================================
 # borra todo lo anterior
 cu.clear()
 cu.clear_act()
@@ -85,18 +52,16 @@ bm.link_col(col_sala)
 bm.link_col(col_obj)
 bm.link_col(col_luces)
 
-# MATERIALES CYCLES orden paredes,piso,techo,puerta,zocalos esto va en el json
-#names = ['Paredes','Piso','Techo','Puerta','Zocalo']
-names = room.materials_names()
-#sbs_names = ['concrete_raw_grey','parquet_european_ash_grey','plaster_acoustic_ceiling','wood_wenge','wood_black_walnut_striped']
+# MATERIALES CYCLES orden paredes,piso,techo,puerta,zocalos
+ # pasar esto a room utils
 sbs_names = room.materials_textures()
-#sbs_types = ['Concrete','Wood','Plaster','Wood','Wood']
 sbs_types = room.materials_categories()
-maps = ['color', 'normal','specular','roughness','metal','bump']
-scales = [1.0, 2.0, 6.0, 5.0, 1.0]
-mats = room_utils.mat_room(names,mats_path,sbs_names,sbs_types,maps)
+mats = room_utils.mat_room(mats_path,sbs_names,sbs_types)
 print(mats)
+
 # CREA LA SALA
+#Escala de los mapas UV orden paredes,piso,techo,puerta,zocalos
+scales = [1.0, 2.0, 6.0, 5.0, 1.0]
 sala = room_utils.make_room(room,mats,scales)
 bm.link_all(sala,col_sala)
  
