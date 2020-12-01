@@ -1,8 +1,10 @@
 from operator import itemgetter
+
+from .ElementWithMaterial import ElementWithMaterial
 from .validation.schema_validation_methods import validate_base_schema
 from .validation.NumberValidator import NumberValidator
 
-class Base:
+class Base(ElementWithMaterial):
     """
     A class to represent a room base.
 
@@ -28,6 +30,7 @@ class Base:
                 dictionary representing base's information
         """
         validate_base_schema(desc)
+        super().__init__(desc['material'])
         (
         self.height, 
         self.thickness,
@@ -38,10 +41,12 @@ class Base:
         """
         Returns string with Speaker object info.
         """
+        material_string = self.material.__str__()
         return(
                ' Base:\n'
               '\tHeight:        {:6.2f}\n' 
               '\tThickness:     {:6.2f}\n'
+             f'\t{material_string}'
               .format(
                      self.height,
                      self.thickness

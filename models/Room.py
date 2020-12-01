@@ -5,6 +5,9 @@ from .Door import Door
 from .Base import Base 
 from .Spot import Spot
 from .Camera import Camera
+from .Wall import Wall
+from .Ceiling import Ceiling
+from .Floor import Floor
 from .Material import Material
 from .validation.schema_validation_methods import validate_room_schema 
 from .validation.NumberValidator import NumberValidator
@@ -65,6 +68,12 @@ class Room:
         for element in elements: 
             if(element == 'speaker'):
                 self.speaker = Speaker(elements[element])
+            elif(element == 'wall'):
+                self.wall = Wall(elements[element])
+            elif(element == 'ceiling'):
+                self.ceiling = Ceiling(elements[element])
+            elif(element == 'floor'):
+                self.floor = Floor(elements[element])
             elif(element == 'door'):
                 self.door = Door(elements[element])
             elif(element == 'base'):
@@ -110,6 +119,9 @@ class Room:
         speakerString = self.speaker.__str__()
         doorString = self.door.__str__()
         baseString = self.base.__str__()
+        wallString = self.wall.__str__()
+        ceilingString = self.ceiling.__str__()
+        floorString = self.floor.__str__()
         lightingString = ""
         for element in self.lighting_elements:
             lightingString += f'{element.__str__()}'
@@ -122,6 +134,9 @@ class Room:
                     f'{speakerString} ' 
                     f'{doorString}'
                     f'{baseString}'
+                    f'{wallString}'
+                    f'{ceilingString}'
+                    f'{floorString}'
                     f'{lightingString}'
                     f'{cameraString}'
                     f'{materialsString}'
@@ -136,15 +151,6 @@ class Room:
         for material in self.materials:
             names.append(material.name)
         return names
-
-    def materials_textures(self):
-        """
-        Returns an array with room materials textures.
-        """
-        textures_names = []
-        for material in self.materials:
-            textures_names.append(material.texture)
-        return textures_names 
 
     def materials_categories(self):
         """

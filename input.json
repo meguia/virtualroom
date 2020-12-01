@@ -8,19 +8,50 @@
         },
         "wall_thickness" : 0.15,
         "elements": {
+            "wall": {
+                "thickness": 0.15,
+                "material":  {
+                    "name": "concrete_raw_grey",
+                    "category": "Concrete"
+                }
+            },
+            "ceiling": {
+                "material":  {
+                    "name": "plaster_acoustic_ceiling",
+                    "category": "Plaster"
+                }
+            },
+            "floor": {
+               "material":  {
+                   "name": "parquet_european_ash_grey",
+                   "category": "Wood"
+               }
+            },
             "door": {
                 "wall_index": 3,
                 "position": 1.5,
                 "width": 1.2,
                 "height": 2.2,
+                "material":  {
+                    "name": "wood_wenge",
+                    "category": "Wood"
+                },
                 "frame": {
                     "width": 0.08,
-                    "thickness": 0.03
+                    "thickness": 0.03,
+                    "material":  {
+                        "name": "wood_wenge",
+                        "category": "Wood"
+                    }
                 }
             },
             "base": {
               "height": 0.12,
-              "thickness" : 0.025
+              "thickness" : 0.025,
+              "material":  {
+                  "name": "wood_black_walnut_striped",
+                  "category": "Wood"
+              }
             },
             "speaker": {
                 "3d_model": "Genelec.blend",
@@ -78,29 +109,24 @@
         },
         "materials": [
           {
-            "name": "Paredes",
-            "category": "Concrete",
-            "texture": "concrete_raw_grey"
+            "name": "concrete_raw_grey",
+            "category": "Concrete"
           },
           {
-            "name": "Piso",
-            "category": "Wood",
-            "texture": "parquet_european_ash_grey"
+            "name": "parquet_european_ash_grey",
+            "category": "Wood"
           },
           {
-            "name": "Techo",
-            "category": "Plaster",
-            "texture": "plaster_acoustic_ceiling"
+            "name": "plaster_acoustic_ceiling",
+            "category": "Plaster"
           },
           {
-            "name": "Puerta",
-            "category": "Wood",
-            "texture": "wood_wenge"
+            "name": "wood_wenge",
+            "category": "Wood"
           },
           {
-            "name": "Zocalo",
-            "category": "Wood",
-            "texture": "wood_black_walnut_striped"
+            "name": "wood_black_walnut_striped",
+            "category": "Wood"
           }
         ]
     }

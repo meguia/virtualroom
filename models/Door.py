@@ -1,10 +1,12 @@
 from operator import itemgetter
 
+from .ElementWithMaterial import ElementWithMaterial
+
 from .Frame import Frame
 from .validation.schema_validation_methods import validate_door_schema
 from .validation.NumberValidator import NumberValidator
 
-class Door:
+class Door(ElementWithMaterial):
     """
     A class to represent a door.
 
@@ -43,6 +45,7 @@ class Door:
                 dictionary representing Door's information
         """
         validate_door_schema(desc)
+        super().__init__(desc['material'])
         (
         self.wall_index,
         self.position,
@@ -55,13 +58,16 @@ class Door:
         """
         Returns string with Door object info.
         """
+
         frame_string = self.frame.__str__()
+        material_string = self.material.__str__()
         return(
               'Door:\n'
               '\tWall index: {:6d} \n' 
               '\tPosition:      {:6.2f}\n' 
               '\tWidth:         {:6.2f}\n' 
               '\tHeight:        {:6.2f}\n'
+              f'\t{material_string }\n'
               f'\t{ frame_string }\n'
               .format(
                      self.wall_index,
