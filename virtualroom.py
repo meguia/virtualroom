@@ -49,7 +49,7 @@ bm.link_col(col_obj)
 bm.link_col(col_luces)
 
 # MATERIALES 
-#sbs_names = room.materials_names()
+sbs_names = room.materials_names()
 #sbs_types = room.materials_categories()
 materials = room.materials_from_elements()
 #mats = room_utils.mat_room(mats_path,sbs_names,sbs_types)
