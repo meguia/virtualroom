@@ -9,6 +9,7 @@ from .Wall import Wall
 from .Ceiling import Ceiling
 from .Floor import Floor
 from .Material import Material
+from .ElementWithMaterial import ElementWithMaterial
 from .validation.schema_validation_methods import validate_room_schema 
 from .validation.NumberValidator import NumberValidator
 
@@ -160,3 +161,14 @@ class Room:
         for material in self.materials:
             category_names.append(material.category)
         return category_names
+    def materials_from_elements(self):
+        # orden paredes,piso,techo,puerta,zocalos
+        materials = [
+                    self.wall.material,
+                    self.floor.material,
+                    self.ceiling.material,
+                    self.door.material,
+                    self.base.material,
+                    ]
+        return materials
+

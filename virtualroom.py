@@ -49,15 +49,17 @@ bm.link_col(col_obj)
 bm.link_col(col_luces)
 
 # MATERIALES 
-sbs_names = room.materials_names()
-sbs_types = room.materials_categories()
-mats = room_utils.mat_room(mats_path,sbs_names,sbs_types)
+#sbs_names = room.materials_names()
+#sbs_types = room.materials_categories()
+materials = room.materials_from_elements()
+#mats = room_utils.mat_room(mats_path,sbs_names,sbs_types)
+mats = room_utils.mat_room(mats_path,materials)
 print(mats)
 
 # CREA LA SALA
 #Escala de los mapas UV orden paredes,piso,techo,puerta,zocalos
 scales = [1.0, 2.0, 6.0, 5.0, 1.0]
-sala = room_utils.make_room(room,mats,scales)
+sala = room_utils.make_room(room,mats,scales, sbs_names=sbs_names)
 bm.link_all(sala,col_sala)
  
 #PARLANTE
