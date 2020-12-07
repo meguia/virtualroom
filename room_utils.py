@@ -106,7 +106,7 @@ def mat_room(path, materials, scales = None):
         # test if textures are generated if not 
         # render the sbsar using sbsar_utils
         if not all(mu.check_imagedict(sbs_path,maps)):
-            print('render textures of ' + str(sbs_path))
+            print('rendering textures of ' + str(sbs_path))
             sbs.sbsar_render(sbs_path,material.name,maps)
         matdicts.append(mu.make_imagedict(sbs_path))
     #for n,sbs_name in enumerate(sbs_names):
