@@ -96,7 +96,7 @@ def mat_room(path, materials, scales = None):
     mats = dict.fromkeys(sbs_names,0)
     matdicts = []
     #texture names required
-    maps = ['color', 'normal','specular','roughness','metal','bump']
+    maps = ['basecolor', 'normal','specular','roughness','metallic','height']
     for material in materials:
         # test if path exist if not creates the folder
         sbs_path = path / material.texture_path 
@@ -106,6 +106,7 @@ def mat_room(path, materials, scales = None):
         # test if textures are generated if not 
         # render the sbsar using sbsar_utils
         if not all(mu.check_imagedict(sbs_path,maps)):
+            print('render textures of ' + str(sbs_path))
             sbs.sbsar_render(sbs_path,material.name,maps)
         matdicts.append(mu.make_imagedict(sbs_path))
     #for n,sbs_name in enumerate(sbs_names):

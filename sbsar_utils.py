@@ -5,26 +5,33 @@ import math
 
 aContext = context.Context()
 
-def map_render(_context,sbsar_file,output,sbs_name,output_path,resol):
-    print(_context.getDefaultPackagePath())
+def map_render(sbsar_file,output,sbs_name,out_path,values):
     batchtools.sbsrender_render(
-                                sbsar_file,
-                                includes=_context.getDefaultPackagePath(),
-                                output_path=output_path,
-                                output_name='_'.join([sbs_name,output]),
-                                input_graph_output=output,
-                                set_value=["$outputsize@{rx},{ry}".format(rx=resol[0],ry=resol[1])]).wait()
+        sbsar_file,
+        output_path=out_path,
+        output_name='_'.join([sbs_name,output]),
+        input_graph_output=output,
+        no_report=True,
+        set_value=values
+    ).wait()
 
 
 def sbsar_render(sbs_path,sbs_name,maps,resolution=[1024,1024],pars=None):
     px = int(math.log(int(resolution[0]), 2))
     py = int(math.log(int(resolution[1]), 2))
-    output_path = str(sbs_path)
-    sbsar_file = output_path + '.sbsar'
+    out_path = str(sbs_path)
+    sbsar_file = out_path + '.sbsar'
+    param_dict = {}
+    values = sbsar_getparam(param_dict,resolution=[px,py]) 
+    print(values)
     # default
     for m in maps:
-        print(aContext)
-        map_render(aContext,sbsar_file,m,sbs_name,output_path,[px,py])
+        map_render(sbsar_file,m,sbs_name,out_path,values)
         
 
-   
+def sbsar_getparam(param_dict,resolution=[10,10]):
+    values = []
+    values.append("$outputsize@" + str(resolution[0]) + "," +  str(resolution[1]))
+    for key,value in param_dict.items():
+        values.append( "" + key + "@" + value)
+    return values   
