@@ -53,6 +53,7 @@ sbs_names = room.materials_names()
 #sbs_types = room.materials_categories()
 materials = room.materials_from_elements()
 #mats = room_utils.mat_room(mats_path,sbs_names,sbs_types)
+# los cambios de parametros deberian ir en materials
 mats = room_utils.mat_room(mats_path,materials)
 print(mats)
 

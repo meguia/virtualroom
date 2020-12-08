@@ -1,5 +1,4 @@
 from pysbs import context, sbsarchive, batchtools
-from pathlib import Path
 import math
 
 aContext = context.Context()
@@ -16,13 +15,16 @@ def map_render(sbsar_file,output,sbs_name,out_path,values):
     ).wait()
 
 
-def sbsar_render(sbs_path,sbs_name,maps,resolution=[512,512],pars=None):
+def sbsar_render(sbs_path,sbs_name,maps,resolution=[512,512],set_pars=None):
     px = int(math.log(int(resolution[0]), 2))
     py = int(math.log(int(resolution[1]), 2))
     out_path = str(sbs_path)
     sbsar_file = out_path + '.sbsar'
     param_dict = sbsar_loadparam(str(sbsar_file))
-    print(param_dict)
+    if set_pars is not None:
+        for key,value in set_pars.items():
+            if key in param_dict:
+                param_dict[key]=value
     values = sbsar_getparam(param_dict,resolution=[px,py]) 
     # default
     for m in maps:
@@ -45,13 +47,9 @@ def sbsar_loadparam(sbs_path,graph_idx=0):
     param_dict = {}
     for inp in inputs:
         if inp.getGroup() is None:
-            label = inp.mIdentifier
+            par_id = inp.mIdentifier
             default = inp.getDefaultValue()
-            if label=='color':
-                param_dict[label] = [0.0, 0.0, 0.0]
-            else:    
-                param_dict[label] = default
-        
+            param_dict[par_id] = default
     return param_dict        
 
     
