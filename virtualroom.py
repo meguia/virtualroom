@@ -9,11 +9,11 @@ thisdir = homedir / 'virtualroom'
 savedir = homedir / 'Renders'
 utildir = homedir / 'blender_utils'
 libdir = thisdir / 'lib'
+presetdir = thisdir / 'presets'
 json_file_input = thisdir / 'input.json'
-json_materials = thisdir / 'materials.json'
+json_material_template = thisdir / 'materials.json'
+json_material_input = presetdir / 'materials_preset.json'
 modelsdir = thisdir / 'models'
-# esta seria la unica para ajustar segun donde tenga casa uno, podemos probar algo en la 
-# nube que quede con una referencia fija
 mats_path = homedir / 'Textures'
 
 sys.path.append(str(utildir))   
@@ -53,12 +53,19 @@ bm.link_col(col_luces)
 # MATERIALES 
 # carga los materiales con los atributos de substance y las rutas
 materials = room.materials_from_elements() # cambiar
-# chequea si esta generado un template de json de los parametros de los materiales y si no lo genera
+# temporal, genera un template de json de los parametros de los materiales 
 data = room_utils.mat_getdict(mats_path, materials)
-with open(json_materials,'w') as fp:
-    json.dump(data,fp, indent=4, sort_keys=True)
+with open(json_materials_template,'w') as json_file:
+    json.dump(data,json_file, indent=4, sort_keys=True)
+# una copia de esto es lo que funcionaria como preset
+with open(json_material_input) as json_file:
+    try:
+        materials_input = json.load(json_file)
+    except json.JSONDecodeError as exc:
+        print(exc)
+        
 # genera un diccionario de materiales de blender a partir de los materiales de substance
-mat_dict = room_utils.mat_room(mats_path,materials)
+mat_dict = room_utils.mat_room(mats_path,materials,materials_input)
 
 
 # CREA LA SALA
