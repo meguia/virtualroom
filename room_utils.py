@@ -1,6 +1,7 @@
 import pdb
 import sys
 import os
+import json
 from pathlib import Path
 homedir = Path.home() 
 utildir = homedir / 'blender_utils'
@@ -89,7 +90,19 @@ def make_room(room, mat_dict=None, scales=None, with_uv=True):
     room_ = bm.list_parent('room',room_list)
     return room_
 
-#def mat_room(path, sbs_names, sbs_types, scales = None):
+def mat_getdict(path, materials):
+    '''
+    Return dictionary with template for json from materials list
+    '''
+    data = {'materials':[]}
+    for m in materials:
+        mat = {}
+        mat['name'] = m.name
+        sbsar_file = str(path / m.texture_path) + '.sbsar'
+        mat['parameters'] = sbs.sbsar_loadparam(str(sbsar_file))
+        data['materials'].append(mat)
+    return data    
+
 def mat_room(path, materials, scales = None):
     sbs_names = [material.name for material in materials] 
     mat_dict = dict.fromkeys(sbs_names,0)

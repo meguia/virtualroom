@@ -10,6 +10,7 @@ savedir = homedir / 'Renders'
 utildir = homedir / 'blender_utils'
 libdir = thisdir / 'lib'
 json_file_input = thisdir / 'input.json'
+json_materials = thisdir / 'materials.json'
 modelsdir = thisdir / 'models'
 # esta seria la unica para ajustar segun donde tenga casa uno, podemos probar algo en la 
 # nube que quede con una referencia fija
@@ -50,12 +51,15 @@ bm.link_col(col_obj)
 bm.link_col(col_luces)
 
 # MATERIALES 
-#sbs_types = room.materials_categories()
-materials = room.materials_from_elements()
-#mats = room_utils.mat_room(mats_path,sbs_names,sbs_types)
-# los cambios de parametros deberian ir en materials
+# carga los materiales con los atributos de substance y las rutas
+materials = room.materials_from_elements() # cambiar
+# chequea si esta generado un template de json de los parametros de los materiales y si no lo genera
+data = room_utils.mat_getdict(mats_path, materials)
+with open(json_materials,'w') as fp:
+    json.dump(data,fp, indent=4, sort_keys=True)
+# genera un diccionario de materiales de blender a partir de los materiales de substance
 mat_dict = room_utils.mat_room(mats_path,materials)
-print(mat_dict)
+
 
 # CREA LA SALA
 #Escala de los mapas UV orden paredes,piso,techo,puerta,zocalos
@@ -69,7 +73,8 @@ with bpy.data.libraries.load(str(filepath)) as (data_from, data_to):
     try:
         data_to.objects = [name for name in data_from.objects]
     except UnicodeDecodeError as exc:
-        print(exc)    
+        print(exc)   
+         
 print('Imported ', str(list(data_to.objects)))
 pie = bpy.data.objects['Stand']
 parlante = bpy.data.objects['Genelec']

@@ -29,12 +29,12 @@ def sbsar_render(sbs_path,sbs_name,channels,resolution=[512,512],set_pars=None):
     py = int(math.log(int(resolution[1]), 2))
     out_path = str(sbs_path)
     sbsar_file = out_path + '.sbsar'
-    param_dict = sbsar_loadparam(str(sbsar_file))
+    param_dict = sbsar_loadparam(str(sbsar_file),resolution=[px,py])
     if set_pars is not None:
         for key,value in set_pars.items():
             if key in param_dict:
                 param_dict[key]=value
-    values = sbsar_getvalues(param_dict,resolution=[px,py]) 
+    values = sbsar_getvalues(param_dict) 
     # default
     with open(str(sbs_path / 'parameters.json'),'w') as fp:
         json.dump(param_dict,fp)
@@ -42,19 +42,20 @@ def sbsar_render(sbs_path,sbs_name,channels,resolution=[512,512],set_pars=None):
         map_render(sbsar_file,chan,sbs_name,out_path,values)
         
 
-def sbsar_getvalues(param_dict,resolution=[10,10]):
+def sbsar_getvalues(param_dict):
     '''
     formats the array of parameters passed in values from the dictionary of parameters param_dict
     and the resolution
     '''
     values = []
-    values.append("$outputsize@" + str(resolution[0]) + "," +  str(resolution[1]))
     for key,value in param_dict.items():
-        values.append( "" + key + "@" + str(value))
-    print(values)
+        if type(value) is list:
+            values.append( "" + key + "@" + ",".join(str(x) for x in value))
+        else:    
+            values.append( "" + key + "@" + str(value))
     return values 
 
-def sbsar_loadparam(sbs_path,graph_idx=0):
+def sbsar_loadparam(sbs_path,resolution=[10,10],graph_idx=0):
     '''
     creates the dictionary of parameters param_dict from the default values of sbsar file
     '''
@@ -62,7 +63,7 @@ def sbsar_loadparam(sbs_path,graph_idx=0):
     sbsarDoc.parseDoc()
     graphs = sbsarDoc.getSBSGraphList()
     inputs = graphs[graph_idx].getInputParameters()
-    param_dict = {}
+    param_dict = {'$resolution':resolution}
     for inp in inputs:
         if inp.getGroup() is None:
             par_id = inp.mIdentifier
@@ -70,15 +71,6 @@ def sbsar_loadparam(sbs_path,graph_idx=0):
             param_dict[par_id] = default
     return param_dict        
 
-    
-def sbsar_getparam(sbs_path):
-    '''
-    Return dictionary with default parameters of sbsar file in sbs_path
-    '''
-    out_path = str(sbs_path)
-    sbsar_file = out_path + '.sbsar'
-    param_dict = sbsar_loadparam(str(sbsar_file))
-    return param_dict
 
 
   
