@@ -68,7 +68,14 @@ def sbsar_loadparam(sbs_path,graph_idx=0):
     return param_dict        
 
     
-
+def sbsar_getparam(sbs_path):
+    '''
+    Return dictionary with default parameters of sbsar file in sbs_path
+    '''
+    out_path = str(sbs_path)
+    sbsar_file = out_path + '.sbsar'
+    param_dict = sbsar_loadparam(str(sbsar_file))
+    return param_dict
 
 
   
