@@ -116,23 +116,28 @@
         "materials": [
           {
             "name": "concrete_raw_grey",
-            "category": "Concrete"
+            "category": "Concrete",
+            "color": [0.1, 0.1, 0.1]
           },
           {
             "name": "parquet_european_ash_grey",
-            "category": "Wood"
+            "category": "Wood",
+            "color": [0.1, 0.1, 0.1]
           },
           {
             "name": "plaster_acoustic_ceiling",
-            "category": "Plaster"
+            "category": "Plaster",
+            "color": [0.1, 0.1, 0.1]
           },
           {
             "name": "wood_wenge",
-            "category": "Wood"
+            "category": "Wood",
+            "color": [0.1, 0.1, 0.1]
           },
           {
             "name": "wood_black_walnut_striped",
-            "category": "Wood"
+            "category": "Wood",
+            "color": [0.1, 0.1, 0.1]
           }
         ]
     }

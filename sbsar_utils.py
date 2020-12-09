@@ -1,4 +1,5 @@
 from pysbs import context, sbsarchive, batchtools
+import json
 import math
 
 aContext = context.Context()
@@ -27,7 +28,6 @@ def sbsar_render(sbs_path,sbs_name,channels,resolution=[512,512],set_pars=None):
     px = int(math.log(int(resolution[0]), 2))
     py = int(math.log(int(resolution[1]), 2))
     out_path = str(sbs_path)
-    sbs_name = out_path.split('\\')[-1]
     sbsar_file = out_path + '.sbsar'
     param_dict = sbsar_loadparam(str(sbsar_file))
     if set_pars is not None:
@@ -36,6 +36,8 @@ def sbsar_render(sbs_path,sbs_name,channels,resolution=[512,512],set_pars=None):
                 param_dict[key]=value
     values = sbsar_getvalues(param_dict,resolution=[px,py]) 
     # default
+    with open(str(sbs_path / 'parameters.json'),'w') as fp:
+        json.dump(param_dict,fp)
     for chan in channels:
         map_render(sbsar_file,chan,sbs_name,out_path,values)
         
