@@ -168,7 +168,9 @@ class Room:
                     self.floor.material,
                     self.ceiling.material,
                     self.door.material,
+                    self.door.frame.material,
                     self.base.material,
                     ]
+        print(len(materials))            
         return materials
 

@@ -12,7 +12,7 @@ libdir = thisdir / 'lib'
 presetdir = thisdir / 'presets'
 json_file_input = thisdir / 'input.json'
 json_material_template = thisdir / 'materials.json'
-json_material_input = presetdir / 'materials_preset.json'
+json_material_input = presetdir / 'materials_preset1.json'
 modelsdir = thisdir / 'models'
 mats_path = homedir / 'Textures'
 
@@ -55,7 +55,7 @@ bm.link_col(col_luces)
 materials = room.materials_from_elements() # cambiar
 # temporal, genera un template de json de los parametros de los materiales 
 data = room_utils.mat_getdict(mats_path, materials)
-with open(json_materials_template,'w') as json_file:
+with open(json_material_template,'w') as json_file:
     json.dump(data,json_file, indent=4, sort_keys=True)
 # una copia de esto es lo que funcionaria como preset
 with open(json_material_input) as json_file:
