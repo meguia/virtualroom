@@ -32,8 +32,10 @@ class Material:
         (
         self.name,
         self.category,
+        self.color,
         ) = itemgetter('name',
                        'category',
+                       'color'
                        )(desc)
         self.texture_path = Path(
                                 self.category,

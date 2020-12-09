@@ -32,6 +32,7 @@ with open(json_file_input) as json_file:
         input = json.load(json_file)
     except json.JSONDecodeError as exc:
         print(exc)
+
 room = Room(input['room'])
 roomString = room.dump_room_info()
 print(f'{roomString}')
@@ -49,18 +50,17 @@ bm.link_col(col_obj)
 bm.link_col(col_luces)
 
 # MATERIALES 
-sbs_names = room.materials_names()
 #sbs_types = room.materials_categories()
 materials = room.materials_from_elements()
 #mats = room_utils.mat_room(mats_path,sbs_names,sbs_types)
 # los cambios de parametros deberian ir en materials
-mats = room_utils.mat_room(mats_path,materials)
-print(mats)
+mat_dict = room_utils.mat_room(mats_path,materials)
+print(mat_dict)
 
 # CREA LA SALA
 #Escala de los mapas UV orden paredes,piso,techo,puerta,zocalos
 scales = [1.0, 2.0, 6.0, 5.0, 1.0]
-sala = room_utils.make_room(room,mats,scales, sbs_names=sbs_names)
+sala = room_utils.make_room(room,mat_dict,scales)
 bm.link_all(sala,col_sala)
  
 #PARLANTE

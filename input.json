@@ -12,19 +12,22 @@
                 "thickness": 0.15,
                 "material":  {
                     "name": "concrete_raw_grey",
-                    "category": "Concrete"
+                    "category": "Concrete",
+                    "color": [0.5, 0.5, 0.5]
                 }
             },
             "ceiling": {
                 "material":  {
                     "name": "plaster_acoustic_ceiling",
-                    "category": "Plaster"
+                    "category": "Plaster",
+                    "color": [0.1, 0.1, 0.1]
                 }
             },
             "floor": {
                "material":  {
                    "name": "parquet_european_ash_grey",
-                   "category": "Wood"
+                   "category": "Wood",
+                   "color": [0.3, 0.3, 0.3]
                }
             },
             "door": {
@@ -34,14 +37,16 @@
                 "height": 2.2,
                 "material":  {
                     "name": "wood_wenge",
-                    "category": "Wood"
+                    "category": "Wood",
+                    "color": [0.5, 0.5, 0.6]
                 },
                 "frame": {
                     "width": 0.08,
                     "thickness": 0.03,
                     "material":  {
                         "name": "wood_wenge",
-                        "category": "Wood"
+                        "category": "Wood",
+                        "color": [0.1, 0.1, 0.1]
                     }
                 }
             },
@@ -50,7 +55,8 @@
               "thickness" : 0.025,
               "material":  {
                   "name": "wood_black_walnut_striped",
-                  "category": "Wood"
+                  "category": "Wood",
+                  "color": [0.1, 0.1, 0.1]
               }
             },
             "speaker": {
