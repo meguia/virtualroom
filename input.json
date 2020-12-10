@@ -117,7 +117,7 @@
           {
             "name": "concrete_raw_grey",
             "category": "Concrete",
-            "color": [0.1, 0.1, 0.1]
+            "preset": "materials_preset1"
           },
           {
             "name": "parquet_european_ash_grey",

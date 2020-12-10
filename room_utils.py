@@ -1,3 +1,4 @@
+from operator import truediv
 import pdb
 import sys
 import os
@@ -102,7 +103,7 @@ def mat_getdict(path, materials):
         data[m.sbs_name] = parameters
     return data    
 
-def mat_room(path, materials):
+def mat_room(mats_path, preset_path, materials):
     '''
     Generates a dictionary of blender materials from a dictionary of substance materials
     Also generate all textures if they are not generated or were generated with different 
@@ -115,23 +116,35 @@ def mat_room(path, materials):
     #texture names required 
     channels = ['basecolor', 'normal','specular','roughness','metallic','height']
     for mat_name, material in materials.items():
-        # load parameters from preset
+        generate_textures = False
+        # load parameters from preset (esto puede ir cuando se instancia el material) ###########
+        with open(str(preset_path / material.preset) + '.json') as json_file:
+            preset = json.load(json_file)
+            parameters = preset[material.sbs_name]
         # test if path exist if not creates the folder
-        texture_path = path / material.texture_path
-        #pdb.set_trace()
+        texture_path = mats_path / material.texture_path
         if not os.path.exists(texture_path):
+            # the material folder was not even created 
             os.makedirs(texture_path)
-
-        # test if textures are generated if not 
-        # render the sbsar using sbsar_utils
-        if not all(mu.check_imagedict(texture_path,channels)):
-            
+            generate_textures = True
+        else:     
+            # the material folder exists
+            if not all(mu.check_imagedict(texture_path,channels)):
+                 #not all textures were generated
+                generate_textures = True
+            else:     
+                # the material folder exists and all textures were generated
+                # then it is presumed that a parameters.json exists
+                with open(str(texture_path / 'parameters.json')) as json_file:
+                    parameters_generated = json.load(json_file)
+                if parameters != parameters_generated:
+                    # (agregar un chequeo de diferencia minima)
+                    generate_textures = True    
+        if generate_textures:
             print('rendering textures of ' + str(texture_path))
-            
             sbs.sbsar_render(sbs_path,material.name,channels)
         imagedicts.append(mu.make_imagedict(texture_path))
-    for n,name in enumerate(sbs_names):    
-        mat_dict[name] = mu.texture_full_material(name,imagedicts[n],mapping=mu.Mapping(coord='UV'))
+        mat_dict[mat_name] = mu.texture_full_material(name,imagedicts[n],mapping=mu.Mapping(coord='UV'))
     return mat_dict
 
 def simple_door(mat_door,dpos,rot,dims):
