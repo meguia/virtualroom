@@ -10,7 +10,7 @@ savedir = homedir / 'Renders'
 utildir = homedir / 'blender_utils'
 libdir = thisdir / 'lib'
 presetdir = thisdir / 'presets'
-json_file_input = thisdir / 'input.json'
+json_file_input = presetdir / 'sala_lapso.json'
 json_material_template = thisdir / 'materials.json'
 json_material_input = presetdir / 'materials_preset1.json'
 modelsdir = thisdir / 'models'
@@ -23,9 +23,12 @@ import blender_methods as bm
 import clear_utils as cu
 import  room_utils 
 from math import radians
+import models
 from models.Room import Room
 import importlib as imp
 imp.reload(room_utils)
+imp.reload(models)
+imp.reload(models.Room)
 
 #CARGA CONFIGURACION
 with open(json_file_input) as json_file:

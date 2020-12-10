@@ -86,9 +86,9 @@ class Room:
             if element['type'] == 'spot':
                 self.lighting_elements.append(Spot(element))
 
-        self.materials = []
-        for material in desc['materials']:
-            self.materials.append(Material(material))
+        #self.materials = []
+        #for material in desc['materials']:
+        #    self.materials.append(Material(material))
 
         self.camera = Camera(desc['camera'])
 
@@ -127,8 +127,8 @@ class Room:
         for element in self.lighting_elements:
             lightingString += f'{element.__str__()}'
         materialsString = ""
-        for material in self.materials:
-            materialsString += f'{material.__str__()}'
+        #for material in self.materials:
+        #    materialsString += f'{material.__str__()}'
         cameraString = self.camera.__str__()
         room_info = (
                     f'{roomString}'
@@ -161,8 +161,14 @@ class Room:
         for material in self.materials:
             category_names.append(material.category)
         return category_names
+
     def materials_from_elements(self):
         # orden paredes,piso,techo,puerta,zocalos
+        # loopear sobre elementos
+        # en cada elemento loopear sobre los materiales
+        # 
+        # armar un diccionario que tenga como keys
+        # material.name_material.preset
         materials = [
                     self.wall.material,
                     self.floor.material,

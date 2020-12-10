@@ -30,16 +30,17 @@ class Material:
                 dictionary representing material's information
         """
         (
-        self.name,
+        self.sbs_name,
         self.category,
-        self.color,
-        ) = itemgetter('name',
+        self.preset,
+        ) = itemgetter('sbs_name',
                        'category',
-                       'color'
+                       'preset'
                        )(desc)
+        self.name = self.sbs_name + '_' + self.preset
         self.texture_path = Path(
                                 self.category,
-                                self.name
+                                self.sbs_name
                                 )
     def __str__(self):
         """
@@ -49,9 +50,11 @@ class Material:
                '\tName:          {0}\n'
                '\tCategory:      {1}\n'
                '\tPath:          {2}\n'
+               '\tPreset:        {3}\n'
                .format(
                       self.name,
                       self.category,
-                      self.texture_path
+                      self.texture_path,
+                      self.preset  
                       )
                )

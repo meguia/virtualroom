@@ -36,7 +36,7 @@
                 "width": 1.2,
                 "height": 2.2,
                 "material":  {
-                    "name": "wood_wenge",
+                    "sbs_name": "wood_wenge",
                     "category": "Wood",
                     "preset": "materials_preset1"
                 },
@@ -44,7 +44,7 @@
                     "width": 0.08,
                     "thickness": 0.03,
                     "material":  {
-                        "name": "wood_wenge",
+                        "sbs_name": "wood_wenge",
                         "category": "Wood",
                         "preset": "materials_preset2"
                     }
@@ -54,7 +54,7 @@
               "height": 0.12,
               "thickness" : 0.025,
               "material":  {
-                  "name": "wood_black_walnut_striped",
+                  "sbs_name": "wood_black_walnut_striped",
                   "category": "Wood",
                   "preset": "materials_preset1"
               }
