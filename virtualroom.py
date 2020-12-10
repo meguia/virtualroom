@@ -54,11 +54,8 @@ bm.link_col(col_luces)
 
 # MATERIALES 
 # carga los materiales con los atributos de substance y las rutas
-materials = room.materials_from_elements() # cambiar
-# temporalmente armamos el diccionario aca
-mat_dict_substance = {}
-for m in materials:
-    mat_dict_substance[m.name] = m
+mat_dict_substance = room.materials_from_elements() # cambiar
+
 # esto tambien es temporal y habria que implementarlo cuando se instancia el material
     
     

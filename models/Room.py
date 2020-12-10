@@ -177,6 +177,9 @@ class Room:
                     self.door.frame.material,
                     self.base.material,
                     ]
+        mat_dict_substance = {}
+        for m in materials:
+            mat_dict_substance[m.name] = m
         print(len(materials))            
-        return materials
+        return mat_dict_substance 
 
