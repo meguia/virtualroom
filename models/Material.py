@@ -40,8 +40,10 @@ class Material:
         self.name = self.sbs_name + '_' + self.preset
         self.texture_path = Path(
                                 self.category,
-                                self.sbs_name
+                                self.name
                                 )
+        self.sbs_file = str(self.category / self.sbs_name) + '.sbsar'
+           
     def __str__(self):
         """
         Returns string with Material object info.
