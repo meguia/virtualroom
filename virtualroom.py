@@ -56,19 +56,26 @@ bm.link_col(col_luces)
 # MATERIALES 
 # carga los materiales con los atributos de substance y las rutas
 materials = room.materials_from_elements() # cambiar
+# temporalmente armamos el diccionario aca
+mat_dict_substance = {}
+for m in materials:
+    mat_dict_substance[m.name] = m
+# esto tambien es temporal y habria que implementarlo cuando se instancia el material
+    
+    
 # temporal, genera un template de json de los parametros de los materiales 
-data = room_utils.mat_getdict(mats_path, materials)
-with open(json_material_template,'w') as json_file:
-    json.dump(data,json_file, indent=4, sort_keys=True)
+#data = room_utils.mat_getdict(mats_path, materials)
+#with open(json_material_template,'w') as json_file:
+#    json.dump(data,json_file, indent=4, sort_keys=True)
 # una copia de esto es lo que funcionaria como preset
-with open(json_material_input) as json_file:
-    try:
-        materials_input = json.load(json_file)
-    except json.JSONDecodeError as exc:
-        print(exc)
+#with open(json_material_input) as json_file:
+#    try:
+#        materials_input = json.load(json_file)
+#    except json.JSONDecodeError as exc:
+#        print(exc)
         
-# genera un diccionario de materiales de blender a partir de los materiales de substance
-mat_dict = room_utils.mat_room(mats_path,materials,materials_input)
+# genera un diccionario de materiales de blender a partir del diccionario de materiales de substance
+mat_dict = room_utils.mat_room(mats_path,mat_dict_substance)
 
 
 # CREA LA SALA
