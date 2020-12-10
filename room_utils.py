@@ -92,35 +92,44 @@ def make_room(room, mat_dict=None, scales=None, with_uv=True):
 
 def mat_getdict(path, materials):
     '''
-    Return dictionary with template for json from materials list
+    Return dictionary with template for json from materials substance dictionary 
+    (without presets, only defaults)
     '''
-    data = {'materials':[]}
-    for m in materials:
-        mat = {}
-        mat['name'] = m.name
-        sbsar_file = str(path / m.texture_path) + '.sbsar'
-        mat['parameters'] = sbs.sbsar_loadparam(str(sbsar_file))
-        data['materials'].append(mat)
+    data = {}
+    for m in materials.values():
+        sbsar_file = str(path / m.sbs_file) 
+        parameters = sbs.sbsar_loadparam(str(sbsar_file))
+        data[m.sbs_name] = parameters
     return data    
 
-def mat_room(path, materials, scales = None):
-    sbs_names = [material.name for material in materials] 
-    mat_dict = dict.fromkeys(sbs_names,0)
+def mat_room(path, materials):
+    '''
+    Generates a dictionary of blender materials from a dictionary of substance materials
+    Also generate all textures if they are not generated or were generated with different 
+    parameter values. Invoke texture_full_material for creating the material with the
+    default shader node structure
+    '''
+    
+    mat_dict = dict.fromkeys(materials.keys(),0)
     imagedicts = []
     #texture names required 
     channels = ['basecolor', 'normal','specular','roughness','metallic','height']
-    for material in materials:
+    for mat_name, material in materials.items():
+        # load parameters from preset
         # test if path exist if not creates the folder
-        sbs_path = path / material.texture_path 
+        texture_path = path / material.texture_path
         #pdb.set_trace()
-        if not os.path.exists(sbs_path):
-            os.makedirs(sbs_path)
+        if not os.path.exists(texture_path):
+            os.makedirs(texture_path)
+
         # test if textures are generated if not 
         # render the sbsar using sbsar_utils
-        if not all(mu.check_imagedict(sbs_path,channels)):
-            print('rendering textures of ' + str(sbs_path))
+        if not all(mu.check_imagedict(texture_path,channels)):
+            
+            print('rendering textures of ' + str(texture_path))
+            
             sbs.sbsar_render(sbs_path,material.name,channels)
-        imagedicts.append(mu.make_imagedict(sbs_path))
+        imagedicts.append(mu.make_imagedict(texture_path))
     for n,name in enumerate(sbs_names):    
         mat_dict[name] = mu.texture_full_material(name,imagedicts[n],mapping=mu.Mapping(coord='UV'))
     return mat_dict

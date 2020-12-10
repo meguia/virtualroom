@@ -42,8 +42,8 @@ class Material:
                                 self.category,
                                 self.name
                                 )
-        self.sbs_file = str(self.category / self.sbs_name) + '.sbsar'
-           
+        self.sbs_file = str(Path(self.category , self.sbs_name)) + '.sbsar'
+
     def __str__(self):
         """
         Returns string with Material object info.
