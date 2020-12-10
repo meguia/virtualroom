@@ -74,7 +74,7 @@ with open(json_material_template,'w') as json_file:
 #        print(exc)
         
 # genera un diccionario de materiales de blender a partir del diccionario de materiales de substance
-mat_dict = room_utils.mat_room(mats_path,mat_dict_substance)
+mat_dict = room_utils.mat_room(mats_path,presetdir,mat_dict_substance)
 
 
 # CREA LA SALA

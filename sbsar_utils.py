@@ -20,26 +20,19 @@ def map_render(sbsar_file,output,sbs_name,out_path,values):
     ).wait()
 
 
-def sbsar_render(material):
+def sbsar_render(sbsar_file,texture_path,name,channels,parameters=None):
     '''
     Renders all textures of sbsar file in sbs_path for channels given in list maps 
     with specified resolution and parameters passed in dictionary set_pars
     '''
-    px = int(math.log(int(resolution[0]), 2))
-    py = int(math.log(int(resolution[1]), 2))
-    out_path = str(sbs_path)
-    sbsar_file = str(sbs_path) + '.sbsar'
-    param_dict = sbsar_loadparam(str(sbsar_file),resolution=[px,py])
-    if set_pars is not None:
-        for key,value in set_pars.items():
-            if key in param_dict:
-                param_dict[key]=value
-    values = sbsar_getvalues(param_dict) 
+    if parameters is None:
+        parameters = sbsar_loadparam(str(sbsar_file))
+    values = sbsar_getvalues(parameters) 
     # default
-    with open(str(sbs_path / 'parameters.json'),'w') as fp:
-        json.dump(param_dict,fp)
+    with open(str(texture_path / 'parameters.json'),'w') as fp:
+        json.dump(parameters,fp)
     for chan in channels:
-        map_render(sbsar_file,chan,sbs_name,out_path,values)
+        map_render(str(sbsar_file),chan,name,str(texture_path),values)
         
 
 def sbsar_getvalues(param_dict):

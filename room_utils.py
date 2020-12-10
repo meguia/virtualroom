@@ -123,6 +123,7 @@ def mat_room(mats_path, preset_path, materials):
             parameters = preset[material.sbs_name]
         # test if path exist if not creates the folder
         texture_path = mats_path / material.texture_path
+        sbs_path = mats_path / material.sbs_file
         if not os.path.exists(texture_path):
             # the material folder was not even created 
             os.makedirs(texture_path)
@@ -142,9 +143,9 @@ def mat_room(mats_path, preset_path, materials):
                     generate_textures = True    
         if generate_textures:
             print('rendering textures of ' + str(texture_path))
-            sbs.sbsar_render(sbs_path,material.name,channels)
-        imagedicts.append(mu.make_imagedict(texture_path))
-        mat_dict[mat_name] = mu.texture_full_material(name,imagedicts[n],mapping=mu.Mapping(coord='UV'))
+            sbs.sbsar_render(sbs_path,texture_path,mat_name,channels,parameters)
+        imagedict = mu.make_imagedict(texture_path)
+        mat_dict[mat_name] = mu.texture_full_material(mat_name,imagedict,mapping=mu.Mapping(coord='UV'))
     return mat_dict
 
 def simple_door(mat_door,dpos,rot,dims):
