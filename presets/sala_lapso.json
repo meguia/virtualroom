@@ -46,7 +46,7 @@
                     "material":  {
                         "sbs_name": "wood_wenge",
                         "category": "Wood",
-                        "preset": "preset2"
+                        "preset": "preset1"
                     }
                 }
             },

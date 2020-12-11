@@ -1,8 +1,8 @@
 {
     "concrete_raw_grey": {
-        "$resolution": [
-            10,
-            10
+        "$outputsize": [
+            11,
+            11
         ],
         "color": [
             0.831006,
@@ -13,9 +13,9 @@
         "roughness_variations": 0.3
     },
     "parquet_european_ash_grey": {
-        "$resolution": [
-            10,
-            10
+        "$outputsize": [
+            11,
+            11
         ],
         "Finish_Matte_Varnish_Varnish_Roughness_Intensity": 0.15,
         "Finish_Varnish_Varnish_Roughness_Intensity": 0.18,
@@ -37,7 +37,7 @@
         "y_amount": 24
     },
     "plaster_acoustic_ceiling": {
-        "$resolution": [
+        "$outputsize": [
             10,
             10
         ],
@@ -55,15 +55,15 @@
         "frame": 1
     },
     "wood_black_walnut_striped": {
-        "$resolution": [
-            10,
-            10
+        "$outputsize": [
+            11,
+            11
         ]
     },
     "wood_wenge": {
-        "$resolution": [
-            10,
-            10
+        "$outputsize": [
+            11,
+            11
         ],
         "Finish_Matte_Varnish_Varnish_Roughness_Intensity": 0.15,
         "Finish_Varnish_Varnish_Roughness_Intensity": 0.18,
