@@ -9,10 +9,10 @@ thisdir = homedir / 'virtualroom'
 savedir = homedir / 'Renders'
 utildir = homedir / 'blender_utils'
 libdir = thisdir / 'lib'
-json_file_input = thisdir / 'input.json'
+presetdir = thisdir / 'presets'
+json_file_input = presetdir / 'sala_lapso.json'
+json_material_template = thisdir / 'materials.json'
 modelsdir = thisdir / 'models'
-# esta seria la unica para ajustar segun donde tenga casa uno, podemos probar algo en la 
-# nube que quede con una referencia fija
 mats_path = homedir / 'Textures'
 
 sys.path.append(str(utildir))   
@@ -22,11 +22,14 @@ import blender_methods as bm
 import clear_utils as cu
 import  room_utils 
 from math import radians
+import models
 from models.Room import Room
 import importlib as imp
-
 imp.reload(room_utils)
+imp.reload(models)
+imp.reload(models.Room)
 
+#CARGA CONFIGURACION
 with open(json_file_input) as json_file:
     try:
         input = json.load(json_file)
@@ -37,53 +40,43 @@ room = Room(input['room'])
 roomString = room.dump_room_info()
 print(f'{roomString}')
 
-
-
-# borra todo lo anterior
+render = False # si va a hacer el render
+generate_template = False
+# BORRA LO ANTERIOR 
 cu.clear()
 cu.clear_act()
-# Crea tres colecciones separadas para sala luces y objetos y las linkea a la escena 
+# COLECCIONES compatibles con el pipeline para Unreal
 col_sala = bm.iscol('Mesh')
-col_luces = bm.iscol('LUCES')
+col_luces = bm.iscol('Lights')
 col_obj = bm.iscol('Mesh')
 bm.link_col(col_sala)
 bm.link_col(col_obj)
 bm.link_col(col_luces)
 
-render = False # si va a hacer el render
-pos_spot = [room.spot.x, room.spot.y, room.spot.z]
-rot_spot = [radians(room.spot.rotX), radians(room.spot.rotY), radians(room.spot.rotZ)]
-rot_camara = radians(-90)
-# MATERIALES CYCLES orden paredes,piso,techo,puerta,zocalos esto va en el json
-names = ['Paredes','Piso','Techo','Puerta','Zocalo']
-sbs_names = ['concrete_raw_grey','parquet_european_ash_grey','plaster_acoustic_ceiling','wood_wenge','wood_black_walnut_striped']
-sbs_types = ['Concrete','Wood','Plaster','Wood','Wood']
-maps = ['color', 'normal','specular','roughness','metal','bump']
-scales = [2.0, 2.0, 6.0, 5.0, 1.0]
-mats = room_utils.mat_room(names,mats_path,sbs_names,sbs_types,maps)
-print(mats)
+# MATERIALES 
+# carga los materiales con los atributos de substance y las rutas
+mat_dict_substance = room.materials_from_elements() # cambiar
+
+if generate_template:
+    data = room_utils.mat_getdict(mats_path, mat_dict_substance)
+    with open(json_material_template,'w') as json_file:
+        json.dump(data,json_file, indent=4, sort_keys=True)
+        
+# genera un diccionario de materiales de blender a partir del diccionario de materiales de substance
+mat_dict = room_utils.mat_room(mats_path,presetdir,mat_dict_substance)
+
 # CREA LA SALA
-sala = room_utils.make_room(room,mats,scales)
+#Escala de los mapas UV orden paredes,piso,techo,puerta,zocalos
+scales = [1.0, 2.0, 6.0, 5.0, 1.0]
+sala = room_utils.make_room(room,mat_dict,scales)
 bm.link_all(sala,col_sala)
  
-#LUCES crea una diccionario con todos los parametros
-Lp = {
-    'name':'Spot1',
-    'pos': pos_spot,
-    'rot': rot_spot,
-    'energy':1000,
-    'size':radians(160.0),
-    'blend':1
-    }
-spot1 = bm.new_spot(**Lp)    
-# Spot simetrico
-pos_spot[1] *= -1
-rot_spot[0] *= -1
-Lp['name']='Spot2'
-Lp['pos']= pos_spot
-Lp['rot']= rot_spot
-spot2 = bm.new_spot(**Lp)
-bm.list_link([spot1,spot2],col_luces)
+#LUCES
+room_lighting_elements = []
+for element in room.lighting_elements:
+    if type(element).__name__ == 'Spot': 
+        room_lighting_elements.append(bm.new_spot(**element.to_dict()))
+bm.list_link(room_lighting_elements,col_luces)
 
 for ob in sala.children:
     ob.select_set(True)

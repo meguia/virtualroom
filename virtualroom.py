@@ -41,6 +41,7 @@ roomString = room.dump_room_info()
 print(f'{roomString}')
 
 render = False # si va a hacer el render
+generate_template = False
 # BORRA LO ANTERIOR 
 cu.clear()
 cu.clear_act()
@@ -56,19 +57,10 @@ bm.link_col(col_luces)
 # carga los materiales con los atributos de substance y las rutas
 mat_dict_substance = room.materials_from_elements() # cambiar
 
-# esto tambien es temporal y habria que implementarlo cuando se instancia el material
-    
-    
-# temporal, genera un template de json de los parametros de los materiales 
-data = room_utils.mat_getdict(mats_path, mat_dict_substance)
-with open(json_material_template,'w') as json_file:
-    json.dump(data,json_file, indent=4, sort_keys=True)
-# una copia de esto es lo que funcionaria como preset
-#with open(json_material_input) as json_file:
-#    try:
-#        materials_input = json.load(json_file)
-#    except json.JSONDecodeError as exc:
-#        print(exc)
+if generate_template:
+    data = room_utils.mat_getdict(mats_path, mat_dict_substance)
+    with open(json_material_template,'w') as json_file:
+        json.dump(data,json_file, indent=4, sort_keys=True)
         
 # genera un diccionario de materiales de blender a partir del diccionario de materiales de substance
 mat_dict = room_utils.mat_room(mats_path,presetdir,mat_dict_substance)
