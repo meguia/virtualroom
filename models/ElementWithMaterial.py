@@ -12,9 +12,10 @@ class ElementWithMaterial:
 
     def __init__(self, desc = {}):
         """
-        Constructs all the necessary attributes for the Ceiling object.
+        Constructs all the necessary attributes for the Element with material object object.
         """
         self.material = Material(desc)
+        self.uv_scale = desc['uv_scale']
 
     def __str__(self):
 
@@ -25,5 +26,6 @@ class ElementWithMaterial:
         return(
              f'{class_name}:\n'
              f'{self.material.__str__()}'
+             f'\tUV scale:      {self.uv_scale:6.2f}\n'
               )
 

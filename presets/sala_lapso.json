@@ -13,21 +13,24 @@
                 "material":  {
                     "sbs_name": "concrete_raw_grey",
                     "category": "Concrete",
-                    "preset": "preset1"
+                    "preset": "preset1",
+                    "uv_scale": 3.0
                 }
             },
             "ceiling": {
                 "material":  {
                     "sbs_name": "plaster_acoustic_ceiling",
                     "category": "Plaster",
-                    "preset": "preset1"
+                    "preset": "preset1",
+                    "uv_scale": 9.0
                 }
             },
             "floor": {
                "material":  {
                    "sbs_name": "parquet_european_ash_grey",
                    "category": "Wood",
-                   "preset": "preset1"
+                   "preset": "preset1",
+                    "uv_scale": 3.0
                }
             },
             "door": {
@@ -38,7 +41,8 @@
                 "material":  {
                     "sbs_name": "wood_wenge",
                     "category": "Wood",
-                    "preset": "preset1"
+                    "preset": "preset1",
+                    "uv_scale": 5.0
                 },
                 "frame": {
                     "width": 0.08,
@@ -46,7 +50,8 @@
                     "material":  {
                         "sbs_name": "wood_wenge",
                         "category": "Wood",
-                        "preset": "preset1"
+                        "preset": "preset1",
+                        "uv_scale": 5.0
                     }
                 }
             },
@@ -56,7 +61,8 @@
               "material":  {
                   "sbs_name": "wood_black_walnut_striped",
                   "category": "Wood",
-                  "preset": "preset1"
+                  "preset": "preset1",
+                  "uv_scale": 1.0
               }
             },
             "speaker": {

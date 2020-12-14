@@ -55,6 +55,7 @@ bm.link_col(col_luces)
 
 # MATERIALES 
 # carga los materiales con los atributos de substance y las rutas
+# esto se podria hacer directamente en make_room
 mat_dict_substance = room.materials_from_elements() # cambiar
 
 if generate_template:
