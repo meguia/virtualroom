@@ -163,12 +163,6 @@ class Room:
         return category_names
 
     def materials_from_elements(self):
-        # orden paredes,piso,techo,puerta,zocalos
-        # loopear sobre elementos
-        # en cada elemento loopear sobre los materiales
-        # 
-        # armar un diccionario que tenga como keys
-        # material.name_material.preset
         materials = [
                     self.wall.material,
                     self.floor.material,
@@ -179,7 +173,6 @@ class Room:
                     ]
         mat_dict_substance = {}
         for m in materials:
-            mat_dict_substance[m.name] = m
-        print(len(materials))            
+            mat_dict_substance[m.name] = m          
         return mat_dict_substance 
 

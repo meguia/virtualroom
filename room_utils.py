@@ -18,20 +18,25 @@ from math import radians, pow
 import importlib as imp
 imp.reload(bm)
 imp.reload(mu)
+imp.reload(uv)
 imp.reload(sbs)
 
 def make_room(room, mat_dict=None, with_uv=True):
-    # ROOMS
-    # materials walls, floor, ceil, base, door
-    print('ROOM:')
-    # temporal para que corra por ahora 
+    '''
+    Makes room as objects parented to an empty
+    the objects are defined in the class Room
+    mat_dict contains a dictionary of substance materiales
+    also asigns uv maps (and lightmaps) to objects with scale
+    '''
     (l,w,h,t) = [room.depth, room.width, room.height, room.wall_thickness] # length, width, height, thickness
     (dn, dp, dw, dh) = [room.door.wall_index, room.door.position, room.door.width, room.door.height] # wall number, position from border, width, height
+    # Makes floor and ceiling
     floor = bm.floor('floor', mat_dict[room.floor.material.name],pos=[0,0,-t],dims=[l,w,t])
     ceil = bm.floor('tceil',mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
     rots = [radians(180),0,radians(90),radians(-90)]
     uv.uv_board(ceil.data, [w,l,t], front=0, scale = w/room.ceiling.uv_scale)
     uv.uv_board(floor.data, [w,l,t], front=0, scale = w/room.floor.uv_scale,rot90=True)
+    # Makes walls with bases
     mat_wall = mat_dict[room.wall.material.name]
     mat_base = mat_dict[room.base.material.name]
     if room.base is not None:
@@ -59,6 +64,7 @@ def make_room(room, mat_dict=None, with_uv=True):
             uv.uv_board(b2.data, [l,basedim[0],basedim[1]], front=1, scale = w/base_scale)
             uv.uv_board(b3.data, [w,basedim[0],basedim[1]], front=1, scale = w/base_scale)
             uv.uv_board(b4.data, [w,basedim[0],basedim[1]], front=1, scale = w/base_scale)
+    #  Makes hole for door in wall dn and reassigns uv map (check)
     w0 = eval('w'+str(dn))
     sw = pow(-1,dn)
     if dn<3:
@@ -75,8 +81,10 @@ def make_room(room, mat_dict=None, with_uv=True):
         bm.hole(w0,hpos=hpos,hsize=hsize)
         #if with_uv:
             #uv.uv_board_with_hole(w0.data, [w,h,t], [dp-dw/2,t,dh,dw])
+    # Also make hole in the correspondign wall base        
     if basedim is not None:
         bm.hole(eval('b'+str(dn)),hpos=hpos,hsize=hsize)
+    # Makes door and frame    
     if room.door.frame is not None: 
         framedim = [room.door.frame.width, room.door.frame.thickness]   
         door,fr = frame_door(mat_dict[room.door.material.name],mat_dict[room.door.frame.material.name],dpos,rots[dn-1],[dw,dh,t],framedim)
@@ -87,7 +95,8 @@ def make_room(room, mat_dict=None, with_uv=True):
         door = simple_door(mat_dict[room.door.material.name],dpos,rots[dn-1],[dw,dh,t])   
         room.append(door)
     if with_uv:    
-        uv.uv_board(door.data, [dw,dh,t], front=1, scale = dh/room.door.uv_scale, rot90=True)    
+        uv.uv_board(door.data, [dw,dh,t], front=1, scale = dh/room.door.uv_scale, rot90=True) 
+    # Parents the list af all objects to an empty    
     room_ = bm.list_parent('room',room_list)
     return room_
 
