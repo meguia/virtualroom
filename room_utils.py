@@ -32,7 +32,7 @@ def make_room(room, mat_dict=None, scales=None, with_uv=True):
     floor = bm.floor('floor', mat_dict[room.floor.material.name],dims=[l,w,-t])
     ceil = bm.floor('tceil',mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
     rots = [radians(180),0,radians(90),radians(-90)]
-    uv.uv_board(ceil.data, [w,l,t], front=0, scale = w/room.ceiling.uv_scale,rot90=True)
+    uv.uv_board(ceil.data, [w,l,t], front=0, scale = w/room.ceiling.uv_scale)
     uv.uv_board(floor.data, [w,l,t], front=0, scale = w/room.floor.uv_scale,rot90=True)
     mat_wall = mat_dict[room.wall.material.name]
     mat_base = mat_dict[room.base.material.name]
