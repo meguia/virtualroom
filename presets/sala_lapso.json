@@ -2,8 +2,8 @@
     "room": {
         "name": "Sala de Lapso",
         "dimensions": {
-            "depth": 18.1,
-            "width": 10.1,
+            "depth": 12.1,
+            "width": 7.1,
             "height": 3.0
         },
         "wall_thickness" : 0.15,
@@ -80,7 +80,7 @@
             "type": "spot",
             "name" : "Spot1",
             "position": {
-                "x": -8,
+                "x": -5.7,
                 "y": 1,
                 "z": 2
             },
@@ -89,7 +89,7 @@
                 "y": -60,
                 "z": 0
             },
-            "energy": 1500,
+            "energy": 1000,
             "size": 160.0,
             "blend": 1
           },
@@ -97,7 +97,7 @@
             "type": "spot",
             "name" : "Spot2",
             "position": {
-                "x": -8,
+                "x": -5.7,
                 "y": -1,
                 "z": 2
             },
@@ -106,7 +106,7 @@
                 "y": -60,
                 "z": 0
             },
-            "energy": 1500,
+            "energy": 1000,
             "size": 160.0,
             "blend": 1
           }

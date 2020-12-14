@@ -27,7 +27,7 @@ def make_room(room, mat_dict=None, with_uv=True):
     # temporal para que corra por ahora 
     (l,w,h,t) = [room.depth, room.width, room.height, room.wall_thickness] # length, width, height, thickness
     (dn, dp, dw, dh) = [room.door.wall_index, room.door.position, room.door.width, room.door.height] # wall number, position from border, width, height
-    floor = bm.floor('floor', mat_dict[room.floor.material.name],dims=[l,w,-t])
+    floor = bm.floor('floor', mat_dict[room.floor.material.name],pos=[0,0,-t],dims=[l,w,t])
     ceil = bm.floor('tceil',mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
     rots = [radians(180),0,radians(90),radians(-90)]
     uv.uv_board(ceil.data, [w,l,t], front=0, scale = w/room.ceiling.uv_scale)
