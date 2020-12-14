@@ -9,5 +9,5 @@ Virtual Room using Blender > Substance > Unreal Engine
 - &#10003;Los materiales deberian referenciarse solo por su nombre y la categoria a la que pertenecen (Wood, Plaster, etc) como atributo, y con esa categoria y el nombre del material se arma la ruta hacia las texturas*. 
 - La escala de los mapas UV deberia depender de las dimensiones en metros de los elementos, para que las texturas no se estiren, ahora estan fijas, habria que agregar la escala del objeto como atributo del elemento
 - las luces simetricas deberian definirse con un unico set de parametros
-
-* Agregue materiales al json, hay un array de objeto materiales en el objeto room. el objeto material tiene como atributo nombre, categria y textura. con categoria y textura forma un atributo que es el path. No modifique todavia nada de room utils. Seria el siguiente paso.
+- ver ajustes de iluminacion global como ambient occlusion
+ 

@@ -20,15 +20,13 @@ imp.reload(bm)
 imp.reload(mu)
 imp.reload(sbs)
 
-def make_room(room, mat_dict=None, scales=None, with_uv=True):
+def make_room(room, mat_dict=None, with_uv=True):
     # ROOMS
     # materials walls, floor, ceil, base, door
     print('ROOM:')
     # temporal para que corra por ahora 
     (l,w,h,t) = [room.depth, room.width, room.height, room.wall_thickness] # length, width, height, thickness
     (dn, dp, dw, dh) = [room.door.wall_index, room.door.position, room.door.width, room.door.height] # wall number, position from border, width, height
-    if scales is None:
-        scales = [1]*5
     floor = bm.floor('floor', mat_dict[room.floor.material.name],dims=[l,w,-t])
     ceil = bm.floor('tceil',mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
     rots = [radians(180),0,radians(90),radians(-90)]
@@ -83,13 +81,13 @@ def make_room(room, mat_dict=None, scales=None, with_uv=True):
         framedim = [room.door.frame.width, room.door.frame.thickness]   
         door,fr = frame_door(mat_dict[room.door.material.name],mat_dict[room.door.frame.material.name],dpos,rots[dn-1],[dw,dh,t],framedim)
         if with_uv:
-            uv.uv_planks(fr.data, scale = dh/scales[4])
+            uv.uv_planks(fr.data, scale = dh/room.door.frame.uv_scale)
         room_list.extend([door,fr])
     else:
         door = simple_door(mat_dict[room.door.material.name],dpos,rots[dn-1],[dw,dh,t])   
         room.append(door)
     if with_uv:    
-        uv.uv_board(door.data, [dw,dh,t], front=1, scale = dh/scales[3], rot90=True)    
+        uv.uv_board(door.data, [dw,dh,t], front=1, scale = dh/room.door.uv_scale, rot90=True)    
     room_ = bm.list_parent('room',room_list)
     return room_
 
