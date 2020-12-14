@@ -68,7 +68,7 @@ mat_dict = room_utils.mat_room(mats_path,presetdir,mat_dict_substance)
 
 # CREA LA SALA
 #Escala de los mapas UV orden paredes,piso,techo,puerta,zocalos
-scales = [1.0, 2.0, 6.0, 5.0, 1.0]
+scales = [3.0, 3.0, 9.0, 5.0, 1.0]
 sala = room_utils.make_room(room,mat_dict,scales)
 bm.link_all(sala,col_sala)
  

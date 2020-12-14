@@ -66,15 +66,15 @@ def make_room(room, mat_dict=None, scales=None, with_uv=True):
         dpos = [sw*(dp-l/2),w0.location[1]+sw*t/2,0]
         hsize=[dw, 3*t, dh]
         bm.hole(w0,hpos=hpos,hsize=hsize)
-        if with_uv:
-            uv.uv_board_with_hole(w0.data , [l,h,t], [dp-dw/2,t,dh,dw])
+        #if with_uv:
+            #uv.uv_board_with_hole(w0.data , [l,h,t], [dp-dw/2,t,dh,dw])
     else:
         hpos = [w0.location[0],sw*(w/2-dp),dh/2]    
         dpos = [w0.location[0]+sw*t/2,sw*(w/2-dp),0]    
         hsize=[3*t,dw, dh]
         bm.hole(w0,hpos=hpos,hsize=hsize)
-        if with_uv:
-            uv.uv_board_with_hole(w0.data, [w,h,t], [dp-dw/2,t,dh,dw])
+        #if with_uv:
+            #uv.uv_board_with_hole(w0.data, [w,h,t], [dp-dw/2,t,dh,dw])
     if basedim is not None:
         bm.hole(eval('b'+str(dn)),hpos=hpos,hsize=hsize)
     if room.door.frame is not None: 
