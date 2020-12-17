@@ -84,7 +84,11 @@ class Room:
         self.lighting_elements = []
         for element in desc['lighting_elements']:
             if element['type'] == 'spot':
-                self.lighting_elements.append(Spot(element))
+                spotInstance = Spot(element)
+                self.lighting_elements.append(spotInstance)
+                if element['create_symmetric']:
+                    self.lighting_elements.append(spotInstance.symmetric_copy())
+
 
         #self.materials = []
         #for material in desc['materials']:

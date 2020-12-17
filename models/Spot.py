@@ -1,5 +1,6 @@
 from operator import itemgetter
 from math import radians
+import copy
 
 from .validation.schema_validation_methods import validate_spot_schema
 from .validation.NumberValidator import NumberValidator
@@ -133,3 +134,13 @@ class Spot:
             'blend': self.blend
             }
         return Lp
+
+    def symmetric_copy(self):
+        """
+        Performs deep copy, returns a symmetric Spot
+        """
+        symmetricSpot = copy.deepcopy(self)
+        symmetricSpot.name += '-symmetric'
+        symmetricSpot.y = self.y * -1
+        symmetricSpot.rotX = self.rotX * -1
+        return symmetricSpot
