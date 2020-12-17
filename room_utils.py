@@ -1,5 +1,3 @@
-from operator import truediv
-import pdb
 import sys
 import os
 import json
@@ -33,67 +31,51 @@ def make_room(room, mat_dict=None, with_uv=True):
     # Makes floor and ceiling
     floor = bm.floor('floor', mat_dict[room.floor.material.name],pos=[0,0,-t],dims=[l,w,t])
     ceil = bm.floor('tceil',mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
+    if with_uv:
+        uv.uv_board(ceil.data, [l,w,t], front=1, scale = room.ceiling.uv_scale)
+        uv.uv_board(floor.data, [l+2*t,w+2*t,t], front=2, scale = room.floor.uv_scale)
+    room_list = [floor,ceil]    
+    # Makes walls with bases in a loop
+    # first define rotation, position, door position, main dimension (dim)
     rots = [radians(180),0,radians(90),radians(-90)]
-    if with_uv:
-        uv.uv_board(ceil.data, [w,l,t], front=0, scale = room.ceiling.uv_scale)
-        uv.uv_board(floor.data, [w,l,t], front=0, scale = room.floor.uv_scale,rot90=True)
-    # Makes walls with bases
-    mat_wall = mat_dict[room.wall.material.name]
-    mat_base = mat_dict[room.base.material.name]
-    if room.base is not None:
-        basedim = [room.base.height, room.base.thickness]
-        w1,b1 = bm.wall('wall1',mat_wall,pos=[0,-w/2,-t],rot=rots[0], dims=[l+2*t,h+t,t],basemat=mat_base,basedim=basedim)
-        w2,b2 = bm.wall('wall2',mat_wall,pos=[0,w/2,-t],rot=rots[1], dims=[l+2*t,h+t,t],basemat=mat_base,basedim=basedim)
-        w3,b3 = bm.wall('wall3',mat_wall,pos=[-l/2,0,-t],rot=rots[2], dims=[w,h+t,t],basemat=mat_base,basedim=basedim)
-        w4,b4 = bm.wall('wall4',mat_wall,pos=[l/2,0,-t],rot=rots[3], dims=[w,h+t,t],basemat=mat_base,basedim=basedim)
-        room_list = [w1,w2,w3,w4,floor,ceil,b1,b2,b3,b4]
-    else:
-        w1 = bm.wall('wall1',mat_wall,pos=[0,-w/2,-t],rot=rots[0], dims=[l+2*t,h+t,t])
-        w2 = bm.wall('wall2',mat_wall,pos=[0,w/2,-t],rot=rots[1], dims=[l+2*t,h+t,t])
-        w3 = bm.wall('wall3',mat_wall,pos=[-l/2,0,-t],rot=rots[2], dims=[w,h+t,t])
-        w4 = bm.wall('wall4',mat_wall,pos=[l/2,0,-t],rot=rots[3], dims=[w,h+t,t])
-        room_list = [w1,w2,w3,w4,floor,ceil]
-    if with_uv:
-        wall_scale = room.wall.uv_scale
-        uv.uv_board(w1.data, [l,h,t], front=1, scale = wall_scale)
-        uv.uv_board(w2.data, [l,h,t], front=1, scale = wall_scale)
-        uv.uv_board(w3.data, [w,h,t], front=1, scale = wall_scale)
-        uv.uv_board(w4.data, [w,h,t], front=1, scale = wall_scale)
+    pos=[[0,-w/2,-t],[0,w/2,-t],[-l/2,0,-t],[l/2,0,-t]]
+    dpos = [[l/2-dp-dw/2,-w/2-t/2,0],[-l/2+dp+dw/2,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
+    dim=[l+2*t,l+2*t,w,w]
+    # For placing the hole an array giving None when there is no hole and the dimensions 
+    # of the hole in  the dn wall
+    hole=[None]*4
+    hole[dn] = [dp, t, dw, dh]
+    for n in range(4):
         if room.base is not None:
-            base_scale = room.base.uv_scale
-            uv.uv_board(b1.data, [l,basedim[0],basedim[1]], front=1, scale = base_scale)
-            uv.uv_board(b2.data, [l,basedim[0],basedim[1]], front=1, scale = base_scale)
-            uv.uv_board(b3.data, [w,basedim[0],basedim[1]], front=1, scale = base_scale)
-            uv.uv_board(b4.data, [w,basedim[0],basedim[1]], front=1, scale = base_scale)
-    #  Makes hole for door in wall dn and reassigns uv map (check)
-    w0 = eval('w'+str(dn))
-    sw = pow(-1,dn)
-    if dn<3:
-        hpos = [sw*(dp-l/2),w0.location[1],dh/2]
-        dpos = [sw*(dp-l/2),w0.location[1]+sw*t/2,0]
-        hsize=[dw, 3*t, dh]
-        bm.hole(w0,hpos=hpos,hsize=hsize)
-    else:
-        hpos = [w0.location[0],sw*(w/2-dp),dh/2]    
-        dpos = [w0.location[0]+sw*t/2,sw*(w/2-dp),0]    
-        hsize=[3*t,dw, dh]
-        bm.hole(w0,hpos=hpos,hsize=hsize)
-    # There is no need to rebuild the uv maps after makeing the holes    
-    # Also make hole in the correspondign wall base        
-    if basedim is not None:
-        bm.hole(eval('b'+str(dn)),hpos=hpos,hsize=hsize)
-    # Makes door and frame    
+            basedim = [dim[n], room.base.height, room.base.thickness]
+            w,b = bm.wall('wall_' + str(n),mat_dict[room.wall.material.name] ,pos=pos[n],rot=rots[n],dims=[dim[n],h+t,t],hole=hole[n],
+                        basemat= mat_dict[room.base.material.name],basedim=[room.base.height, room.base.thickness])            
+            if with_uv:
+                if n==dn:
+                    uv.uv_board_with_hole(b.data,basedim,hole[dn],scale=room.wall.uv_scale,internal=False)
+                else:
+                    uv.uv_board(b.data,basedim,scale=room.base.uv_scale)    
+            room_list.append(b)    
+        else:
+            w = bm.wall('wall_' + str(n),mat_dict[room.wall.material.name] ,pos=pos[n],rot=rots[n],dims=dims[n],hole=hole[n])
+        if with_uv:
+            if n==dn:
+                uv.uv_board_with_hole(w.data,[dim[n],h+t,t],hole[dn],scale=room.wall.uv_scale)
+            else:
+                uv.uv_board(w.data,[dim[n],h+t,t],scale=room.wall.uv_scale)
+        room_list.append(w)    
+    # Makes door and frame 
     if room.door.frame is not None: 
         framedim = [room.door.frame.width, room.door.frame.thickness]   
-        door,fr = frame_door(mat_dict[room.door.material.name],mat_dict[room.door.frame.material.name],dpos,rots[dn-1],[dw,dh,t],framedim)
+        door,fr = frame_door(mat_dict[room.door.material.name],mat_dict[room.door.frame.material.name],dpos[dn],rots[dn],[dw,dh,t],framedim)
         if with_uv:
             uv.uv_planks(fr.data, scale = room.door.frame.uv_scale)
         room_list.extend([door,fr])
     else:
-        door = simple_door(mat_dict[room.door.material.name],dpos,rots[dn-1],[dw,dh,t])   
+        door = simple_door(mat_dict[room.door.material.name],dpos[dn],rots[dn],[dw,dh,t])   
         room.append(door)
     if with_uv:    
-        uv.uv_board(door.data, [dw,dh,t], front=1, scale = room.door.uv_scale, rot90=True) 
+        uv.uv_board(door.data,[dw,dh,t],scale=room.door.uv_scale,rot90=True) 
     # Parents the list af all objects to an empty    
     room_ = bm.list_parent('room',room_list)
     return room_
@@ -117,9 +99,7 @@ def mat_room(mats_path, preset_path, materials):
     parameter values. Invoke texture_full_material for creating the material with the
     default shader node structure
     '''
-    
     mat_dict = dict.fromkeys(materials.keys(),0)
-    imagedicts = []
     #texture names required 
     channels = ['basecolor', 'normal','specular','roughness','metallic','height']
     for mat_name, material in materials.items():
@@ -161,6 +141,7 @@ def simple_door(mat_door,dpos,rot,dims):
     and rotation rot of dimension dims
     '''
     # simple door with no frame
+    dims[2] /= 2.0
     door = bm.wall('door',mat_door,pos=dpos,rot=rot,dims=dims)
     return door
 
@@ -175,6 +156,7 @@ def frame_door(mat_door,mat_frame,dpos,rot,dims,framedim):
     dims[0] -= 2*framedim[1]
     dims[1] -= 2*framedim[1]
     dpos[2] += framedim[1]
+    dims[2] /= 2.0
     door = bm.wall('door',mat_door,pos=dpos,rot=rot,dims=dims)
     return door, frame
 
@@ -184,7 +166,7 @@ def wall_tiles(tile,dims,base,frame,door):
     '''
     # cover walls with tiles using array. cut the tiles at the end of the wall
     (l,w,h) = dims # length, width, height, thickness
-    (dn, dp, dw, dh) = door # wall number, position, width, height
+    #(dn, dp, dw, dh) = door # wall number, position, width, height
     tile.location=[-l/2+0.5,-w/2,0.5+base[0]]
     tile.rotation_euler=[radians(90),0,0]
     panelx = tile.modifiers.new(name='tilex', type='ARRAY')
