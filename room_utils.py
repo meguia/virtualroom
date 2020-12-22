@@ -104,7 +104,13 @@ def mat_room(mats_path, preset_path, materials):
     channels = ['basecolor', 'normal','specular','roughness','metallic','height']
     for mat_name, material in materials.items():
         generate_textures = False
-        # load parameters from preset (esto puede ir cuando se instancia el material) ###########
+        if mat_dict.has_key('displacement'):
+            use_technical = True
+            displacement = mat_dict.displacement
+        else:
+            use_technical=False
+            displacement = None    
+        # load parameters from preset 
         with open(str(preset_path / material.preset) + '.json') as json_file:
             preset = json.load(json_file)
             parameters = preset[material.sbs_name]
@@ -130,9 +136,9 @@ def mat_room(mats_path, preset_path, materials):
                     generate_textures = True    
         if generate_textures:
             print('rendering textures of ' + str(texture_path))
-            sbs.sbsar_render(sbs_path,texture_path,mat_name,channels,parameters)
+            sbs.sbsar_render(sbs_path,texture_path,mat_name,channels,parameters,use_technical)
         imagedict = mu.make_imagedict(texture_path)
-        mat_dict[mat_name] = mu.texture_full_material(mat_name,imagedict,mapping=mu.Mapping(coord='UV'))
+        mat_dict[mat_name] = mu.texture_full_material(mat_name,imagedict,mapping=mu.Mapping(coord='UV'),displacement)
     return mat_dict
 
 def simple_door(mat_door,dpos,rot,dims):

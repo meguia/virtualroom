@@ -1,6 +1,5 @@
 from pysbs import context, sbsarchive, batchtools
 import json
-import math
 
 aContext = context.Context()
 
@@ -20,14 +19,14 @@ def map_render(sbsar_file,output,sbs_name,out_path,values):
     ).wait()
 
 
-def sbsar_render(sbsar_file,texture_path,name,channels,parameters=None):
+def sbsar_render(sbsar_file,texture_path,name,channels,parameters=None,use_technical=False):
     '''
     Renders all textures of sbsar file in sbs_path for channels given in list maps 
     with specified resolution and parameters passed in dictionary set_pars
     '''
     if parameters is None:
         parameters = sbsar_loadparam(str(sbsar_file))
-    values = sbsar_getvalues(parameters) 
+    values = sbsar_getvalues(parameters,use_technical) 
     # default
     with open(str(texture_path / 'parameters.json'),'w') as fp:
         json.dump(parameters,fp)
@@ -35,7 +34,7 @@ def sbsar_render(sbsar_file,texture_path,name,channels,parameters=None):
         map_render(str(sbsar_file),chan,name,str(texture_path),values)
         
 
-def sbsar_getvalues(param_dict):
+def sbsar_getvalues(param_dict, use_technical=False):
     '''
     formats the array of parameters passed in values from the dictionary of parameters param_dict
     and the resolution
@@ -44,6 +43,12 @@ def sbsar_getvalues(param_dict):
     for key,value in param_dict.items():
         if type(value) is list:
             values.append( "" + key + "@" + ",".join(str(x) for x in value))
+        elif type(value) is dict:
+            if not use_technical and 'Technical' in key:
+                pass
+            else:
+                for key2,value2 in value.items():
+                    values.append( "" + key2 + "@" + str(value2))        
         else:    
             values.append( "" + key + "@" + str(value))
     return values 
@@ -58,10 +63,17 @@ def sbsar_loadparam(sbs_path,resolution=[10,10],graph_idx=0):
     inputs = graphs[graph_idx].getInputParameters()
     param_dict = {'$resolution':resolution}
     for inp in inputs:
+        par_id = inp.mIdentifier
+        default = inp.getDefaultValue()
         if inp.getGroup() is None:
-            par_id = inp.mIdentifier
-            default = inp.getDefaultValue()
             param_dict[par_id] = default
+        else:
+            group =  inp.getGroup()
+            if 'Channels' not in group:
+                if group in param_dict:
+                    param_dict[group][par_id] = default
+                else:    
+                    param_dict[group] = {par_id:default}
     return param_dict        
 
 

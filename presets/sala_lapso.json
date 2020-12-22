@@ -11,10 +11,11 @@
             "wall": {
                 "thickness": 0.15,
                 "material":  {
-                    "sbs_name": "concrete_raw_grey",
-                    "category": "Concrete",
+                    "sbs_name": "acoustic_foam_fonac",
+                    "category": "Plaster",
                     "preset": "preset1",
-                    "uv_scale": 3.0
+                    "displacement": 0.1,
+                    "uv_scale": 1.5
                 }
             },
             "ceiling": {
