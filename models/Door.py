@@ -45,7 +45,7 @@ class Door(ElementWithMaterial):
                 dictionary representing Door's information
         """
         validate_door_schema(desc)
-        super().__init__(desc['material'])
+        super().__init__(desc['material'], desc['uv_scale'])
         (
         self.wall_index,
         self.position,
@@ -67,8 +67,8 @@ class Door(ElementWithMaterial):
               '\tPosition:      {:6.2f}\n' 
               '\tWidth:         {:6.2f}\n' 
               '\tHeight:        {:6.2f}\n'
-              f'\t{material_string }\n'
-              f'\t{ frame_string }\n'
+              f'{super().__str__()}'
+              f'{ frame_string }\n'
               .format(
                      self.wall_index,
                      self.position,

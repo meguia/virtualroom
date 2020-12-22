@@ -104,9 +104,11 @@ def mat_room(mats_path, preset_path, materials):
     channels = ['basecolor', 'normal','specular','roughness','metallic','height']
     for mat_name, material in materials.items():
         generate_textures = False
-        if mat_dict.has_key('displacement'):
+        #if mat_dict.has_key('displacement'):
+        if hasattr(material, 'displacement'):
             use_technical = True
-            displacement = mat_dict.displacement
+            #displacement = mat_dict.displacement
+            displacement = material.displacement
         else:
             use_technical=False
             displacement = None    

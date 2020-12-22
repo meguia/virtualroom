@@ -180,3 +180,13 @@ class Room:
             mat_dict_substance[m.name] = m          
         return mat_dict_substance 
 
+    def material_helper(self):
+        materials = [
+                    self.wall.material,
+                    self.floor.material,
+                    self.ceiling.material,
+                    self.door.material,
+                    self.door.frame.material,
+                    self.base.material,
+                    ]
+        return materials

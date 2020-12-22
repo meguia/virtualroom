@@ -10,28 +10,28 @@
         "elements": {
             "wall": {
                 "thickness": 0.15,
+                "uv_scale": 1.5,
                 "material":  {
                     "sbs_name": "acoustic_foam_fonac",
                     "category": "Plaster",
                     "preset": "preset1",
-                    "displacement": 0.1,
-                    "uv_scale": 1.5
+                    "displacement": 0.1
                 }
             },
             "ceiling": {
+                "uv_scale": 1.0,
                 "material":  {
                     "sbs_name": "plaster_acoustic_ceiling",
                     "category": "Plaster",
-                    "preset": "preset1",
-                    "uv_scale": 1.0
+                    "preset": "preset1"
                 }
             },
             "floor": {
+               "uv_scale": 3.0,
                "material":  {
                    "sbs_name": "parquet_european_ash_grey",
                    "category": "Wood",
-                   "preset": "preset1",
-                    "uv_scale": 3.0
+                   "preset": "preset1"
                }
             },
             "door": {
@@ -39,31 +39,31 @@
                 "position": 1,
                 "width": 1.2,
                 "height": 2.2,
+                "uv_scale": 2.0,
                 "material":  {
                     "sbs_name": "wood_wenge",
                     "category": "Wood",
-                    "preset": "preset1",
-                    "uv_scale": 2.0
+                    "preset": "preset1"
                 },
                 "frame": {
                     "width": 0.08,
                     "thickness": 0.03,
+                    "uv_scale": 1.0,
                     "material":  {
                         "sbs_name": "wood_black_walnut_striped",
                         "category": "Wood",
-                        "preset": "preset1",
-                        "uv_scale": 1.0
+                        "preset": "preset1"
                     }
                 }
             },
             "base": {
               "height": 0.12,
               "thickness" : 0.025,
+              "uv_scale": 3.0,
               "material":  {
                   "sbs_name": "wood_black_walnut_striped",
                   "category": "Wood",
-                  "preset": "preset1",
-                  "uv_scale": 3.0
+                  "preset": "preset1"
               }
             },
             "speaker": {

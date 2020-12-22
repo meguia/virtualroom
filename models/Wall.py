@@ -22,7 +22,7 @@ class Wall(ElementWithMaterial):
         """
         Constructs all the necessary attributes for the wall object.
         """
-        super().__init__(desc["material"])
+        super().__init__(desc['material'], desc['uv_scale'])
         self.thickness = desc["thickness"]
 
     def __str__(self):
@@ -33,7 +33,7 @@ class Wall(ElementWithMaterial):
         return(
               'Wall:\n'
               '\tThickness:     {:6.2f}\n'
-             f'{self.material.__str__()}'
+             f'{super().__str__()}'
               .format(
                      self.thickness
                      )

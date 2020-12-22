@@ -14,4 +14,14 @@ class Ceiling(ElementWithMaterial):
         """
         Constructs all the necessary attributes for the Ceiling object.
         """
-        super().__init__(desc["material"])
+        super().__init__(desc['material'], desc['uv_scale'])
+
+    def __str__(self):
+
+        """
+        Returns string with Ceiling object info.
+        """
+        return(
+              f'Ceiling:\n'
+              f'{super().__str__()}'
+              )

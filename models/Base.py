@@ -30,7 +30,7 @@ class Base(ElementWithMaterial):
                 dictionary representing base's information
         """
         validate_base_schema(desc)
-        super().__init__(desc['material'])
+        super().__init__(desc['material'], desc['uv_scale'])
         (
         self.height, 
         self.thickness,
@@ -46,7 +46,7 @@ class Base(ElementWithMaterial):
                ' Base:\n'
               '\tHeight:        {:6.2f}\n' 
               '\tThickness:     {:6.2f}\n'
-             f'\t{material_string}'
+             f'{super().__str__()}'
               .format(
                      self.height,
                      self.thickness

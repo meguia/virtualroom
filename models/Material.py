@@ -43,6 +43,8 @@ class Material:
                                 self.name
                                 )
         self.sbs_file = str(Path(self.category , self.sbs_name)) + '.sbsar'
+        if 'displacement' in desc.keys():
+            self.displacement = desc['displacement']
 
     def __str__(self):
         """

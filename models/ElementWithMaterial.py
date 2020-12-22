@@ -10,12 +10,12 @@ class ElementWithMaterial:
         ceiling's material
     """
 
-    def __init__(self, desc = {}):
+    def __init__(self, desc, uv_scale):
         """
         Constructs all the necessary attributes for the Element with material object object.
         """
         self.material = Material(desc)
-        self.uv_scale = desc['uv_scale']
+        self.uv_scale = uv_scale 
 
     def __str__(self):
 
@@ -24,8 +24,7 @@ class ElementWithMaterial:
         """
         class_name = type(self).__name__
         return(
-             f'{class_name}:\n'
-             f'{self.material.__str__()}'
              f'\tUV scale:      {self.uv_scale:6.2f}\n'
+             f'{self.material.__str__()}'
               )
 

@@ -15,4 +15,14 @@ class Floor(ElementWithMaterial):
         """
         Constructs all the necessary attributes for the Floor object.
         """
-        super().__init__(desc['material'])
+        super().__init__(desc['material'], desc['uv_scale'])
+
+    def __str__(self):
+
+        """
+        Returns string with Floor object info.
+        """
+        return(
+              f'Floor:\n'
+              f'{super().__str__()}'
+              )
