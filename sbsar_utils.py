@@ -48,7 +48,10 @@ def sbsar_getvalues(param_dict, use_technical=False):
                 pass
             else:
                 for key2,value2 in value.items():
-                    values.append( "" + key2 + "@" + str(value2))        
+                    if type(value2) is list:
+                        values.append( "" + key2 + "@" + ",".join(str(x) for x in value2))
+                    else:    
+                        values.append( "" + key2 + "@" + str(value2))        
         else:    
             values.append( "" + key + "@" + str(value))
     return values 

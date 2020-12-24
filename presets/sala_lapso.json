@@ -12,10 +12,9 @@
                 "thickness": 0.15,
                 "uv_scale": 1.5,
                 "material":  {
-                    "sbs_name": "acoustic_foam_fonac",
-                    "category": "Plaster",
-                    "preset": "preset1",
-                    "displacement": 0.1
+                    "sbs_name": "concrete_raw_grey",
+                    "category": "Concrete",
+                    "preset": "preset1"
                 }
             },
             "ceiling": {

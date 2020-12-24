@@ -19,7 +19,7 @@ imp.reload(mu)
 imp.reload(uv)
 imp.reload(sbs)
 
-def make_room(room, mat_dict=None, with_uv=True):
+def make_room(room, mat_dict=None, with_uv=True, with_tiles=False):
     '''
     Makes room as objects parented to an empty
     the objects are defined in the class Room
@@ -41,10 +41,16 @@ def make_room(room, mat_dict=None, with_uv=True):
     pos=[[0,-w/2,-t],[0,w/2,-t],[-l/2,0,-t],[l/2,0,-t]]
     dpos = [[l/2-dp-dw/2,-w/2-t/2,0],[-l/2+dp+dw/2,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
     dim=[l+2*t,l+2*t,w,w]
+    tdim = 0.005
+    pos2=[[l/2,-w/2+tdim],[-l/2,w/2-tdim],[-l/2+tdim,-w/2],[l/2-tdim,w/2]]
+    dpos2 = [[l/2-dp,-w/2+tdim,l/2-dp-dw,-w/2+tdim],[-l/2+dp,w/2-tdim,-l/2+dp+dw,w/2-tdim],
+            [-l/2+tdim,-w/2+dp,-l/2+tdim,-w/2+dp+dw],[l/2-tdim,w/2-dp,l/2-tdim,w/2-dp-dw]]
+    dim2=[l,l,w,w]
+
     # For placing the hole an array giving None when there is no hole and the dimensions 
     # of the hole in  the dn wall
     hole=[None]*4
-    hole[dn] = [dp, t, dw, dh]
+    hole[dn] = [dp, t, dw, dh, dpos2[dn]]
     for n in range(4):
         if room.base is not None:
             basedim = [dim[n], room.base.height, room.base.thickness]
@@ -55,9 +61,14 @@ def make_room(room, mat_dict=None, with_uv=True):
                     uv.uv_board_with_hole(b.data,basedim,hole[dn],scale=room.wall.uv_scale,internal=False)
                 else:
                     uv.uv_board(b.data,basedim,scale=room.base.uv_scale)    
-            room_list.append(b)    
+            room_list.append(b)   
+            if with_tiles:
+                pos2[n].append(basedim[1]-t)
+                print(n)
+                tiles =  wall_tiles('tiles_' +str(n),[dim2[n],h-basedim[1]+t],[1,1],pos=pos2[n],rot=[radians(90),0,rots[n]],hole=hole[n],mats=None)
+                room_list.extend(tiles)       
         else:
-            w = bm.wall('wall_' + str(n),mat_dict[room.wall.material.name] ,pos=pos[n],rot=rots[n],dims=dims[n],hole=hole[n])
+            w = bm.wall('wall_' + str(n),mat_dict[room.wall.material.name] ,pos=pos[n],rot=rots[n],dims=[dim[n],h+t,t],hole=hole[n])
         if with_uv:
             if n==dn:
                 uv.uv_board_with_hole(w.data,[dim[n],h+t,t],hole[dn],scale=room.wall.uv_scale)
@@ -107,7 +118,6 @@ def mat_room(mats_path, preset_path, materials):
         #if mat_dict.has_key('displacement'):
         if hasattr(material, 'displacement'):
             use_technical = True
-            #displacement = mat_dict.displacement
             displacement = material.displacement
         else:
             use_technical=False
@@ -140,7 +150,7 @@ def mat_room(mats_path, preset_path, materials):
             print('rendering textures of ' + str(texture_path))
             sbs.sbsar_render(sbs_path,texture_path,mat_name,channels,parameters,use_technical)
         imagedict = mu.make_imagedict(texture_path)
-        mat_dict[mat_name] = mu.texture_full_material(mat_name,imagedict,mapping=mu.Mapping(coord='UV'),displacement)
+        mat_dict[mat_name] = mu.texture_full_material(mat_name,imagedict,mapping=mu.Mapping(coord='UV'),displacement=displacement)
     return mat_dict
 
 def simple_door(mat_door,dpos,rot,dims):
@@ -168,24 +178,38 @@ def frame_door(mat_door,mat_frame,dpos,rot,dims,framedim):
     door = bm.wall('door',mat_door,pos=dpos,rot=rot,dims=dims)
     return door, frame
 
-def wall_tiles(tile,dims,base,frame,door):
+def wall_tiles(name,dims,tile_size,pos,rot,hole=None,mats=None):
     '''
     Function to apply panels to the walls
     '''
     # cover walls with tiles using array. cut the tiles at the end of the wall
-    (l,w,h) = dims # length, width, height, thickness
-    #(dn, dp, dw, dh) = door # wall number, position, width, height
-    tile.location=[-l/2+0.5,-w/2,0.5+base[0]]
-    tile.rotation_euler=[radians(90),0,0]
-    panelx = tile.modifiers.new(name='tilex', type='ARRAY')
-    panelx.fit_type = 'FIT_LENGTH'
-    panelx.fit_length = l-1
-    panelx.relative_offset_displace = [1,0,0]
-    panely = tile.modifiers.new(name='tiley', type='ARRAY')
-    panely.fit_type = 'FIT_LENGTH'
-    panely.fit_length = h-1
-    panely.relative_offset_displace = [0,1,0]
-    return [tile]
+    print(dims)
+    print(hole)
+    (dx,dy) = tile_size
+    (Lx,Ly) = dims
+    if hole is not None:
+        (x,y,w,h,dpos) = hole
+        tile1 = bm.tile_fill(name+'1',dx,dy,x,Ly)
+        tile1.location=pos
+        tile1.rotation_euler=rot
+        tile2 = bm.tile_fill(name+'2',dx,dy,w,Ly-h+y)
+        tile2.location=[dpos[0],dpos[1],h]
+        tile2.rotation_euler=rot
+        tile3 = bm.tile_fill(name+'3',dx,dy,Lx-x-w,Ly)
+        tile3.location=[dpos[2],dpos[3],pos[2]]
+        tile3.rotation_euler=rot
+        if mats is not None:
+            tile1.data.materials.append(mats)
+            tile2.data.materials.append(mats)
+            tile3.data.materials.append(mats)
+        return [tile1,tile2,tile3]    
+    else:    
+        tile = bm.tile_fill(name,dx,dy,Lx,Ly)
+        if mats is not None:
+            tile.data.materials.append(mats)
+        tile.location=pos
+        tile.rotation_euler=rot
+        return [tile]
     
     
     
