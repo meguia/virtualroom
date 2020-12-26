@@ -1,6 +1,6 @@
 {
     "concrete_raw_grey": {
-        "$resolution": [
+        "$outputsize": [
             10,
             10
         ],
@@ -23,7 +23,7 @@
         "roughness_variations": 0.3
     },
     "acoustic_foam_fonac": {
-        "$resolution": [
+        "$outputsize": [
             10,
             10
         ],
@@ -50,7 +50,7 @@
         "roughness": 0.95
     },
     "parquet_european_ash_grey": {
-        "$resolution": [
+        "$outputsize": [
             10,
             10
         ],
@@ -83,7 +83,7 @@
         "y_amount": 24
     },
     "plaster_acoustic_ceiling": {
-        "$resolution": [
+        "$outputsize": [
             10,
             10
         ],
@@ -111,7 +111,7 @@
         "frame": 1
     },
     "wood_black_walnut_striped": {
-        "$resolution": [
+        "$outputsize": [
             10,
             10
         ],
@@ -146,7 +146,7 @@
         }
     },
     "wood_wenge": {
-        "$resolution": [
+        "$outputsize": [
             10,
             10
         ],

@@ -64,7 +64,7 @@ def sbsar_loadparam(sbs_path,resolution=[10,10],graph_idx=0):
     sbsarDoc.parseDoc()
     graphs = sbsarDoc.getSBSGraphList()
     inputs = graphs[graph_idx].getInputParameters()
-    param_dict = {'$resolution':resolution}
+    param_dict = {'$outputsize':resolution}
     for inp in inputs:
         par_id = inp.mIdentifier
         default = inp.getDefaultValue()
