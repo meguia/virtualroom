@@ -88,6 +88,7 @@ pie.rotation_euler = [0,0,radians(room.speaker.rotation)]
 bm.list_link([pie,parlante],col_obj)
 
 #LUCES
+#room_utils.tube_array(room,
 room_lighting_elements = []
 for element in room.lighting_elements:
     if type(element).__name__ == 'Spot': 

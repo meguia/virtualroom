@@ -29,8 +29,8 @@ def make_room(room, mat_dict=None, with_uv=True, with_tiles=False):
     (l,w,h,t) = [room.depth, room.width, room.height, room.wall_thickness] # length, width, height, thickness
     (dn, dp, dw, dh) = [room.door.wall_index, room.door.position, room.door.width, room.door.height] # wall number, position from border, width, height
     # Makes floor and ceiling
-    floor = bm.floor('floor', mat_dict[room.floor.material.name],pos=[0,0,-t],dims=[l,w,t])
-    ceil = bm.floor('tceil',mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
+    floor = bm.floor(type(room.floor).__name__, mat_dict[room.floor.material.name],pos=[0,0,-t],dims=[l,w,t])
+    ceil = bm.floor(type(room.ceiling).__name__,mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
     if with_uv:
         uv.uv_board(ceil.data, [l,w,t], front=1, scale = room.ceiling.uv_scale)
         uv.uv_board(floor.data, [l+2*t,w+2*t,t], front=2, scale = room.floor.uv_scale)
@@ -211,7 +211,30 @@ def wall_tiles(name,dims,tile_size,pos,rot,hole=None,mats=None):
         tile.rotation_euler=rot
         return [tile]
     
-    
+#def tube_array(room, ceiling):
+    '''
+    Function to create an array of LED tubes for lighting
+    receive room class and
+    ceiling
+    tube class with dimensions, intensity, and other geometrical data, 
+    lighting = room.lighting
+    lighting.array
+    lighting.array.x
+    lighting.array.y
+    lighting.array.orientation
+    tube = room.lighting.tube
+    tube.length
+    tube.diameter
+    tube.hole.length
+    tube.hole.depth
+    tube.hole.width
+    tube.color
+    tube.iesfile
+    tube.intensity
+    '''
+    # calcular cantidad de elementos del array
+#    if 
+    #arraymod(ob,count=2,off_relative=None,off_constant=None,obj2=None):    
     
 
 def inject_metadata(direxe,pathimg,w=4000,h=2000):
