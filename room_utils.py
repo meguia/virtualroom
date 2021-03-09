@@ -211,30 +211,78 @@ def wall_tiles(name,dims,tile_size,pos,rot,hole=None,mats=None):
         tile.rotation_euler=rot
         return [tile]
     
-#def tube_array(room, ceiling):
-    '''
-    Function to create an array of LED tubes for lighting
-    receive room class and
-    ceiling
-    tube class with dimensions, intensity, and other geometrical data, 
-    lighting = room.lighting
-    lighting.array
-    lighting.array.x
-    lighting.array.y
-    lighting.array.orientation
-    tube = room.lighting.tube
-    tube.length
-    tube.diameter
-    tube.hole.length
-    tube.hole.depth
-    tube.hole.width
-    tube.color
-    tube.iesfile
-    tube.intensity
-    '''
-    # calcular cantidad de elementos del array
-#    if 
-    #arraymod(ob,count=2,off_relative=None,off_constant=None,obj2=None):    
+#def ceiling_lighting(room, ceiling):
+#    '''
+#    Function to create an array of LED tubes or SPOTS for ceiling lighting
+#    receive room class and ceiling
+#    lighting = room.ceiling_lighting
+#    lighting.array: x , y
+#    lighting.mount:
+#    
+#    lighting.element
+#    
+#    type: tube OR spot
+#    element: 
+#    tube class with dimensions, intensity, and other geometrical data, 
+#    
+#    lighting.array
+#    lighting.array.nx
+#    lighting.array.ny
+#    lighting.array.orientation
+#    
+#    lighting.mount.type
+#    lighting.mount.size 
+#    
+#    lighting.type
+#    element = lighting.element
+#    element.diameter
+#    element.length
+#    element.hole.depth // hardcoded
+#    element.hole.width // hardcoded
+#    element.color
+#    element.iesfile
+#    element.intensity
+#    '''
+    # Primero la parte geometrica
+    
+    # nx , ny son la cantidad de elementos del array
+    # calcular el espaciamiento y la ubicacion del primero objeto mount (x0,y0,z0)
+    # para tener una iluminacion uniforme
+    # chequear si las dimensiones de mount entran en ese espaciamiento
+    
+    #crear el objeto mount 
+    # si es type tubo es cubo 
+    # si es type spot es cilindro
+    # con las dimensiones de mount.size
+    # bpy.data.object['mount']
+    
+    # llaman a una funcion de blender methods
+    # spacing puede estar fijo en 0.002 m
+    # bm.embed_array(ceiling,nx,ny,dx,dy,x0,y0,z0,mount,spacing)
+
+    # ahora creamos las luces en si
+    # if type es tube
+    # crear un objeto un tube con dimensiones
+    # element.diameter
+    # element.length
+    # invocar una funcion ad-hoc de blender methods que haga un tubo con caps y 
+    # dos materiales
+    # material1 emisor
+    # material2 gris metal con roughness
+    # bm.tube_with_caps(length, diameter, caps, material1, material2) 
+    # array de nx ny spacing dx dy y posicion original de tubo (x0,y0,z0)
+    # aplicar la intensidad y el color al material de emision
+    
+    # if type spot
+    # crear una funcion en blender methods que haga un array de point lights
+    # array de nx ny spacing dx dy y posicion original de point light (x0,y0,z0)
+    # spot_list = bm.point_light_array(nx,ny,dx,dy,x0,y0,z0)
+    # aplicar ies texture a todos los point lights
+    
+    # devuelve una lista de objetos para linkear
+    #[tube,mount]
+    #spot_list.append(mount)
+   
     
 
 def inject_metadata(direxe,pathimg,w=4000,h=2000):

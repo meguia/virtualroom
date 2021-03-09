@@ -88,12 +88,16 @@ pie.rotation_euler = [0,0,radians(room.speaker.rotation)]
 bm.list_link([pie,parlante],col_obj)
 
 #LUCES
-#room_utils.tube_array(room,
-room_lighting_elements = []
-for element in room.lighting_elements:
-    if type(element).__name__ == 'Spot': 
-        room_lighting_elements.append(bm.new_spot(**element.to_dict()))
-bm.list_link(room_lighting_elements,col_luces)
+#room_lighting_elements = ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__])
+
+### OLD
+#room_lighting_elements = []
+#for element in room.lighting_elements:
+#    if type(element).__name__ == 'Spot': 
+#        room_lighting_elements.append(bm.new_spot(**element.to_dict()))
+
+
+#bm.list_link(room_lighting_elements,col_luces)
 
 #CAMARA 360
 bm.set_cycles()
