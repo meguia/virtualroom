@@ -259,7 +259,9 @@ def wall_tiles(name,dims,tile_size,pos,rot,hole=None,mats=None):
     # llaman a una funcion de blender methods
     # spacing puede estar fijo en 0.002 m
     # bm.embed_array(ceiling,nx,ny,dx,dy,x0,y0,z0,mount,spacing)
-
+    bm.embed_array(ceiling,Nx,Ny,dx,dy,mount)
+    s1 = mount.modifiers.new(name,'SOLIDIFY')
+    
     # ahora creamos las luces en si
     # if type es tube
     # crear un objeto un tube con dimensiones
