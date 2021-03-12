@@ -31,5 +31,17 @@ imp.reload(models.Room)
 # BORRA LO ANTERIOR 
 cu.clear()
 cu.clear_act()
-cylinder = bm.cylinder('Tube', n=16, mats = None, r=1.0, h=1.0, hlist=[0.0,1.0, 2.0 ,3.0, 4.0], pos = [0,0,0], rot = [0,0,0])
+
+cylinder = bm.cylinder('Tube', 
+                      n=16, 
+                      mats = None, 
+                      #rlist=[0.50,0.90,5.20,0.90,0.50], 
+                      #rlist=[0.10,0.10,0.15,0.15,0.15,0.10,0.10], 
+                      #rlist=[0.05,0.05,0.10,0.10,0.10,0.05,0.05], 
+                      h=1.0, 
+                      #hlist=[0.0,0.1,0.11,0.88,0.89,0.9,1.00], 
+                      hlist=[0.0,0.1,0.11,1.08,1.09,1.10,1.20], 
+                      pos = [0,0,0], 
+                      rot = [radians(90),0,0]
+                      )
 bpy.context.scene.collection.objects.link( bpy.data.objects['Tube'] )
