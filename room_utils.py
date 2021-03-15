@@ -231,7 +231,7 @@ def wall_tiles(name,dims,tile_size,pos,rot,hole=None,mats=None):
 #    lighting.array.orientation
 #    
 #    lighting.mount.type
-#    lighting.mount.size 
+#    lighting.mount.size (x,y)
 #    
 #    lighting.type
 #    element = lighting.element
@@ -243,24 +243,43 @@ def wall_tiles(name,dims,tile_size,pos,rot,hole=None,mats=None):
 #    element.iesfile
 #    element.intensity
 #    '''
-    # Primero la parte geometrica
     
-    # nx , ny son la cantidad de elementos del array
+    # Nx , Ny son la cantidad de elementos del array
     # calcular el espaciamiento y la ubicacion del primero objeto mount (x0,y0,z0)
     # para tener una iluminacion uniforme
     # chequear si las dimensiones de mount entran en ese espaciamiento
     
+        
+    # Primero la parte geometrica depende del objeto
+    # x es depth, y es width
+    # ceiling esta centrado en 0,0,h, pero igual por las dudas tomamos las coordenadas
+    (Sx,Sy,Sz) = lighting.mount.size
+    factor = 0.3
+    overlay = 0.01
+    dx = (room.depth+(2*factor-1)*Sx)/(Nx+2*factor-1)
+    dy = (room.width+(2*factor-1)*Sy)/(Ny+2*factor-1)
+    dx0 = factor*dx+(0.5-factor)*Sx
+    dy0 = factor*dy+(0.5-factor)*Sy
+    x0 = ceiling.location.x - room.depth/2 + dx0
+    y0 = ceiling.location.y - room.width/2 + dy0
+    z0 = ceiling.location.z - overlay
+
     #crear el objeto mount 
     # si es type tubo es cubo 
     # si es type spot es cilindro
     # con las dimensiones de mount.size
     # bpy.data.object['mount']
+    if lighting.mount.type is 'tube':
+        # crea el plafon para el tubo como un cubo en base a las dimensiones que estan
+        # en lighting.mount.size
+        mount = bm.box('mount',dims=[Sx,Sy,Sz], pos=[x0,y0,z0])
     
+        
     # llaman a una funcion de blender methods
     # spacing puede estar fijo en 0.002 m
     # bm.embed_array(ceiling,nx,ny,dx,dy,x0,y0,z0,mount,spacing)
-    bm.embed_array(ceiling,Nx,Ny,dx,dy,mount)
-    s1 = mount.modifiers.new(name,'SOLIDIFY')
+    bm.embed_array(ceiling,Nx,Ny,dx,dy,mount,bottom=False)
+    s1 = mount.modifiers.new('S1','SOLIDIFY')
     
     # ahora creamos las luces en si
     # if type es tube
@@ -283,6 +302,7 @@ def wall_tiles(name,dims,tile_size,pos,rot,hole=None,mats=None):
     
     # devuelve una lista de objetos para linkear
     #[tube,mount]
+    #bm.light_array(ob,Nx,Ny,dx,dy):
     #spot_list.append(mount)
    
     
