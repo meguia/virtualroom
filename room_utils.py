@@ -254,6 +254,7 @@ def wall_tiles(name,dims,tile_size,pos,rot,hole=None,mats=None):
     # x es depth, y es width
     # ceiling esta centrado en 0,0,h, pero igual por las dudas tomamos las coordenadas
     (Sx,Sy,Sz) = lighting.mount.size
+    (Nx,Ny) = [lighting.array.x, lighting.array.x] 
     factor = 0.3
     overlay = 0.01
     dx = (room.depth+(2*factor-1)*Sx)/(Nx+2*factor-1)
@@ -263,16 +264,18 @@ def wall_tiles(name,dims,tile_size,pos,rot,hole=None,mats=None):
     x0 = ceiling.location.x - room.depth/2 + dx0
     y0 = ceiling.location.y - room.width/2 + dy0
     z0 = ceiling.location.z - overlay
-
+    # chequear que sea consistente
+    # dx>Sx
+    # dy>Sy
+    
     #crear el objeto mount 
-    # si es type tubo es cubo 
+    # si es type tubo es box
     # si es type spot es cilindro
     # con las dimensiones de mount.size
-    # bpy.data.object['mount']
     if lighting.mount.type is 'tube':
         # crea el plafon para el tubo como un cubo en base a las dimensiones que estan
         # en lighting.mount.size
-        mount = bm.box('mount',dims=[Sx,Sy,Sz], pos=[x0,y0,z0])
+        mount = bm.box('mount',dims=[Sx,Sy,Sz], pos=[x0,y0,z0],bottom=False)
     
         
     # llaman a una funcion de blender methods
@@ -290,7 +293,13 @@ def wall_tiles(name,dims,tile_size,pos,rot,hole=None,mats=None):
     # dos materiales
     # material1 emisor
     # material2 gris metal con roughness
-    # bm.tube_with_caps(length, diameter, caps, material1, material2) 
+    # crear material led
+    # crear material metal1
+    #r_list = [0.1,0.1,0.2,0.2,0.1,0.1]
+    #l_list = [0.1,0,1.6,0,0.1]
+    #tube = tube('tube', mats = [led,metal1], r=r_list, l=l_list, pos=[x0,y0,z0])
+    #paint_regions(tube,2,[[-2,-0.8,1],[0.8,2,1]])
+
     # array de nx ny spacing dx dy y posicion original de tubo (x0,y0,z0)
     # aplicar la intensidad y el color al material de emision
     
