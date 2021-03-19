@@ -8,7 +8,7 @@ from .validation.StringValidator import StringValidator
 
 class Spot:
     """
-    A class to represent a Blender camera.
+    A class to represent a Blender spot.
 
     Attributes
     ----------

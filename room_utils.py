@@ -211,7 +211,7 @@ def wall_tiles(name,dims,tile_size,pos,rot,hole=None,mats=None):
         tile.rotation_euler=rot
         return [tile]
     
-#def ceiling_lighting(room, ceiling):
+def ceiling_lighting(room, ceiling):
 #    '''
 #    Function to create an array of LED tubes or SPOTS for ceiling lighting
 #    receive room class and ceiling
