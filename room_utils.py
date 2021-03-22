@@ -12,7 +12,7 @@ import blender_methods as bm
 import material_utils as mu
 import uv_utils as uv
 import sbsar_utils as sbs
-from math import radians, pow
+from math import radians, pow, pi
 import importlib as imp
 imp.reload(bm)
 imp.reload(mu)
@@ -274,7 +274,7 @@ def ceiling_lighting(room, ceiling):
     # llaman a una funcion de blender methods
     # spacing puede estar fijo en 0.002 m
     # bm.embed_array(ceiling,nx,ny,dx,dy,x0,y0,z0,mount,spacing)
-    bm.embed_array(ceiling,Nx,Ny,dx,dy,mount,bottom=False)
+    bm.embed_array(ceiling,Nx,Ny,dx,dy,mount)
     s1 = mount.modifiers.new('S1','SOLIDIFY')
     
     # ahora creamos las luces en si
@@ -290,18 +290,19 @@ def ceiling_lighting(room, ceiling):
     # crear material metal1
     tube_strength = 100
     tube_color = [1,0.8,0.8,1]
-    
+
     led1 = mu.emission_material('Led1',tube_strength,tube_color)
     metal1 = mu.simple_material('Metal',[0.8, 0.8, 0.8,1], specular=0.9,roughness=0.3,metallic=1.0)
-    r_list = [0.1,0.1,0.2,0.2,0.1,0.1]
-    l_list = [0.1,0,1.6,0,0.1]
-    tube = bm.tube('tube', mats = [led1,metal1], r=r_list, l=l_list, pos=[x0,y0,z0])
-    bm.paint_regions(tube,2,[[-2,-0.8,1],[0.8,2,1]])
+    r_list = [0.02,0.02,0.03,0.03,0.02,0.02]
+    l_list = [0.05,0,1.3,0,0.05] # tubo de 1.4 m
+    zoffset = 0.7
+    tube = bm.tube('tube', mats = [led1,metal1], r=r_list, l=l_list, zoffset=zoffset, pos=[x0,y0,z0+Sz/2], rot=[0,pi/2,pi/2])
+    bm.paint_regions(tube,2,[[-1,-0.6,1],[0.6,1,1]])
 
     # array de nx ny spacing dx dy y posicion original de tubo (x0,y0,z0)
     # aplicar la intensidad y el color al material de emision
-    at1 = arraymod(ob,name='AT1',count=Ny,off_constant=dy)
-    at2 = arraymod(ob,name='AT2',count=Nx,off_constant=dx)
+    at1 = bm.arraymod(tube,name='AT1',count=Ny,off_constant=[0,dy,0])
+    at2 = bm.arraymod(tube,name='AT2',count=Nx,off_constant=[dx,0,0])
     # if type spot
     # crear una funcion en blender methods que haga un array de point lights
     # array de nx ny spacing dx dy y posicion original de point light (x0,y0,z0)
