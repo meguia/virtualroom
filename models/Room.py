@@ -9,6 +9,7 @@ from .Wall import Wall
 from .Ceiling import Ceiling
 from .Floor import Floor
 from .Material import Material
+from .Lighting import Lighting
 from .ElementWithMaterial import ElementWithMaterial
 from .validation.schema_validation_methods import validate_room_schema 
 from .validation.NumberValidator import NumberValidator
@@ -81,18 +82,19 @@ class Room:
                 self.base= Base(self.wall_thickness,elements[element]) 
 
         #self.spot = Spot(desc['spot'])
-        self.lighting_elements = []
-        for element in desc['lighting_elements']:
-            if element['type'] == 'spot':
-                spotInstance = Spot(element)
-                self.lighting_elements.append(spotInstance)
-                if element['create_symmetric']:
-                    self.lighting_elements.append(spotInstance.symmetric_copy())
+        #self.lighting_elements = []
+        #for element in desc['lighting_elements']:
+        #    if element['type'] == 'spot':
+        #        spotInstance = Spot(element)
+        #        self.lighting_elements.append(spotInstance)
+        #        if element['create_symmetric']:
+        #            self.lighting_elements.append(spotInstance.symmetric_copy())
 
 
         #self.materials = []
         #for material in desc['materials']:
         #    self.materials.append(Material(material))
+        self.lighting = Lighting(desc['lighting'])
 
         self.camera = Camera(desc['camera'])
 
@@ -127,10 +129,11 @@ class Room:
         wallString = self.wall.__str__()
         ceilingString = self.ceiling.__str__()
         floorString = self.floor.__str__()
-        lightingString = ""
-        for element in self.lighting_elements:
-            lightingString += f'{element.__str__()}'
-        materialsString = ""
+        lightingString = self.lighting.__str__()
+
+        #for element in self.lighting_elements:
+        #    lightingString += f'{element.__str__()}'
+        #materialsString = ""
         #for material in self.materials:
         #    materialsString += f'{material.__str__()}'
         cameraString = self.camera.__str__()
@@ -144,7 +147,7 @@ class Room:
                     f'{floorString}'
                     f'{lightingString}'
                     f'{cameraString}'
-                    f'{materialsString}'
+        #            f'{materialsString}'
                     )
         return(room_info)
 

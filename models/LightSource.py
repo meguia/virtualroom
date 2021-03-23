@@ -4,6 +4,10 @@ from .validation.StringValidator import StringValidator
 from .validation.NumberValidator import NumberValidator
 from .validation.OneOfValidator import OneOfValidator
 
+from .extra.RGBColor import RGBColor
+
+from .Mount import Mount
+
 class LightSource:
     """
     A class to represent a Light Source.
@@ -24,9 +28,8 @@ class LightSource:
         light length
     """
 
-    source = OneOfValidator('Tube', 'Spot') 
+    obj = OneOfValidator('tube', 'spot') 
     iesfile = StringValidator(additional_msg="Iesfile path")
-    color = NumberValidator(0,255)
     intensity = NumberValidator()
     diameter = NumberValidator()
 
@@ -40,31 +43,47 @@ class LightSource:
                 dictionary representing light source information
         """
         (
-        self.source,
+        self.obj,
         self.iesfile,
-        self.color,
         self.intensity,
-        self.diameter
-        ) = itemgetter('source',
+        #self.diameter
+        ) = itemgetter('object',
                        'iesfile',
-                       'color',
                        'intensity',
-                       'diameter',
+        #               'diameter',
                        )(desc)
+        self.mount = Mount(desc['mount'])
+        self.color = RGBColor(desc['color'])
+
+    def color_as_rgba_array(self):
+        """
+        Returns color as array containing r,g,b,alpha values 
+        """
+        return [
+                self.color.r,
+                self.color.g,
+                self.color.b,
+                self.color.alpha,
+               ]
 
     def __str__(self):
         """
         Returns string with LightSource object info.
         """
-        return('Material:\n'
-               '\tName:          {self.source}\n'
-               '\tIes file:      {self.iesfile}\n'
-               '\tColor:         {:6.2f}\n'
-               '\tIntensity:     {:6.2f}\n'
-               '\tDiamater:      {:6.2f}\n'
+        mount_string = self.mount.__str__()
+        color_string = self.color.__str__()
+        return(
+               f'{ mount_string }'
+               '\tObject:\n'
+               '\tName:          {0}\n'
+               '\tIes file:      {1}\n'
+               '\tIntensity:     {2:6.2f}\n'
+               f'{ color_string }'
+        #       '\tDiamater:      {:6.2f}\n'
                .format(
-                      self.color,
+                      self.obj,
+                      self.iesfile,
                       self.intensity,
-                      self.diameter,
+        #              self.diameter,
                       )
                )

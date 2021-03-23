@@ -10,13 +10,15 @@ class Lighting:
 
     Attributes
     ----------
-    arrangement: array o tuple?
-        x, y represents room lighting arrangement
-    mount: object
-    whole: tuple
-       width, depth 
+    array_x: int
+        lighting x array size
+    array_y: int
+        lighting y array size
         
     """
+    array_x = NumberValidator()
+    array_y = NumberValidator()
+
     def __init__(self, desc = {}):
         """
         Constructs all the necessary attributes for the Lighting object.
@@ -26,20 +28,29 @@ class Lighting:
             desc: dict
                 dictionary representing light source information
         """
-        self.whole = itemgetter.('x', 'y')(desc['whole'])
-        self.arrangement = itemgetter.('x', 'y')(desc['arrangement'])
-        self.light_source = LightSource(desc['light source'])
+        (
+        self.array_x, 
+        self.array_y, 
+        ) = itemgetter(
+                     'x',
+                     'y',
+                     )(desc['arrangement'])
+        self.light_source = LightSource(desc['light_source'])
     '''
         {
-            "light source": {
-                "whole" : {"x": valx, "y": valy},
+            "lighting": {
                 "arrangement" : {"x": valx, "y": valy},
-                "light source": {
-                    "source" : "Tube",
+                "light_source": {
+                    "object" : "Tube",
                     "iesfile": "file/path",
-                    "color" : 255,
                     "intensity" : 400,
-                    "diameter": 0.01,
+                    "mount": {
+                        "size": {
+                        "x": 10.0,
+                        "y": 10.0,
+                        "z": 10.0,
+                        }
+                    }
                 }
             }
         }
@@ -54,13 +65,12 @@ class Lighting:
 
         return(
               'Lighting:\n'
-              '\tWhole x, y: {6.2f} {6.2f}\n' 
-              '\tArrangement x, y: {6.2f} {6.2f}\n' 
+              'Arrangement:\n'
+              '\tX:  {0:6.2f}\n'
+              '\tY:  {1:6.2f}\n' 
               f'{ light_source_string }\n'
               .format(
-                     self.whole[0],
-                     self.whole[1],
-                     self.arrangement[0],
-                     self.arrangement[1],
+                     self.array_x,
+                     self.array_y,
                      )
               )

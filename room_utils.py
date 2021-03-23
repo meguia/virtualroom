@@ -240,11 +240,14 @@ def ceiling_lighting(room, ceiling):
     # x es depth, y es width
     # ceiling esta centrado en 0,0,h, pero igual por las dudas tomamos las coordenadas
     # ojo puede depender de la orientacion
-    mount_size = [0.1, 1.5, 0.1]
-    lighting_array_x = 5
-    lighting_array_y = 2
+    #room.lighting.mount.sizeX
+    #mount_size = [0.1, 1.5, 0.1]
+    mount_size = room.lighting.light_source.mount.as_xyz_array()
+    #lighting_array_x = 5
+    #lighting_array_y = 2
     (Sx,Sy,Sz) = mount_size
-    (Nx,Ny) = [lighting_array_x, lighting_array_y] 
+    #(Nx,Ny) = [lighting_array_x, lighting_array_y] 
+    (Nx,Ny) = [room.lighting.array_x, room.lighting.array_y] 
     factor = 0.3
     overlay = 0.01
     dx = (room.depth+(2*factor-1)*Sx)/(Nx+2*factor-1)
@@ -254,7 +257,7 @@ def ceiling_lighting(room, ceiling):
     x0 = ceiling.location.x - room.depth/2 + dx0
     y0 = ceiling.location.y - room.width/2 + dy0
     z0 = ceiling.location.z - overlay
-        # chequear que sea consistente
+    # chequear que sea consistente
     # dx>Sx
     # dy>Sy
     
@@ -262,15 +265,16 @@ def ceiling_lighting(room, ceiling):
     # si es type tubo es box
     # si es type spot es cilindro
     # con las dimensiones de mount.size
-    mount_type = 'tube'
-    if mount_type is 'tube':
+    #mount_type = room.lighting.light_source.obj #'tube' or 'spot'
+    mount_type = room.lighting.light_source.obj #'tube'
+    if mount_type == 'tube':
         # crea el plafon para el tubo como un cubo en base a las dimensiones que estan
         # en lighting.mount.size
         mount = bm.box('mount',dims=[Sx,Sy,Sz], pos=[x0,y0,z0],bottom=False)
-    elif mount_type is 'spot':
+    elif mount_type == 'spot':
         mount = bm.tube('mount',dims=[Sx,Sy,Sz], pos=[x0,y0,z0],bottom=False)
     else:
-        pass    
+        pass
     # llaman a una funcion de blender methods
     # spacing puede estar fijo en 0.002 m
     # bm.embed_array(ceiling,nx,ny,dx,dy,x0,y0,z0,mount,spacing)
@@ -288,8 +292,11 @@ def ceiling_lighting(room, ceiling):
     # material2 gris metal con roughness
     # crear material led
     # crear material metal1
-    tube_strength = 1000
-    tube_color = [1,0.8,0.8,1]
+    #tube_strength = 1000
+    tube_strength = room.lighting.light_source.intensity
+    
+    #tube_color = #[1,0.8,0.8,1]
+    tube_color = room.lighting.light_source.color_as_rgba_array()
 
     led1 = mu.emission_material('Led1',tube_strength,tube_color)
     metal1 = mu.simple_material('Metal',[0.8, 0.8, 0.8,1], specular=0.9,roughness=0.3,metallic=1.0)
