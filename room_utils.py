@@ -254,7 +254,7 @@ def ceiling_lighting(room, ceiling):
     x0 = ceiling.location.x - room.depth/2 + dx0
     y0 = ceiling.location.y - room.width/2 + dy0
     z0 = ceiling.location.z - overlay
-    # chequear que sea consistente
+        # chequear que sea consistente
     # dx>Sx
     # dy>Sy
     
@@ -288,7 +288,7 @@ def ceiling_lighting(room, ceiling):
     # material2 gris metal con roughness
     # crear material led
     # crear material metal1
-    tube_strength = 100
+    tube_strength = 1000
     tube_color = [1,0.8,0.8,1]
 
     led1 = mu.emission_material('Led1',tube_strength,tube_color)
@@ -301,9 +301,9 @@ def ceiling_lighting(room, ceiling):
 
     # array de nx ny spacing dx dy y posicion original de tubo (x0,y0,z0)
     # aplicar la intensidad y el color al material de emision
-    at1 = bm.arraymod(tube,name='AT1',count=Ny,off_constant=[0,dy,0])
-    at2 = bm.arraymod(tube,name='AT2',count=Nx,off_constant=[dx,0,0])
-    # if type spot
+    at1 = bm.arraymod(tube,name='AT1',count=Ny,off_constant=[0,0,dy])
+    at2 = bm.arraymod(tube,name='AT2',count=Nx,off_constant=[0,-dx,0])
+        # if type spot
     # crear una funcion en blender methods que haga un array de point lights
     # array de nx ny spacing dx dy y posicion original de point light (x0,y0,z0)
     # spot_list = bm.point_light_array(nx,ny,dx,dy,x0,y0,z0)
