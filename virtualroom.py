@@ -90,6 +90,13 @@ bm.list_link([pie,parlante],col_obj)
 #LUCES
 room_lighting_elements = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__])
 bm.list_link(room_lighting_elements,col_luces)
+# mejorar ESTo!! leel la lista con los elementos
+tube = room_lighting_elements[0]
+bpy.context.view_layer.update()
+print(tube.matrix_world)
+bm.apply_transforms(tube)
+print(tube.matrix_world)
+
 
 #CAMARA 360
 bm.set_cycles()

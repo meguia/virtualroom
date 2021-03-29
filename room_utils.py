@@ -212,17 +212,18 @@ def wall_tiles(name,dims,tile_size,pos,rot,hole=None,mats=None):
         return [tile]
     
 def ceiling_lighting(room, ceiling):
-    #    '''
-    #    Function to create an array of LED tubes or SPOTS for ceiling lighting
-    #    receive room class and ceiling
-    #    lighting = room.lighting
-    #    lighting.array: x , y
-    #    lighting.... definiria a que lighting source tengo que incluir
-    #    
-    #    lightSource clase general con   
-    #    mount > dimensions . material
-    #    color
-    #    intensity
+    '''
+    Function to create an array of LED tubes or SPOTS for ceiling lighting
+    receive room class and object ceiling
+    lighting = room.lighting
+    lighting.array: x , y
+    lighting.... definiria a que lighting source tengo que incluir
+    
+    lightSource clase general con   
+    mount > dimensions . material
+    color
+    intensity
+    '''
     #    
     #    Tube
     #    dimensions ( para el spot no es relevante)
@@ -241,15 +242,13 @@ def ceiling_lighting(room, ceiling):
     # ceiling esta centrado en 0,0,h, pero igual por las dudas tomamos las coordenadas
     # ojo puede depender de la orientacion
     #room.lighting.mount.sizeX
-    #mount_size = [0.1, 1.5, 0.1]
+    #mount_size = [0.12, 1.5, 0.12]
+    
     mount_size = room.lighting.light_source.mount.as_xyz_array()
-    #lighting_array_x = 5
-    #lighting_array_y = 2
     (Sx,Sy,Sz) = mount_size
-    #(Nx,Ny) = [lighting_array_x, lighting_array_y] 
     (Nx,Ny) = [room.lighting.array_x, room.lighting.array_y] 
     factor = 0.3
-    overlay = 0.01
+    overlay = 0.0
     dx = (room.depth+(2*factor-1)*Sx)/(Nx+2*factor-1)
     dy = (room.width+(2*factor-1)*Sy)/(Ny+2*factor-1)
     dx0 = factor*dx+(0.5-factor)*Sx
@@ -264,6 +263,9 @@ def ceiling_lighting(room, ceiling):
     #crear el objeto mount 
     # si es type tubo es box
     # si es type spot es cilindro
+    
+    # CREAR EL material para MOUNT
+    
     # con las dimensiones de mount.size
     #mount_type = room.lighting.light_source.obj #'tube' or 'spot'
     mount_type = room.lighting.light_source.obj #'tube'
@@ -275,51 +277,38 @@ def ceiling_lighting(room, ceiling):
         mount = bm.tube('mount',dims=[Sx,Sy,Sz], pos=[x0,y0,z0],bottom=False)
     else:
         pass
-    # llaman a una funcion de blender methods
-    # spacing puede estar fijo en 0.002 m
-    # bm.embed_array(ceiling,nx,ny,dx,dy,x0,y0,z0,mount,spacing)
     bm.embed_array(ceiling,Nx,Ny,dx,dy,mount)
     s1 = mount.modifiers.new('S1','SOLIDIFY')
     
-    # ahora creamos las luces en si
-    # if type es tube
-    # crear un objeto un tube con dimensiones
-    # element.diameter
-    # element.length
-    # invocar una funcion ad-hoc de blender methods que haga un tubo con caps y 
-    # dos materiales
-    # material1 emisor
-    # material2 gris metal con roughness
-    # crear material led
-    # crear material metal1
-    #tube_strength = 1000
+    # Crea TUBO
     tube_strength = room.lighting.light_source.intensity
-    
-    #tube_color = #[1,0.8,0.8,1]
     tube_color = room.lighting.light_source.color_as_rgba_array()
-
+    # crea material
     led1 = mu.emission_material('Led1',tube_strength,tube_color)
     metal1 = mu.simple_material('Metal',[0.8, 0.8, 0.8,1], specular=0.9,roughness=0.3,metallic=1.0)
-    r_list = [0.02,0.02,0.03,0.03,0.02,0.02]
-    l_list = [0.05,0,1.3,0,0.05] # tubo de 1.4 m
-    zoffset = 0.7
+    # dimensiones del tubo
+    tube_gap = 0.03
+    tube_radius = 0.03
+    tube_length = (Sy-2.0*tube_gap)
+    cap_length = 0.05
+    cap_radius = 0.02
+    r_list = [cap_radius,cap_radius,tube_radius,tube_radius,cap_radius,cap_radius]
+    l_list = [cap_length,0,tube_length,0,cap_length] # tubo de 1.4 m
+    zoffset = (tube_length+cap_length)/2.0
     tube = bm.tube('tube', mats = [led1,metal1], r=r_list, l=l_list, zoffset=zoffset, pos=[x0,y0,z0+Sz/2], rot=[0,pi/2,pi/2])
-    bm.paint_regions(tube,2,[[-1,-0.6,1],[0.6,1,1]])
-
-    # array de nx ny spacing dx dy y posicion original de tubo (x0,y0,z0)
-    # aplicar la intensidad y el color al material de emision
-    at1 = bm.arraymod(tube,name='AT1',count=Ny,off_constant=[0,0,dy])
-    at2 = bm.arraymod(tube,name='AT2',count=Nx,off_constant=[0,-dx,0])
-        # if type spot
+    # Aplicar la rotacion, escribir una funcion en blender methods que aplique SOLO rotacion
+    bm.paint_regions(tube,2,[[-tube_length/2,-tube_length/2+cap_length,1],[tube_length/2-cap_length,tube_length/2,1]])
+    at1 = bm.arraymod(tube,name='AT1',count=Ny,off_constant=[0,dy,0])
+    at2 = bm.arraymod(tube,name='AT2',count=Nx,off_constant=[dx,0,0])
+    # if type spot
     # crear una funcion en blender methods que haga un array de point lights
     # array de nx ny spacing dx dy y posicion original de point light (x0,y0,z0)
     # spot_list = bm.point_light_array(nx,ny,dx,dy,x0,y0,z0)
     # aplicar ies texture a todos los point lights
-    
-    # devuelve una lista de objetos para linkear
+    #bm.light_array(ob,Nx,Ny,dx,dy)
     return [tube,mount]
-    #bm.light_array(ob,Nx,Ny,dx,dy):
-    #spot_list.append(mount)
+
+
    
     
 
