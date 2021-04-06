@@ -270,12 +270,12 @@ def ceiling_lighting(room, ceiling):
     # dimensiones del tubo
     tube_gap = 0.03
     tube_radius = 0.03
-    tube_length = (Sy-2.0*tube_gap)
     cap_length = 0.05
+    tube_length = (Sy-2.0*tube_gap-2.0*cap_length)
     cap_radius = 0.02
     r_list = [cap_radius,cap_radius,tube_radius,tube_radius,cap_radius,cap_radius]
     l_list = [cap_length,0,tube_length,0,cap_length] # tubo de 1.4 m
-    zoffset = (tube_length+cap_length)/2.0
+    zoffset = (tube_length+cap_length+tube_gap)/2.0
     light_source = bm.tube('tube', mats = [led1,metal1], r=r_list, l=l_list, zoffset=zoffset, axis=1)
     bm.paint_regions(light_source,1,[[-tube_length/2,-tube_length/2+cap_length,1],[tube_length/2-cap_length,tube_length/2,1]])
     at1 = bm.arraymod(light_source,name='AT1',count=Ny,off_constant=[0,dy,0])
