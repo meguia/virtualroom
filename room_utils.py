@@ -224,26 +224,7 @@ def ceiling_lighting(room, ceiling):
     color
     intensity
     '''
-    #    
-    #    Tube
-    #    dimensions ( para el spot no es relevante)
-    #    materials list para el caso de tubv
-    #    material led es un material solo con shder de emision
-    #    de aca se puede derivar spot tube, etc
-        
-    # Nx , Ny son la cantidad de elementos del array
-    # calcular el espaciamiento y la ubicacion del primero objeto mount (x0,y0,z0)
-    # para tener una iluminacion uniforme
-    # chequear si las dimensiones de mount entran en ese espaciamiento
-        
-            
-    # Primero la parte geometrica depende del objeto
-    # x es depth, y es width
-    # ceiling esta centrado en 0,0,h, pero igual por las dudas tomamos las coordenadas
-    # ojo puede depender de la orientacion
-    #room.lighting.mount.sizeX
-    #mount_size = [0.12, 1.5, 0.12]
-    
+       
     mount_size = room.lighting.light_source.mount.as_xyz_array()
     (Sx,Sy,Sz) = mount_size
     (Nx,Ny) = [room.lighting.array_x, room.lighting.array_y] 
@@ -295,18 +276,21 @@ def ceiling_lighting(room, ceiling):
     r_list = [cap_radius,cap_radius,tube_radius,tube_radius,cap_radius,cap_radius]
     l_list = [cap_length,0,tube_length,0,cap_length] # tubo de 1.4 m
     zoffset = (tube_length+cap_length)/2.0
-    tube = bm.tube('tube', mats = [led1,metal1], r=r_list, l=l_list, zoffset=zoffset, pos=[x0,y0,z0+Sz/2], rot=[0,pi/2,pi/2])
-    # Aplicar la rotacion, escribir una funcion en blender methods que aplique SOLO rotacion
-    bm.paint_regions(tube,2,[[-tube_length/2,-tube_length/2+cap_length,1],[tube_length/2-cap_length,tube_length/2,1]])
-    at1 = bm.arraymod(tube,name='AT1',count=Ny,off_constant=[0,dy,0])
-    at2 = bm.arraymod(tube,name='AT2',count=Nx,off_constant=[dx,0,0])
+    light_source = bm.tube('tube', mats = [led1,metal1], r=r_list, l=l_list, zoffset=zoffset, axis=1)
+    bm.paint_regions(light_source,1,[[-tube_length/2,-tube_length/2+cap_length,1],[tube_length/2-cap_length,tube_length/2,1]])
+    at1 = bm.arraymod(light_source,name='AT1',count=Ny,off_constant=[0,dy,0])
+    at2 = bm.arraymod(light_source,name='AT2',count=Nx,off_constant=[dx,0,0])
+    
     # if type spot
     # crear una funcion en blender methods que haga un array de point lights
     # array de nx ny spacing dx dy y posicion original de point light (x0,y0,z0)
     # spot_list = bm.point_light_array(nx,ny,dx,dy,x0,y0,z0)
     # aplicar ies texture a todos los point lights
     #bm.light_array(ob,Nx,Ny,dx,dy)
-    return [tube,mount]
+    #general
+    light_source.parent = mount
+    
+    return light_source,mount
 
 
    

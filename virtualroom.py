@@ -88,14 +88,11 @@ pie.rotation_euler = [0,0,radians(room.speaker.rotation)]
 bm.list_link([pie,parlante],col_obj)
 
 #LUCES
-room_lighting_elements = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__])
-bm.list_link(room_lighting_elements,col_luces)
-# mejorar ESTo!! leel la lista con los elementos
-tube = room_lighting_elements[0]
-bpy.context.view_layer.update()
-print(tube.matrix_world)
-bm.apply_transforms(tube)
-print(tube.matrix_world)
+light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__])
+bm.list_link([light_source, mount],col_sala)
+#bpy.context.view_layer.update()
+#bm.apply_transforms(light_source)
+
 
 
 #CAMARA 360
