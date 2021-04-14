@@ -225,8 +225,9 @@ def ceiling_lighting(room, ceiling):
     intensity
     '''
        
-    mount_size = room.lighting.light_source.mount.as_xyz_array()
-    (Sx,Sy,Sz) = mount_size
+    #mount_size = room.lighting.light_source.mount.as_xyz_array()
+    #(Sx,Sy,Sz) = mount_size
+    (Sx,Sy,Sz)= [0.1,0.1,0.13]
     (Nx,Ny) = [room.lighting.array_x, room.lighting.array_y] 
     factor = 0.3
     overlay = 0.0
@@ -248,38 +249,53 @@ def ceiling_lighting(room, ceiling):
     # CREAR EL material para MOUNT
     
     # con las dimensiones de mount.size
-    #mount_type = room.lighting.light_source.obj #'tube' or 'spot'
-    mount_type = room.lighting.light_source.obj #'tube'
+    #mount_type = room.lighting.light_source.obj #'tube'
+    mount_type = 'spot'
     if mount_type == 'tube':
         # crea el plafon para el tubo como un cubo en base a las dimensiones que estan
         # en lighting.mount.size
         mount = bm.box('mount',dims=[Sx,Sy,Sz], pos=[x0,y0,z0],bottom=False)
     elif mount_type == 'spot':
-        mount = bm.tube('mount',dims=[Sx,Sy,Sz], pos=[x0,y0,z0],bottom=False)
+        mount = bm.tube('mount', r=Sx, l=Sz, pos=[x0,y0,z0], bot=False)
     else:
         pass
+    
     bm.embed_array(ceiling,Nx,Ny,dx,dy,mount)
     s1 = mount.modifiers.new('S1','SOLIDIFY')
+
     
-    # Crea TUBO
-    tube_strength = room.lighting.light_source.intensity
-    tube_color = room.lighting.light_source.color_as_rgba_array()
-    # crea material
-    led1 = mu.emission_material('Led1',tube_strength,tube_color)
-    metal1 = mu.simple_material('Metal',[0.8, 0.8, 0.8,1], specular=0.9,roughness=0.3,metallic=1.0)
-    # dimensiones del tubo
-    tube_gap = 0.03
-    tube_radius = 0.03
-    cap_length = 0.05
-    tube_length = (Sy-2.0*tube_gap-2.0*cap_length)
-    cap_radius = 0.02
-    r_list = [cap_radius,cap_radius,tube_radius,tube_radius,cap_radius,cap_radius]
-    l_list = [cap_length,0,tube_length,0,cap_length] # tubo de 1.4 m
-    zoffset = (tube_length+cap_length+tube_gap)/2.0
-    light_source = bm.tube('tube', mats = [led1,metal1], r=r_list, l=l_list, zoffset=zoffset, axis=1)
-    bm.paint_regions(light_source,1,[[-tube_length/2,-tube_length/2+cap_length,1],[tube_length/2-cap_length,tube_length/2,1]])
-    at1 = bm.arraymod(light_source,name='AT1',count=Ny,off_constant=[0,dy,0])
-    at2 = bm.arraymod(light_source,name='AT2',count=Nx,off_constant=[dx,0,0])
+    if mount_type == 'tube':
+        # Crea TUBO
+        tube_strength = room.lighting.light_source.intensity
+        tube_color = room.lighting.light_source.color_as_rgba_array()
+        # crea material
+        led1 = mu.emission_material('Led1',tube_strength,tube_color)
+        metal1 = mu.simple_material('Metal',[0.8, 0.8, 0.8,1], specular=0.9,roughness=0.3,metallic=1.0)
+        # dimensiones del tubo
+        tube_gap = 0.03
+        tube_radius = 0.03
+        cap_length = 0.05
+        tube_length = (Sy-2.0*tube_gap-2.0*cap_length)
+        cap_radius = 0.02
+        r_list = [cap_radius,cap_radius,tube_radius,tube_radius,cap_radius,cap_radius]
+        l_list = [cap_length,0,tube_length,0,cap_length] # tubo de 1.4 m
+        zoffset = (tube_length+cap_length+tube_gap)/2.0
+        light_source = bm.tube('tube', mats = [led1,metal1], r=r_list, l=l_list, zoffset=zoffset, axis=1)
+        bm.paint_regions(light_source,1,[[-tube_length/2,-tube_length/2+cap_length,1],[tube_length/2-cap_length,tube_length/2,1]])
+        at1 = bm.arraymod(light_source,name='AT1',count=Ny,off_constant=[0,dy,0])
+        at2 = bm.arraymod(light_source,name='AT2',count=Nx,off_constant=[dx,0,0])
+    elif mount_type == 'spot':
+        # Crea SPOT
+        spot_strength = room.lighting.light_source.intensity
+        spot_color = room.lighting.light_source.color_as_rgba_array()
+        spot_color = spot_color[:3]
+        # creamos el spot aplicando IES
+        spot = bm.new_spot(name='spot',size=radians(90),blend=0.9,color=spot_color,energy=spot_strength,spot_size=0.1)
+        # creamos copias del spor en un array
+        light_source = bm.light_grid(spot,Nx-1,Ny-1,dx,dy)
+    else:
+        pass
+    
     
     # if type spot
     # crear una funcion en blender methods que haga un array de point lights
