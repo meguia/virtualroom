@@ -2,7 +2,7 @@ from operator import itemgetter
 
 from ..validation.NumberValidator import NumberValidator
 
-class RGBColor:
+class Color:
     """
     A class to represent a Color.
 
@@ -36,12 +36,14 @@ class RGBColor:
         self.r,
         self.g,
         self.b,
-        self.alpha,
         ) = itemgetter('r',
                        'g',
                        'b',
-                       'alpha',
                        )(desc)
+        if 'alpha' in desc:
+            self.alpha = itemgetter('alpha')(desc)
+        else: 
+            self.alpha = 0
 
     def __str__(self):
         """

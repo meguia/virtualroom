@@ -206,3 +206,112 @@ def validate_camera_schema(desc = {}):
                     'Expected keys: \'x\', \'y\', \'z\''
                     )
         raise KeyError(error_msg)
+
+def validate_tube_schema(desc = {}):
+    """
+    Raises an exception if the tube schema used for input is badly formatted 
+    """
+    expected_keys = [
+                    'object', 
+                    'color',
+                    'intensity', 
+                    'mount', 
+                    ]
+    keys_status = [key in desc for key in expected_keys]
+    has_keys = reduce((lambda x, y: x and y), keys_status)
+    if not has_keys:
+        error_msg = (
+                    'Wrong schema for tube dictionary keys. '
+                    'Expected keys: '
+                    '\'object\', '
+                    '\'color\', '
+                    '\'intensity\', '
+                    '\'mount\''
+                    )
+        raise KeyError(error_msg) 
+
+    color_desc = desc['color']
+    expected_keys = ['r', 'g', 'b', 'alpha']
+    keys_status = [key in color_desc for key in expected_keys]
+    has_keys = reduce((lambda x, y: x and y), keys_status)
+    if not has_keys:
+        error_msg = (
+                    'Wrong schema for tube color dictionary keys. '
+                    'Expected keys: \'r\', \'g\', \'b\', \'alpha\''
+                    )
+        raise KeyError(error_msg)
+
+    if 'size' not in desc['mount']:
+        error_msg = (
+                    'Wrong schema for tube mount dictionary keys. '
+                    'Expected keys: \'size\''
+                    )
+        raise KeyError(error_msg)
+
+    mount_size_desc = desc['mount']['size']
+    print(mount_size_desc)
+    expected_keys = ['x', 'y', 'z']
+    keys_status = [key in mount_size_desc for key in expected_keys]
+    has_keys = reduce((lambda x, y: x and y), keys_status)
+    if not has_keys:
+        error_msg = (
+                    'Wrong schema for tube mount size dictionary keys. '
+                    'Expected keys: \'x\', \'y\', \'z\''
+                    )
+        raise KeyError(error_msg)
+
+
+def validate_simple_spot_schema(desc = {}):
+    """
+    Raises an exception if the frame schema used for input is badly formatted 
+    """
+    expected_keys = [
+                    'object', 
+                    'color',
+                    'intensity', 
+                    'mount', 
+                    'iesfile',
+                    ]
+    keys_status = [key in desc for key in expected_keys]
+    has_keys = reduce((lambda x, y: x and y), keys_status)
+    if not has_keys:
+        error_msg = (
+                    'Wrong schema for tube dictionary keys. '
+                    'Expected keys: '
+                    '\'object\', '
+                    '\'color\', '
+                    '\'intensity\', '
+                    '\'mount\''
+                    '\'iesfile\''
+                    )
+        raise KeyError(error_msg) 
+
+    color_desc = desc['color']
+    expected_keys = ['r', 'g', 'b']
+    keys_status = [key in color_desc for key in expected_keys]
+    has_keys = reduce((lambda x, y: x and y), keys_status)
+    if not has_keys:
+        error_msg = (
+                    'Wrong schema for spot color dictionary keys. '
+                    'Expected keys: \'r\', \'g\', \'b\''
+                    )
+        raise KeyError(error_msg)
+
+    if 'size' not in desc['mount']:
+        error_msg = (
+                    'Wrong schema for tube mount dictionary keys. '
+                    'Expected keys: \'size\''
+                    )
+        raise KeyError(error_msg)
+
+    mount_size_desc = desc['mount']['size']
+    print(mount_size_desc)
+    expected_keys = ['x', 'z']
+    keys_status = [key in mount_size_desc for key in expected_keys]
+    has_keys = reduce((lambda x, y: x and y), keys_status)
+    if not has_keys:
+        error_msg = (
+                    'Wrong schema for spot mount size dictionary keys. '
+                    'Expected keys: \'x\', \'z\''
+                    )
+        raise KeyError(error_msg)

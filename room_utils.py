@@ -225,9 +225,9 @@ def ceiling_lighting(room, ceiling):
     intensity
     '''
        
-    #mount_size = room.lighting.light_source.mount.as_xyz_array()
-    #(Sx,Sy,Sz) = mount_size
-    (Sx,Sy,Sz)= [0.1,0.1,0.13]
+    mount_size = room.lighting.light_source.mount.as_xyz_array()
+    (Sx,Sy,Sz) = mount_size
+    #(Sx,Sy,Sz)= [0.1,0.1,0.13]
     (Nx,Ny) = [room.lighting.array_x, room.lighting.array_y] 
     factor = 0.3
     overlay = 0.0
@@ -249,8 +249,7 @@ def ceiling_lighting(room, ceiling):
     # CREAR EL material para MOUNT
     
     # con las dimensiones de mount.size
-    #mount_type = room.lighting.light_source.obj #'tube'
-    mount_type = 'spot'
+    mount_type = room.lighting.light_source.object #'tube'
     if mount_type == 'tube':
         # crea el plafon para el tubo como un cubo en base a las dimensiones que estan
         # en lighting.mount.size
@@ -287,11 +286,10 @@ def ceiling_lighting(room, ceiling):
     elif mount_type == 'spot':
         # Crea SPOT
         spot_strength = room.lighting.light_source.intensity
-        spot_color = room.lighting.light_source.color_as_rgba_array()
-        spot_color = spot_color[:3]
+        spot_color = room.lighting.light_source.color_as_rgb_array()
         # creamos el spot aplicando IES
         spot = bm.new_spot(name='spot',size=radians(90),blend=0.9,color=spot_color,energy=spot_strength,spot_size=0.1)
-        # creamos copias del spor en un array
+        # creamos copias del spot en un array
         light_source = bm.light_grid(spot,Nx-1,Ny-1,dx,dy)
     else:
         pass

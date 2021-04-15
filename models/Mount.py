@@ -31,13 +31,17 @@ class Mount:
         """
         (
         self.sizeX,
-        self.sizeY,
         self.sizeZ,
         ) = itemgetter(
                        'x',
-                       'y',
                        'z',
                        )(desc['size'])
+
+        print(desc['size'])
+        if 'y' in desc['size']:
+            self.sizeY = itemgetter('y')(desc['size'])
+        else:
+            self.sizeY = 0
 
     def as_xyz_array(self):
         """

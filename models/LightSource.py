@@ -4,7 +4,10 @@ from .validation.StringValidator import StringValidator
 from .validation.NumberValidator import NumberValidator
 from .validation.OneOfValidator import OneOfValidator
 
-from .extra.RGBColor import RGBColor
+from .validation.schema_validation_methods import validate_tube_schema
+from .validation.schema_validation_methods import validate_simple_spot_schema
+
+from .extra.Color import Color
 
 from .Mount import Mount
 
@@ -26,9 +29,10 @@ class LightSource:
         light diameter 
     length: float
         light length
+    blend:
     """
 
-    obj = OneOfValidator('tube', 'spot') 
+    object = OneOfValidator('tube', 'spot') 
     iesfile = StringValidator(additional_msg="Iesfile path")
     intensity = NumberValidator()
     diameter = NumberValidator()
@@ -42,18 +46,25 @@ class LightSource:
             desc: dict
                 dictionary representing light source information
         """
+        # validate desc schema
+        print(desc)
+        self.object = itemgetter('object')(desc)
+        if self.object == 'tube':
+            validate_tube_schema(desc)
+            pass
+        elif self.object == 'spot':
+            #validate_simple_spot_schema(desc)
+            pass
+
         (
-        self.obj,
         self.iesfile,
         self.intensity,
-        #self.diameter
-        ) = itemgetter('object',
+        ) = itemgetter(
                        'iesfile',
                        'intensity',
-        #               'diameter',
                        )(desc)
         self.mount = Mount(desc['mount'])
-        self.color = RGBColor(desc['color'])
+        self.color = Color(desc['color'])
 
     def color_as_rgba_array(self):
         """
@@ -64,6 +75,16 @@ class LightSource:
                 self.color.g,
                 self.color.b,
                 self.color.alpha,
+               ]
+
+    def color_as_rgb_array(self):
+        """
+        Returns color as array containing r,g,b values 
+        """
+        return [
+                self.color.r,
+                self.color.g,
+                self.color.b,
                ]
 
     def __str__(self):
@@ -81,7 +102,7 @@ class LightSource:
                f'{ color_string }'
         #       '\tDiamater:      {:6.2f}\n'
                .format(
-                      self.obj,
+                      self.object,
                       self.iesfile,
                       self.intensity,
         #              self.diameter,
