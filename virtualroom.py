@@ -89,7 +89,8 @@ bm.list_link([pie,parlante],col_obj)
 
 #LUCES
 light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__])
-bm.list_link([light_source, mount],col_sala)
+bm.list_link([light_source, mount],col_luces)
+
 #bpy.context.view_layer.update()
 #bm.apply_transforms(light_source)
 
