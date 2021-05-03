@@ -73,6 +73,8 @@ sala = room_utils.make_room(room,mat_dict,with_tiles=False)
 bm.link_all(sala,col_sala)
  
 #PARLANTE
+# en lugar de speaker :-> sources (fuentes de sonido)
+# ver como importar solo lo necesario
 filepath = libdir / room.speaker.mesh_resource_name
 with bpy.data.libraries.load(str(filepath)) as (data_from, data_to):
     try:
@@ -80,6 +82,12 @@ with bpy.data.libraries.load(str(filepath)) as (data_from, data_to):
     except UnicodeDecodeError as exc:
         print(exc)   
          
+# room.sources.array (posiciones de las fuentes posiciones x,y)         
+# room.sources.speaker name (Genelec, JBL, Edifier)
+# room.sources.stand name (o type) (Floor_stand, Plate, None), data geometrica adicional, 
+# solo altura en z para el acople del parlante
+
+# las instancia se obtienen loopeando sobre room.sorces.array
 print('Imported ', str(list(data_to.objects)))
 pie = bpy.data.objects['Stand']
 parlante = bpy.data.objects['Genelec']
