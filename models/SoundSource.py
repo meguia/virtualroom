@@ -26,7 +26,7 @@ class SoundSource:
     positions 
         Array of speaker objects
     """
-    STAND_HEIGHT = 1.535
+    STAND_MAXHEIGHT = 1.535
     PLATESTAND_HEIGHT = 0.27
 
     lib = StringValidator(
@@ -68,7 +68,9 @@ class SoundSource:
         if self.stand_name == 'Stand':
             for pos in self.positions:
                 # add stand height
-                pos.z = self.STAND_HEIGHT
+                if pos.z > self.STAND_MAXHEIGHT:
+                    pos.z = self.STAND_MAXHEIGHT
+
         elif self.stand_name == 'Plate_Stand':
             for pos in self.positions:
                 # add stand height
