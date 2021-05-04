@@ -47,7 +47,6 @@ class LightSource:
                 dictionary representing light source information
         """
         # validate desc schema
-        print(desc)
         self.object = itemgetter('object')(desc)
         if self.object == 'tube':
             validate_tube_schema(desc)
