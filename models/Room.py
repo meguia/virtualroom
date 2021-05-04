@@ -11,6 +11,7 @@ from .Floor import Floor
 from .Material import Material
 from .Lighting import Lighting
 from .ElementWithMaterial import ElementWithMaterial
+from .SoundSource import SoundSource
 from .validation.schema_validation_methods import validate_room_schema 
 from .validation.NumberValidator import NumberValidator
 
@@ -28,8 +29,8 @@ class Room:
         room's height in meters
     wall_thickness: float
         room's walls thickness in meters
-    speaker: type Speaker
-        represents a speaker placed in the room
+    source: type Source 
+        represents sound sources present in the room
     door: type Door 
         represents a door placed in the room
     base: type Base 
@@ -68,8 +69,8 @@ class Room:
         self.wall_thickness = itemgetter('wall_thickness')(desc)
         elements = desc['elements']
         for element in elements: 
-            if(element == 'speaker'):
-                self.speaker = Speaker(elements[element])
+            if(element == 'source'):
+                self.source = SoundSource(elements[element])
             elif(element == 'wall'):
                 self.wall = Wall(elements[element])
             elif(element == 'ceiling'):
@@ -81,19 +82,6 @@ class Room:
             elif(element == 'base'):
                 self.base= Base(self.wall_thickness,elements[element]) 
 
-        #self.spot = Spot(desc['spot'])
-        #self.lighting_elements = []
-        #for element in desc['lighting_elements']:
-        #    if element['type'] == 'spot':
-        #        spotInstance = Spot(element)
-        #        self.lighting_elements.append(spotInstance)
-        #        if element['create_symmetric']:
-        #            self.lighting_elements.append(spotInstance.symmetric_copy())
-
-
-        #self.materials = []
-        #for material in desc['materials']:
-        #    self.materials.append(Material(material))
         self.lighting = Lighting(desc['lighting'])
 
         self.camera = Camera(desc['camera'])
@@ -123,7 +111,7 @@ class Room:
         Returns string with all room's info.
         """
         roomString = self.__str__()
-        speakerString = self.speaker.__str__()
+        sourceString = self.source.__str__()
         doorString = self.door.__str__()
         baseString = self.base.__str__()
         wallString = self.wall.__str__()
@@ -131,15 +119,10 @@ class Room:
         floorString = self.floor.__str__()
         lightingString = self.lighting.__str__()
 
-        #for element in self.lighting_elements:
-        #    lightingString += f'{element.__str__()}'
-        #materialsString = ""
-        #for material in self.materials:
-        #    materialsString += f'{material.__str__()}'
         cameraString = self.camera.__str__()
         room_info = (
                     f'{roomString}'
-                    f'{speakerString} ' 
+                    f'{sourceString} ' 
                     f'{doorString}'
                     f'{baseString}'
                     f'{wallString}'
@@ -147,7 +130,6 @@ class Room:
                     f'{floorString}'
                     f'{lightingString}'
                     f'{cameraString}'
-        #            f'{materialsString}'
                     )
         return(room_info)
 
