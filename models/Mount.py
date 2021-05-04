@@ -37,7 +37,6 @@ class Mount:
                        'z',
                        )(desc['size'])
 
-        print(desc['size'])
         if 'y' in desc['size']:
             self.sizeY = itemgetter('y')(desc['size'])
         else:

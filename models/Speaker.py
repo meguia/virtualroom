@@ -39,14 +39,14 @@ class Speaker:
                 dictionary representing Speaker's information: x, y and z
                 position and rotation
         """
-        validate_speaker_schema(desc)
+        #validate_speaker_schema(desc)
         (
         self.x,
         self.y,
         self.z,
-        ) = itemgetter('x','y','z')(desc['position']) 
+        ) = itemgetter('x','y','z')(desc) 
         self.rotation = desc.get('rotation')
-        self.mesh_resource_name = itemgetter('3d_model')(desc)
+        #self.mesh_resource_name = itemgetter('3d_model')(desc)
         #self.path_resources = Path.home() / 'virtualroom/lib'
         #self.expected_mesh_path = self.path_resources / f'{self.mesh_resource_name}.blend'
         #matching_paths = glob.glob(str(self.expected_mesh_path))
@@ -64,16 +64,15 @@ class Speaker:
         """
         Returns string with Speaker object info.
         """
-        return(' Speaker:\n'
-               '\tPosition:\n'
-               '\tX:             {:6.2f}\n'
-               '\tY:             {:6.2f}\n'
-               '\tZ:             {:6.2f}\n'
-               '\tRotation:      {:6.2f}\n'
-               .format(
-                      self.x,
-                      self.y,
-                      self.z,
-                      self.rotation
-                      )
-               )
+        return(
+              '\n\tX:             {:6.2f}\n'
+              '\tY:             {:6.2f}\n'
+              '\tZ:             {:6.2f}\n'
+              '\tRotation:      {:6.2f}\n'
+              .format(
+                     self.x,
+                     self.y,
+                     self.z,
+                     self.rotation
+                     )
+              )

@@ -10,7 +10,7 @@ savedir = homedir / 'Renders'
 utildir = homedir / 'blender_utils'
 libdir = thisdir / 'lib'
 presetdir = thisdir / 'presets'
-json_file_input = presetdir / 'sala_lapso.json'
+json_file_input = presetdir / '.sala_lapso_test.json'
 json_material_template = thisdir / 'materials.json'
 modelsdir = thisdir / 'models'
 mats_path = homedir / 'Textures'
@@ -75,7 +75,7 @@ bm.link_all(sala,col_sala)
 #PARLANTE
 # en lugar de speaker :-> sources (fuentes de sonido)
 # ver como importar solo lo necesario
-filepath = libdir / room.speaker.mesh_resource_name
+filepath = libdir / room.source.lib
 with bpy.data.libraries.load(str(filepath)) as (data_from, data_to):
     try:
         data_to.objects = [name for name in data_from.objects]
@@ -89,11 +89,26 @@ with bpy.data.libraries.load(str(filepath)) as (data_from, data_to):
 
 # las instancia se obtienen loopeando sobre room.sorces.array
 print('Imported ', str(list(data_to.objects)))
-pie = bpy.data.objects['Stand']
-parlante = bpy.data.objects['Genelec']
-pie.location = [room.speaker.x, room.speaker.y, room.speaker.z]
-pie.rotation_euler = [0,0,radians(room.speaker.rotation)]
-bm.list_link([pie,parlante],col_obj)
+pie_data = bpy.data.objects[room.source.stand_name].data
+parlante_data = bpy.data.objects[room.source.speaker_name].data
+object_list = []
+for idx, pos in enumerate(room.source.positions):
+    print(pos)
+    stand_name = room.source.stand_name + str(idx)
+    pie = bpy.data.objects.new(stand_name, pie_data)
+    pie.location = [pos.x, pos.y, 0]
+    pie.rotation_euler = [0,0,radians(pos.rotation)]
+    object_list.append(pie)
+    parlante_name = room.source.speaker_name + str(idx)
+    parlante = bpy.data.objects.new(parlante_name, parlante_data)
+    parlante.location = [pos.x, pos.y, pos.z]
+    parlante.rotation_euler = [0,0,radians(pos.rotation)]
+    object_list.append(parlante)
+bm.list_link(object_list, col_obj)
+
+#pie.location = [room.speaker.x, room.speaker.y, room.speaker.z]
+#pie.rotation_euler = [0,0,radians(room.speaker.rotation)]
+#bm.list_link([pie,parlante],col_obj)
 
 #LUCES
 light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__])
