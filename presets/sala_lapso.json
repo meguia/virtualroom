@@ -65,14 +65,42 @@
                   "preset": "preset1"
               }
             },
-            "speaker": {
-                "3d_model": "Genelec.blend",
-                "position": {
+            "source": {
+                "lib": "Sources.blend",
+                "speaker": "Genelec",
+                "stand": "Plate_Stand",
+                "positions": [
+                    {
                     "x": 2,
                     "y": 0,
-                    "z": 0
-                },
-                "rotation": 0
+                    "z": 0,
+                    "rotation": 180
+                    },
+                    {
+                    "x": 2,
+                    "y": 1,
+                    "z": 0,
+                    "rotation": 180
+                    },
+                    {
+                    "x": 2.5,
+                    "y": 1.5,
+                    "z": 0,
+                    "rotation": 180
+                    },
+                    {
+                    "x": 2,
+                    "y": -1,
+                    "z": 0,
+                    "rotation": 180
+                    },
+                    {
+                    "x": 2.5,
+                    "y": -1.5,
+                    "z": 0,
+                    "rotation": 180
+                    }
+                ]
             }
         },
         "lighting": {

@@ -27,7 +27,7 @@ class SoundSource:
         Array of speaker objects
     """
     STAND_HEIGHT = 1.535
-    PIEGENELEC_HEIGHT = 0.27
+    PLATESTAND_HEIGHT = 0.27
 
     lib = StringValidator(
                          minsize=1, 
@@ -69,10 +69,10 @@ class SoundSource:
             for pos in self.positions:
                 # add stand height
                 pos.z = self.STAND_HEIGHT
-        elif self.stand_name == 'PieGenelec':
+        elif self.stand_name == 'Plate_Stand':
             for pos in self.positions:
                 # add stand height
-                pos.z = self.PIEGENELEC_HEIGHT 
+                pos.z = self.PLATESTAND_HEIGHT 
 
     def __str__(self):
         """
