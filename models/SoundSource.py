@@ -23,21 +23,22 @@ class SoundSource:
         Name of speaker resource
     stand_name: string
         Name of stand resource
+    height: float
+        Speakers height value
     positions 
         Array of speaker objects
     """
-    STAND_MAXHEIGHT = 1.535
-    PLATESTAND_HEIGHT = 0.27
 
     lib = StringValidator(
                          minsize=1, 
-                         additional_msg=".blend file containen resources"
+                         additional_msg=".blend file container resources"
                          )
     speaker_name = StringValidator(
                                    minsize=1, 
                                    additional_msg="Speaker resource name"
                                    )
     stand_name = StringValidator(minsize=1, additional_msg="Stand resource name")
+    height = NumberValidator(1.20, 1.75, additional_msg="Stand height must be bigger than 1.20 and smaller than 1.75")
 
     def __init__(self, desc = {}):
         """
@@ -54,10 +55,12 @@ class SoundSource:
         self.lib,
         self.speaker_name,
         self.stand_name,
+        self.height,
         ) = itemgetter(
                       'lib',
                       'speaker',
-                      'stand')(desc) 
+                      'stand',
+                      'height')(desc) 
 
         self.positions_from_data = []
         for pos in desc['positions']:
@@ -65,16 +68,6 @@ class SoundSource:
 
         self.positions = []
         self.positions = self.positions_from_data
-        if self.stand_name == 'Stand':
-            for pos in self.positions:
-                # add stand height
-                if pos.z > self.STAND_MAXHEIGHT:
-                    pos.z = self.STAND_MAXHEIGHT
-
-        elif self.stand_name == 'Plate_Stand':
-            for pos in self.positions:
-                # add stand height
-                pos.z = self.PLATESTAND_HEIGHT 
 
     def __str__(self):
         """

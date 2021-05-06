@@ -311,8 +311,41 @@ def ceiling_lighting(room, ceiling):
     return light_source,mount
 
 
-   
-    
+# en room utils 
+# make_speaker_array(room,speaker_data,[pie_data,pie_data2],speaker_height)
+# devuelve object_list
+
+def make_speaker_array(room, speaker_data, pie_data_array , speaker_height=0.0):
+    '''
+    A function to create blender objects such as a speaker and a stand
+    Returns a list of blender objects
+
+    Parameters
+    ----------
+        room (Room): An object containing room data
+        speaker_data (blender object data): blender object data representing a speaker
+        pie_data_array (array): an array of blender objects data representing a speaker stand 
+        speaker_height (float): height of speaker
+    '''
+    object_list = []
+    for idx, p in enumerate(room.source.positions):
+        stand_name_ob = room.source.stand_name+ '_' + str(idx)
+        pie = bm.object_from_data(stand_name_ob, pie_data_array[0])
+        pie.location = [p.x, p.y, speaker_height]
+        pie.rotation_euler = [0,0,radians(p.rotation)]
+        object_list.append(pie)
+        if len(pie_data_array) > 1:
+            stand_name_ob = room.source.stand_name + '_' + str(idx) + '_2'
+            pie2 = bm.object_from_data(stand_name_ob, pie_data_array[1])
+            pie2.location = [p.x, p.y, 0]
+            pie2.rotation_euler = [0,0,radians(p.rotation)]
+            object_list.append(pie2)    
+        speaker_name_ob = room.source.speaker_name+ '_' + str(idx)
+        speaker = bm.object_from_data(speaker_name_ob, speaker_data)
+        speaker.location = [p.x, p.y, speaker_height]
+        speaker.rotation_euler = [0,0,radians(p.rotation)]
+        object_list.append(speaker)
+    return object_list
 
 def inject_metadata(direxe,pathimg,w=4000,h=2000):
     # inyecta metadata

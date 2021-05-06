@@ -82,33 +82,20 @@ with bpy.data.libraries.load(str(filepath)) as (data_from, data_to):
     except UnicodeDecodeError as exc:
         print(exc)   
          
-# room.sources.array (posiciones de las fuentes posiciones x,y)         
-# room.sources.speaker name (Genelec, JBL, Edifier)
-# room.sources.stand name (o type) (Floor_stand, Plate, None), data geometrica adicional, 
-# solo altura en z para el acople del parlante
-
-# las instancia se obtienen loopeando sobre room.sorces.array
+#PARLANTES
 print('Imported ', str(list(data_to.objects)))
-pie_data = bpy.data.objects[room.source.stand_name].data
-parlante_data = bpy.data.objects[room.source.speaker_name].data
-object_list = []
-for idx, pos in enumerate(room.source.positions):
-    print(pos)
-    stand_name = room.source.stand_name + str(idx)
-    pie = bpy.data.objects.new(stand_name, pie_data)
-    pie.location = [pos.x, pos.y, 0]
-    pie.rotation_euler = [0,0,radians(pos.rotation)]
-    object_list.append(pie)
-    parlante_name = room.source.speaker_name + str(idx)
-    parlante = bpy.data.objects.new(parlante_name, parlante_data)
-    parlante.location = [pos.x, pos.y, pos.z]
-    parlante.rotation_euler = [0,0,radians(pos.rotation)]
-    object_list.append(parlante)
-bm.list_link(object_list, col_obj)
+pie_data_array = []
+pie_data_array.append(bpy.data.objects[room.source.stand_name].data)
+speaker_data = bpy.data.objects[room.source.speaker_name].data
+speaker_height = 0.0
+if room.source.stand_name == 'Plate_Stand':
+    speaker_height = bpy.data.objects[room.source.stand_name].location[2]
+elif room.source.stand_name == 'Floor_Stand':
+    pie_data_array.append(bpy.data.objects[room.source.stand_name +'2'].data)
+    speaker_height = room.source.height
 
-#pie.location = [room.speaker.x, room.speaker.y, room.speaker.z]
-#pie.rotation_euler = [0,0,radians(room.speaker.rotation)]
-#bm.list_link([pie,parlante],col_obj)
+object_list = room_utils.make_speaker_array(room, speaker_data, pie_data_array, speaker_height)
+bm.list_link(object_list, col_obj)
 
 #LUCES
 light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__])
