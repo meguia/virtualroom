@@ -289,7 +289,7 @@ def ceiling_lighting(room, ceiling):
         spot_color = room.lighting.light_source.color_as_rgb_array()
         # creamos el spot aplicando IES
         #spot = bm.new_spot(name='spot',size=radians(90),blend=0.9,color=spot_color,energy=spot_strength,spot_size=0.1)
-        ies_path = 'C://Users//Camilo//Downloads//spot1.ies'
+        ies_path = str(thisdir / room.lighting.light_source.iesfile)
         spot = bm.new_ieslight(ies_path,color=spot_color,power=spot_strength)
         # creamos copias del spot en un array
         light_source = bm.light_grid(spot,Nx-1,Ny-1,dx,dy)

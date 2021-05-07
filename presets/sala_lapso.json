@@ -103,7 +103,7 @@
             "arrangement" : {"x": 5, "y": 2},
             "light_source": {
                 "object" : "spot",
-                "iesfile": "file/path",
+                "iesfile": "lib/ies/spot1.ies",
                 "color" : {
                     "r" : 1.0,
                     "g" : 0.8,
