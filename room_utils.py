@@ -54,27 +54,27 @@ def make_room(room, mat_dict=None, with_uv=True, with_tiles=False):
     for n in range(4):
         if room.base is not None:
             basedim = [dim[n], room.base.height, room.base.thickness]
-            w,b = bm.wall('wall_' + str(n),mat_dict[room.wall.material.name] ,pos=pos[n],rot=rots[n],dims=[dim[n],h+t,t],hole=hole[n],
+            wall,base= bm.wall('wall_' + str(n),mat_dict[room.wall.material.name] ,pos=pos[n],rot=rots[n],dims=[dim[n],h+t,t],hole=hole[n],
                         basemat= mat_dict[room.base.material.name],basedim=[room.base.height, room.base.thickness])            
             if with_uv:
                 if n==dn:
-                    uv.uv_board_with_hole(b.data,basedim,hole[dn],scale=room.wall.uv_scale,internal=False)
+                    uv.uv_board_with_hole(base.data,basedim,hole[dn],scale=room.wall.uv_scale,internal=False)
                 else:
-                    uv.uv_board(b.data,basedim,scale=room.base.uv_scale)    
-            room_list.append(b)   
+                    uv.uv_board(base.data,basedim,scale=room.base.uv_scale)    
+            room_list.append(base)   
             if with_tiles:
                 pos2[n].append(basedim[1]-t)
                 print(n)
                 tiles =  wall_tiles('tiles_' +str(n),[dim2[n],h-basedim[1]+t],[1,1],pos=pos2[n],rot=[radians(90),0,rots[n]],hole=hole[n],mats=None)
                 room_list.extend(tiles)       
         else:
-            w = bm.wall('wall_' + str(n),mat_dict[room.wall.material.name] ,pos=pos[n],rot=rots[n],dims=[dim[n],h+t,t],hole=hole[n])
+            wall = bm.wall('wall_' + str(n),mat_dict[room.wall.material.name] ,pos=pos[n],rot=rots[n],dims=[dim[n],h+t,t],hole=hole[n])
         if with_uv:
             if n==dn:
-                uv.uv_board_with_hole(w.data,[dim[n],h+t,t],hole[dn],scale=room.wall.uv_scale)
+                uv.uv_board_with_hole(wall.data,[dim[n],h+t,t],hole[dn],scale=room.wall.uv_scale)
             else:
-                uv.uv_board(w.data,[dim[n],h+t,t],scale=room.wall.uv_scale)
-        room_list.append(w)    
+                uv.uv_board(wall.data,[dim[n],h+t,t],scale=room.wall.uv_scale)
+        room_list.append(wall)    
     # Makes door and frame 
     if room.door.frame is not None: 
         framedim = [room.door.frame.width, room.door.frame.thickness]   
@@ -84,9 +84,46 @@ def make_room(room, mat_dict=None, with_uv=True, with_tiles=False):
         room_list.extend([door,fr])
     else:
         door = simple_door(mat_dict[room.door.material.name],dpos[dn],rots[dn],[dw,dh,t])   
+        # este no deberia ser room_list?
         room.append(door)
     if with_uv:    
         uv.uv_board(door.data,[dw,dh,t],scale=room.door.uv_scale,rot90=True) 
+
+    # add curtains
+    # dpos = [[l/2-dp-dw/2,-w/2-t/2,0],[-l/2+dp+dw/2,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
+    if room.curtain_arrangement is not None:
+        for idx, curtain in enumerate(room.curtain_arrangement.curtains):
+           xs = []
+           ys = [] 
+           zs = []
+           if curtain.wall_index == 0: 
+               # def mesh_for_recboard(name,xs,ys,zs):
+               xs = [curtain.position-curtain.width/2,curtain.position+curtain.width/2]
+               ys = [-w/2+curtain.offset,-w/2+curtain.offset]
+               zs = [0,curtain.height]
+           elif curtain.wall_index == 1:
+               xs = [curtain.position+curtain.width/2,curtain.position-curtain.width/2]
+               ys = [w/2-curtain.offset,w/2-curtain.offset]
+               zs = [0,curtain.height]
+
+           elif curtain.wall_index == 2: 
+               xs = [-l/2+curtain.offset, -l/2+curtain.offset]
+               ys = [curtain.position+curtain.width/2,curtain.position-curtain.width/2]
+               zs = [0,curtain.height]
+
+           elif curtain.wall_index == 3: 
+               xs = [l/2-curtain.offset, l/2-curtain.offset]
+               ys = [curtain.position-curtain.width/2,curtain.position+curtain.width/2]
+               zs = [0,curtain.height]
+
+           object_name = 'curtain' + str(idx)
+           rec_mesh = bm.mesh_for_recboard(object_name, xs, ys, zs)
+           rec_ob =  bm.object_from_data(
+                                        rec_mesh.name,
+                                        rec_mesh
+                                        )
+           room_list.append(rec_ob)
+
     # Parents the list af all objects to an empty    
     room_ = bm.list_parent('room',room_list)
     return room_

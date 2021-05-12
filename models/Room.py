@@ -12,8 +12,11 @@ from .Material import Material
 from .Lighting import Lighting
 from .ElementWithMaterial import ElementWithMaterial
 from .SoundSource import SoundSource
+from .CurtainArrangement import CurtainArrangement
+
 from .validation.schema_validation_methods import validate_room_schema 
 from .validation.NumberValidator import NumberValidator
+
 
 class Room:
     """
@@ -81,6 +84,8 @@ class Room:
                 self.door = Door(elements[element])
             elif(element == 'base'):
                 self.base= Base(self.wall_thickness,elements[element]) 
+            elif(element == 'curtain_arrangement'):
+                self.curtain_arrangement = CurtainArrangement(elements[element]) 
 
         self.lighting = Lighting(desc['lighting'])
 
@@ -118,18 +123,33 @@ class Room:
         ceilingString = self.ceiling.__str__()
         floorString = self.floor.__str__()
         lightingString = self.lighting.__str__()
+        curtainsArrangementString = self.curtain_arrangement.__str__()
 
         cameraString = self.camera.__str__()
         room_info = (
+                    '\n------------------------------------------------------------\n'
+                    '\n------------------------------------------------------------\n'
                     f'{roomString}'
+                    '\n------------------------------------------------------------\n'
                     f'{sourceString} ' 
+                    '\n------------------------------------------------------------\n'
                     f'{doorString}'
+                    '\n------------------------------------------------------------\n'
                     f'{baseString}'
+                    '\n------------------------------------------------------------\n'
                     f'{wallString}'
+                    '\n------------------------------------------------------------\n'
                     f'{ceilingString}'
+                    '\n------------------------------------------------------------\n'
                     f'{floorString}'
+                    '\n------------------------------------------------------------\n'
                     f'{lightingString}'
+                    '\n------------------------------------------------------------\n'
                     f'{cameraString}'
+                    '\n------------------------------------------------------------\n'
+                    f'{curtainsArrangementString}'
+                    '\n------------------------------------------------------------\n'
+                    '\n------------------------------------------------------------\n'
                     )
         return(room_info)
 
