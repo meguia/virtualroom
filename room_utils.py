@@ -117,7 +117,7 @@ def make_room(room, mat_dict=None, with_uv=True, with_tiles=False):
                zs = [0,curtain.height]
 
            object_name = 'curtain' + str(idx)
-           rec_mesh = bm.mesh_for_recboard(object_name, xs, ys, zs)
+           rec_mesh = bm.mesh_for_vertical_plane(object_name, xs, ys, zs)
            rec_ob =  bm.object_from_data(
                                         rec_mesh.name,
                                         rec_mesh
