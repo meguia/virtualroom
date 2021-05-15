@@ -4,3 +4,4 @@
 *.jpg
 /presets/.*
 .*.py
+*.blend1

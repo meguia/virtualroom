@@ -384,6 +384,23 @@ def make_speaker_array(room, speaker_data, pie_data_array , speaker_height=0.0):
         object_list.append(speaker)
     return object_list
 
+def tilt_base(base, angle):
+    '''
+    Tilt Base with threaded rods with angle in degrees. 
+    Geometrical data are obtained from the mesh assuming that min z coordinate
+    of the mesh is on the floor and the max x xoordinate is the pivoting point
+    '''
+    h = abs(min([v.co.z for v in base.data.vertices]))
+    D = abs(max([v.co.x for v in base.data.vertices]))
+    var = base.children[0]
+    d = abs(max([v.co.x for v in var.data.vertices]))
+    alpha = radians(angle)
+    z = h + (D-h*tan(alpha))*sin(alpha)
+    l = (D+d)*tan(alpha)
+    base.rotation_euler = [0, alpha,0]
+    base.location = [0,0,z]
+    var.location = [0,0,-l]
+
 def inject_metadata(direxe,pathimg,w=4000,h=2000):
     # inyecta metadata
     metadata360 = {
