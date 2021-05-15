@@ -107,16 +107,16 @@
             "source": {
                 "lib": "Sources.blend",
                 "speaker": "Genelec",
-                "stand": "Plate_Stand",
+                "stand": "Tilt_Stand",
                 "height": 1.25,
                 "positions": [
                     {
-                    "x": -2,
+                    "x": -1,
                     "y": 0,
                     "rotation": 180
                     },
                     {
-                    "x": -0.5,
+                    "x": 0,
                     "y": 0,
                     "rotation": 180
                     },
@@ -131,7 +131,7 @@
                     "rotation": 180
                     },
                     {
-                    "x": 4,
+                    "x": 4.5,
                     "y": 0,
                     "rotation": 180
                     }
@@ -161,7 +161,7 @@
         },
         "camera": {
             "position": {
-                "x": 0,
+                "x": -3,
                 "y": 0,
                 "z": 1.5
             },

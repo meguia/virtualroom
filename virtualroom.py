@@ -72,29 +72,28 @@ mat_dict = room_utils.mat_room(mats_path,presetdir,mat_dict_substance)
 sala = room_utils.make_room(room,mat_dict,with_tiles=False)
 bm.link_all(sala,col_sala)
  
-#PARLANTE
-# en lugar de speaker :-> sources (fuentes de sonido)
-# ver como importar solo lo necesario
+# CARGA SPEAKER y STAND de la libreria source
 filepath = libdir / room.source.lib
 with bpy.data.libraries.load(str(filepath)) as (data_from, data_to):
-    try:
-        data_to.objects = [name for name in data_from.objects]
-    except UnicodeDecodeError as exc:
-        print(exc)   
+    for name in data_from.objects:
+        if (name == room.source.speaker_name) or name.startswith(room.source.stand_name):
+             data_to.objects.append(name)
          
 #PARLANTES
 print('Imported ', str(list(data_to.objects)))
-pie_data_array = []
-pie_data_array.append(bpy.data.objects[room.source.stand_name].data)
+stand_data_array = [ob.data for ob in bpy.data.objects if ob.name.startswith(room.source.stand_name)]
+print(stand_data_array)
 speaker_data = bpy.data.objects[room.source.speaker_name].data
+print(speaker_data)
 speaker_height = 0.0
-if room.source.stand_name == 'Plate_Stand':
-    speaker_height = bpy.data.objects[room.source.stand_name].location[2]
-elif room.source.stand_name == 'Floor_Stand':
-    pie_data_array.append(bpy.data.objects[room.source.stand_name +'2'].data)
+if room.source.stand_name == 'Floor_Stand':
     speaker_height = room.source.height
-
-object_list = room_utils.make_speaker_array(room, speaker_data, pie_data_array, speaker_height)
+else:
+    speaker_height = bpy.data.objects[room.source.stand_name].location[2]
+    if room.source.stand_name == 'Tilt_Stand':
+        point_camera = True
+    
+object_list = room_utils.make_speaker_array(room, speaker_data, stand_data_array, speaker_height, point_camera)
 bm.list_link(object_list, col_obj)
 
 #LUCES

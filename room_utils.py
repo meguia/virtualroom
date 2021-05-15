@@ -12,7 +12,7 @@ import blender_methods as bm
 import material_utils as mu
 import uv_utils as uv
 import sbsar_utils as sbs
-from math import radians, pow, pi
+from math import radians, pow, pi, atan2, tan, sin, sqrt
 import importlib as imp
 imp.reload(bm)
 imp.reload(mu)
@@ -352,7 +352,7 @@ def ceiling_lighting(room, ceiling):
 # make_speaker_array(room,speaker_data,[pie_data,pie_data2],speaker_height)
 # devuelve object_list
 
-def make_speaker_array(room, speaker_data, pie_data_array , speaker_height=0.0):
+def make_speaker_array(room, speaker_data, stand_data_array, speaker_height, point_camera):
     '''
     A function to create blender objects such as a speaker and a stand
     Returns a list of blender objects
@@ -361,30 +361,45 @@ def make_speaker_array(room, speaker_data, pie_data_array , speaker_height=0.0):
     ----------
         room (Room): An object containing room data
         speaker_data (blender object data): blender object data representing a speaker
-        pie_data_array (array): an array of blender objects data representing a speaker stand 
-        speaker_height (float): height of speaker
+        stand_data_array (array): an array of blender objects data representing a speaker stand 
+        point_camera (bool): True for Tilt_Stand only, points the speaker to the camera position
     '''
     object_list = []
     for idx, p in enumerate(room.source.positions):
         stand_name_ob = room.source.stand_name+ '_' + str(idx)
-        pie = bm.object_from_data(stand_name_ob, pie_data_array[0])
-        pie.location = [p.x, p.y, speaker_height]
-        pie.rotation_euler = [0,0,radians(p.rotation)]
-        object_list.append(pie)
-        if len(pie_data_array) > 1:
-            stand_name_ob = room.source.stand_name + '_' + str(idx) + '_2'
-            pie2 = bm.object_from_data(stand_name_ob, pie_data_array[1])
-            pie2.location = [p.x, p.y, 0]
-            pie2.rotation_euler = [0,0,radians(p.rotation)]
-            object_list.append(pie2)    
+        stand = bm.object_from_data(stand_name_ob, stand_data_array[0])
+        stand.location = [p.x, p.y, speaker_height]
+        object_list.append(stand)
+        if len(stand_data_array) > 1:
+            stand_name_ob = room.source.stand_name + '_' + str(idx) + '_B'
+            stand2 = bm.object_from_data(stand_name_ob, stand_data_array[1])
+            stand2.parent = stand
+            object_list.append(stand2)    
+        if point_camera:
+            cpos = [room.camera.x,room.camera.y,room.camera.z]
+            pitch,yaw = get_tilt_angles(stand.location,cpos)
+            tilt_base(stand,[0,pitch,yaw])
+        else:
+            stand.rotation_euler = [0,0,radians(p.rotation)]
         speaker_name_ob = room.source.speaker_name+ '_' + str(idx)
         speaker = bm.object_from_data(speaker_name_ob, speaker_data)
-        speaker.location = [p.x, p.y, speaker_height]
-        speaker.rotation_euler = [0,0,radians(p.rotation)]
+        speaker.parent = stand
         object_list.append(speaker)
     return object_list
 
-def tilt_base(base, angle):
+
+def get_tilt_angles(pos_ob, pos_target):
+    '''
+    Computes the tilt angles in Y and Z for (pitch and yaw) needed for object in 
+    pos_ob to point in direction of pos_target
+    '''
+    yaw = atan2(pos_ob[1]-pos_target[1],pos_ob[0]-pos_target[0])
+    dist = sqrt((pos_ob[1]-pos_target[1])**2+(pos_ob[0]-pos_target[0])**2)
+    pitch = atan2(pos_target[2]-pos_ob[2],dist)
+    return pitch,yaw
+    
+
+def tilt_base(base, rotation):
     '''
     Tilt Base with threaded rods with angle in degrees. 
     Geometrical data are obtained from the mesh assuming that min z coordinate
@@ -394,12 +409,12 @@ def tilt_base(base, angle):
     D = abs(max([v.co.x for v in base.data.vertices]))
     var = base.children[0]
     d = abs(max([v.co.x for v in var.data.vertices]))
-    alpha = radians(angle)
+    alpha = rotation[1]
     z = h + (D-h*tan(alpha))*sin(alpha)
     l = (D+d)*tan(alpha)
-    base.rotation_euler = [0, alpha,0]
-    base.location = [0,0,z]
-    var.location = [0,0,-l]
+    base.rotation_euler = rotation
+    base.location.z = z
+    var.location.z = -l
 
 def inject_metadata(direxe,pathimg,w=4000,h=2000):
     # inyecta metadata
