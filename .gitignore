@@ -5,3 +5,4 @@
 /presets/.*
 .*.py
 *.blend1
+lib/Sources.blend1

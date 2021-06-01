@@ -1,0 +1,171 @@
+{
+    "room": {
+        "name": "Sala de Lapso",
+        "dimensions": {
+            "depth": 12,
+            "width": 7,
+            "height": 3.0
+        },
+        "wall_thickness" : 0.15,
+        "elements": {
+            "wall": {
+                "thickness": 0.15,
+                "uv_scale": 1.5,
+                "material":  {
+                    "sbs_name": "concrete_raw_grey",
+                    "category": "Concrete",
+                    "preset": "preset1"
+                }
+            },
+            "ceiling": {
+                "uv_scale": 1.0,
+                "material":  {
+                    "sbs_name": "plaster_acoustic_ceiling",
+                    "category": "Plaster",
+                    "preset": "preset1"
+                }
+            },
+            "floor": {
+               "uv_scale": 3.0,
+               "material":  {
+                   "sbs_name": "parquet_european_ash_grey",
+                   "category": "Wood",
+                   "preset": "preset1"
+               }
+            },
+            "door": {
+                "wall_index": 2,
+                "position": 1,
+                "width": 1.2,
+                "height": 2.2,
+                "uv_scale": 2.0,
+                "material":  {
+                    "sbs_name": "wood_wenge",
+                    "category": "Wood",
+                    "preset": "preset1"
+                },
+                "frame": {
+                    "width": 0.08,
+                    "thickness": 0.03,
+                    "uv_scale": 1.0,
+                    "material":  {
+                        "sbs_name": "wood_black_walnut_striped",
+                        "category": "Wood",
+                        "preset": "preset1"
+                    }
+                }
+            },
+            "base": {
+              "height": 0.12,
+              "thickness" : 0.025,
+              "uv_scale": 3.0,
+              "material":  {
+                  "sbs_name": "wood_black_walnut_striped",
+                  "category": "Wood",
+                  "preset": "preset1"
+              }
+            },
+            "curtain_arrangement":{
+              "material":  {
+                  "sbs_name": "wood_black_walnut_striped",
+                  "category": "Wood",
+                  "preset": "preset1"
+              },
+              "uv_scale": 2.0,
+              "curtains": [
+                {
+                "wall_index": 0,
+                "offset": 0.05,
+                "width": 1.75,
+                "height": 2.75,
+                "position": 2.0
+                },
+                {
+                "wall_index": 1,
+                "offset": 0.05,
+                "width": 1.75,
+                "height": 2.75,
+                "position": 2.0
+                },
+                {
+                "wall_index": 2,
+                "offset": 0.05,
+                "width": 1.75,
+                "height": 2.75,
+                "position": 2.0
+                },
+                {
+                "wall_index": 3,
+                "offset": 0.05,
+                "width": 1.75,
+                "height": 2.75,
+                "position": -2.0
+                }
+              ]
+
+            },
+            "source": {
+                "lib": "Sources.blend",
+                "speaker": "Genelec",
+                "stand": "Tilt_Stand",
+                "height": 1.25,
+                "positions": [
+                    {
+                    "x": -1,
+                    "y": 0,
+                    "rotation": 0
+                    },
+                    {
+                    "x": 0,
+                    "y": 0,
+                    "rotation": 0
+                    },
+                    {
+                    "x": 1,
+                    "y": 0,
+                    "rotation": 0
+                    },
+                    {
+                    "x": 2.5,
+                    "y": 0,
+                    "rotation": 0
+                    },
+                    {
+                    "x": 4.5,
+                    "y": 0,
+                    "rotation": 0
+                    }
+                ]
+            }
+        },
+        "lighting": {
+            "arrangement" : {"x": 5, "y": 2},
+            "light_source": {
+                "object" : "spot",
+                "iesfile": "lib/ies/spot1.ies",
+                "color" : {
+                    "r" : 1.0,
+                    "g" : 0.8,
+                    "b" : 0.8,
+                    "alpha" :1.0 
+                },
+                "intensity" : 5,
+                "mount": {
+                    "size": {
+                    "x": 0.1,
+                    "y": 0.1,
+                    "z": 0.12
+                    }
+                }
+            }
+        },
+        "camera": {
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": 1.5
+            },
+            "rotation": -90
+        }
+    }
+}

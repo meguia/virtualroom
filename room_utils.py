@@ -12,6 +12,7 @@ import blender_methods as bm
 import material_utils as mu
 import uv_utils as uv
 import sbsar_utils as sbs
+import bmesh_utils as bu
 from math import radians, pow, pi, atan2, tan, sin, sqrt
 import importlib as imp
 imp.reload(bm)
@@ -74,6 +75,8 @@ def make_room(room, mat_dict=None, with_uv=True, with_tiles=False):
                 uv.uv_board_with_hole(wall.data,[dim[n],h+t,t],hole[dn],scale=room.wall.uv_scale)
             else:
                 uv.uv_board(wall.data,[dim[n],h+t,t],scale=room.wall.uv_scale)
+        # agregar condicion para dividir la pared y que lea a que altura
+        bu.face_split(wall.data,4,fac=0.1)        
         room_list.append(wall)    
     # Makes door and frame 
     if room.door.frame is not None: 
