@@ -18,6 +18,7 @@ import importlib as imp
 imp.reload(bm)
 imp.reload(mu)
 imp.reload(uv)
+imp.reload(bu)
 imp.reload(sbs)
 
 def make_room(room, mat_dict=None, with_uv=True, with_tiles=False):
@@ -76,7 +77,7 @@ def make_room(room, mat_dict=None, with_uv=True, with_tiles=False):
             else:
                 uv.uv_board(wall.data,[dim[n],h+t,t],scale=room.wall.uv_scale)
         # agregar condicion para dividir la pared y que lea a que altura
-        bu.face_split(wall.data,4,fac=0.1)        
+        bu.face_split(wall.data,4,edge_indices=[1,3],fac=0.9)        
         room_list.append(wall)    
     # Makes door and frame 
     if room.door.frame is not None: 
