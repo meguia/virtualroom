@@ -8,8 +8,8 @@ from .validation.schema_validation_methods import validate_tube_schema
 from .validation.schema_validation_methods import validate_simple_spot_schema
 
 from .extra.Color import Color
-
 from .Mount import Mount
+from .Asset import Asset
 
 class LightSource:
     """
@@ -32,7 +32,7 @@ class LightSource:
     blend:
     """
 
-    object = OneOfValidator('tube', 'spot') 
+    object = OneOfValidator('tube', 'spot','asset') 
     iesfile = StringValidator(additional_msg="Iesfile path")
     intensity = NumberValidator()
     diameter = NumberValidator()
@@ -53,6 +53,13 @@ class LightSource:
             pass
         elif self.object == 'spot':
             #validate_simple_spot_schema(desc)
+            pass
+        elif self.object == 'asset':
+            try:
+                self.asset = Asset(desc['asset_info'])
+            except KeyError:
+                error_msg = 'Missing asset_info key'
+                print(error_msg)
             pass
 
         (
@@ -92,6 +99,8 @@ class LightSource:
         """
         mount_string = self.mount.__str__()
         color_string = self.color.__str__()
+        if(self.asset is not None):
+            color_string += self.asset.__str__()
         return(
                f'{ mount_string }'
                '\tObject:\n'
