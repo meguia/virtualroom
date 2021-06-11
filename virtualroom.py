@@ -97,7 +97,21 @@ object_list = room_utils.make_speaker_array(room, speaker_data, stand_data_array
 bm.list_link(object_list, col_obj)
 
 #LUCES
-light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__])
+# importar asset
+if(room.lighting.light_source.object == 'asset'):
+    assets_names = room.lighting.light_source.assets_names_as_array()
+    for asset_lib_name in room.lighting.light_source.libs_names_as_array():
+        lib_filepath = libdir / asset_lib_name
+        with bpy.data.libraries.load(str(lib_filepath)) as (data_from, data_to):
+            for name in data_from.objects:
+                for asset_name in assets_names:
+                    if (name == asset_name):
+                         data_to.objects.append(name)
+        asset_object_array = [ob for ob in bpy.data.objects if ob.name in assets_names]
+        light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__], asset_object_array)
+else:
+    light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__])
+
 bm.list_link([light_source, mount],col_luces)
 
 #bpy.context.view_layer.update()

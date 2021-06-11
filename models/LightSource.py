@@ -48,6 +48,7 @@ class LightSource:
         """
         # validate desc schema
         self.object = itemgetter('object')(desc)
+        self.assets= []
         if self.object == 'tube':
             validate_tube_schema(desc)
             pass
@@ -56,9 +57,10 @@ class LightSource:
             pass
         elif self.object == 'asset':
             try:
-                self.asset = Asset(desc['asset_info'])
+                for asset in desc['assets_info']:
+                    self.assets.append(Asset(asset))
             except KeyError:
-                error_msg = 'Missing asset_info key'
+                error_msg = 'Missing assets_info key'
                 print(error_msg)
             pass
 
@@ -93,14 +95,28 @@ class LightSource:
                 self.color.b,
                ]
 
+    def assets_names_as_array(self):
+        """
+        Returns an array of strings containing assets names
+        """
+        return [asset.name for asset in self.assets]
+
+    def libs_names_as_array(self):
+        """
+        Returns a unique list of libs names 
+        """
+        libs_list = [asset.lib for asset in self.assets]
+        return list(set(libs_list))
+
     def __str__(self):
         """
         Returns string with LightSource object info.
         """
         mount_string = self.mount.__str__()
         color_string = self.color.__str__()
-        if(self.asset is not None):
-            color_string += self.asset.__str__()
+        if(len(self.assets) > 0):
+            for asset in self.assets:
+                color_string += asset.__str__()
         return(
                f'{ mount_string }'
                '\tObject:\n'

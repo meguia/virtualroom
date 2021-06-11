@@ -252,7 +252,7 @@ def wall_tiles(name,dims,tile_size,pos,rot,hole=None,mats=None):
         tile.rotation_euler=rot
         return [tile]
     
-def ceiling_lighting(room, ceiling):
+def ceiling_lighting(room, ceiling, asset_data=None):
     '''
     Function to create an array of LED tubes or SPOTS for ceiling lighting
     receive room class and object ceiling
@@ -295,14 +295,16 @@ def ceiling_lighting(room, ceiling):
         # crea el plafon para el tubo como un cubo en base a las dimensiones que estan
         # en lighting.mount.size
         mount = bm.box('mount',dims=[Sx,Sy,Sz], pos=[x0,y0,z0],bottom=False)
+        bm.embed_array(ceiling,Nx,Ny,dx,dy,mount)
+        s1 = mount.modifiers.new('S1','SOLIDIFY')
     elif mount_type == 'spot':
         mount = bm.tube('mount', r=Sx, l=Sz, pos=[x0,y0,z0], bot=False)
+        bm.embed_array(ceiling,Nx,Ny,dx,dy,mount)
+        s1 = mount.modifiers.new('S1','SOLIDIFY')
+    elif mount_type == 'asset':
+        pass
     else:
         pass
-    
-    bm.embed_array(ceiling,Nx,Ny,dx,dy,mount)
-    s1 = mount.modifiers.new('S1','SOLIDIFY')
-
     
     if mount_type == 'tube':
         # Crea TUBO
@@ -336,10 +338,29 @@ def ceiling_lighting(room, ceiling):
         light_source = bm.light_grid(spot,Nx-1,Ny-1,dx,dy)
         light_source.show_instancer_for_viewport = False
         light_source.show_instancer_for_render = False
+    elif mount_type == 'asset':
+        #stand_name_ob = room.source.stand_name+ '_' + str(idx)
+        try:
+            if(asset_data == None):
+                raise ValueError('asset_data should contain blender object data')
+            if 'Bulb' == asset_data[0].name:
+                light_source= bm.object_from_data('Bulb', asset_data[0].data)
+                mount = bm.object_from_data('Lamp', asset_data[1].data)
+            if 'Lamp' == asset_data[0].name:
+                light_source= bm.object_from_data('Bulb', asset_data[1].data)
+                mount = bm.object_from_data('Lamp', asset_data[0].data)
+           # light_source.location = [x0, y0, z0]
+            mount.location = [x0, y0, z0]
+            at1 = bm.arraymod(light_source,name='AT1',count=Ny,off_constant=[0,dy,0])
+            at2 = bm.arraymod(light_source,name='AT2',count=Nx,off_constant=[dx,0,0])
+            #light_source.parent = mount
+            at1 = bm.arraymod(mount,name='AT1',count=Ny,off_constant=[0,dy,0])
+            at2 = bm.arraymod(mount,name='AT2',count=Nx,off_constant=[dx,0,0])
+
+        except Exception as error:
+            print('Error'+repr(error))
     else:
         pass
-    
-    
     # if type spot
     # crear una funcion en blender methods que haga un array de point lights
     # array de nx ny spacing dx dy y posicion original de point light (x0,y0,z0)
@@ -350,6 +371,7 @@ def ceiling_lighting(room, ceiling):
     light_source.parent = mount
     
     return light_source,mount
+
 
 
 # en room utils 
