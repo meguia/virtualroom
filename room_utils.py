@@ -345,19 +345,24 @@ def ceiling_lighting(room, ceiling, asset_data=None):
         try:
             if(asset_data == None):
                 raise ValueError('asset_data should contain blender object data')
-            if 'Bulb' == asset_data[0].name:
-                light_source= bm.object_from_data('Bulb', asset_data[0].data)
-                mount = bm.object_from_data('Lamp', asset_data[1].data)
-            if 'Lamp' == asset_data[0].name:
-                light_source= bm.object_from_data('Bulb', asset_data[1].data)
-                mount = bm.object_from_data('Lamp', asset_data[0].data)
-           # light_source.location = [x0, y0, z0]
+            for asset in asset_data:
+                if asset.name == 'Lamp':
+                    mount = bm.object_from_data('Lamp', asset.data)
             mount.location = [x0, y0, z0]
-            at1 = bm.arraymod(light_source,name='AT1',count=Ny,off_constant=[0,dy,0])
-            at2 = bm.arraymod(light_source,name='AT2',count=Nx,off_constant=[dx,0,0])
-            #light_source.parent = mount
             at1 = bm.arraymod(mount,name='AT1',count=Ny,off_constant=[0,dy,0])
             at2 = bm.arraymod(mount,name='AT2',count=Nx,off_constant=[dx,0,0])
+
+            spot_strength = room.lighting.light_source.intensity
+            spot_color = room.lighting.light_source.color_as_rgb_array()
+
+            # creamos el spot aplicando IES
+            ies_path = str(thisdir / room.lighting.light_source.iesfile)
+            spot = bm.new_ieslight(ies_path,color=spot_color,power=spot_strength)
+            # offest hardcodeado para que no quede en z igual a techo
+            spot.location.z -= 0.40
+            light_source = bm.light_grid(spot,Nx-1,Ny-1,dx,dy)
+            light_source.show_instancer_for_viewport = False
+            light_source.show_instancer_for_render = False
 
         except Exception as error:
             print('Error'+repr(error))
