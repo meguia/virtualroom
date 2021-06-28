@@ -9,6 +9,7 @@ sys.path.append(str(utildir))
 sys.path.append(str(thisdir))  
 
 import blender_methods as bm
+import numpy_mesh as nm
 import material_utils as mu
 import uv_utils as uv
 import sbsar_utils as sbs
@@ -16,6 +17,7 @@ import bmesh_utils as bu
 from math import radians, pow, pi, atan2, tan, sin, sqrt
 import importlib as imp
 imp.reload(bm)
+imp.reload(nm)
 imp.reload(mu)
 imp.reload(uv)
 imp.reload(bu)
@@ -458,10 +460,115 @@ def inject_metadata(direxe,pathimg,w=4000,h=2000):
     'UsePanoramaViewer'            : True,
     'artist'                       : 'LAPSo'}
     pars = ['-' + it[0] + '=' + str(it[1]) for it in metadata360.items()]
-    if os.name is 'posix':
+    if os.name == 'posix':
         file = str(pathimg).replace(" ", "\\ ")
         cmd = 'exiftool' + ' ' + ' '.join(pars) + ' '  + file
     else:    
         cmd = str(direxe) + '\exiftool' + ' ' + ' '.join(pars) + ' '  + str(pathimg)
     print(cmd)
     os.system(cmd)
+
+
+def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False):
+    '''
+    Makes room as objects parented to an empty
+    the objects are defined in the class Room
+    mat_dict contains a dictionary of substance materiales
+    also asigns uv maps (and lightmaps) to objects with scale
+    '''
+    (l,w,h,t) = [room.depth, room.width, room.height, room.wall_thickness] # length, width, height, thickness
+    (dn, dp, dw, dh) = [room.door.wall_index, room.door.position, room.door.width, room.door.height] # wall number, position from border, width, height
+    # Makes floor and ceiling
+    floor = nm.floor(type(room.floor).__name__, mat_dict[room.floor.material.name],pos=[0,0,-t],dims=[l+2*t,w+2*t,t])
+    ceil = nm.floor(type(room.ceiling).__name__,mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
+    if with_uv:
+        uv.uv_board(ceil.data, [l,w,t], front=1, scale = room.ceiling.uv_scale)
+        uv.uv_board(floor.data, [l+2*t,w+2*t,t], front=2, scale = room.floor.uv_scale)
+    room_list = [floor,ceil]    
+    # Makes walls with bases in a loop
+    # first define rotation, position, door position, main dimension (dim)
+    rots = [radians(180),0,radians(90),radians(-90)]
+    pos=[[0,-w/2-t/2,0],[0,w/2+t/2,0],[-l/2-t/2,0,0],[l/2+t/2,0,0]]
+    dpos = [[l/2-dp-dw/2,-w/2-t/2,0],[-l/2+dp+dw/2,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
+    dim=[l+2*t,l+2*t,w,w]
+    tdim = 0.005
+    #para tiles (no se usa por ahora)
+    pos2=[[l/2,-w/2+tdim],[-l/2,w/2-tdim],[-l/2+tdim,-w/2],[l/2-tdim,w/2]]
+    dpos2 = [[l/2-dp,-w/2+tdim,l/2-dp-dw,-w/2+tdim],[-l/2+dp,w/2-tdim,-l/2+dp+dw,w/2-tdim],
+            [-l/2+tdim,-w/2+dp,-l/2+tdim,-w/2+dp+dw],[l/2-tdim,w/2-dp,l/2-tdim,w/2-dp-dw]]
+    dim2=[l,l,w,w]
+    # For placing the hole in an array of empty arrays
+    holes = [[]]*4
+    holes[dn] = [[[dp,dp+dw],[0,dh]]]
+    bandmats = [mat_dict[room.wall.material.name]]
+    
+    for n in range(4):
+        bands = []
+        bandmats = [mat_dict[room.wall.material.name]]
+        if room.base is not None:
+            (bh,bt) = [room.base.height, room.base.thickness]
+            bands.append([[0,bh,bh*1.1],[bt,bt,0]])
+            bandmats.append(mat_dict[room.base.material.name])
+        # puesto a mano esto despues se saca de room franja de pintura de arriba
+        bands.append([[h-0.2,h],[0,0]])
+        # por ahora el mismo material
+        bandmats.append(mat_dict[room.wall.material.name])
+        print(bandmats)
+        print(bands)
+        wall = nm.wall('wall_' + str(n),pos=pos[n],rot=rots[n],dims=[dim[n],t/2,h],holes=holes[n],bandmats=bandmats,bands=bands)
+        if with_uv:
+            pass
+            #pendiente
+            #uv.uv_board(wall.data,[dim[n],h+t,t],scale=room.wall.uv_scale)    
+        room_list.append(wall)    
+    # Makes door and frame 
+    if room.door.frame is not None: 
+        framedim = [room.door.frame.width, room.door.frame.thickness]   
+        door,fr = frame_door(mat_dict[room.door.material.name],mat_dict[room.door.frame.material.name],dpos[dn],rots[dn],[dw,dh,t],framedim)
+        if with_uv:
+            uv.uv_planks(fr.data, scale = room.door.frame.uv_scale)
+        room_list.extend([door,fr])
+    else:
+        door = simple_door(mat_dict[room.door.material.name],dpos[dn],rots[dn],[dw,dh,t])   
+        # este no deberia ser room_list?
+        room.append(door)
+    if with_uv:    
+        uv.uv_board(door.data,[dw,dh,t],scale=room.door.uv_scale,rot90=True) 
+
+    # add curtains
+    # dpos = [[l/2-dp-dw/2,-w/2-t/2,0],[-l/2+dp+dw/2,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
+    if room.curtain_arrangement is not None:
+        for idx, curtain in enumerate(room.curtain_arrangement.curtains):
+           xs = []
+           ys = [] 
+           zs = []
+           if curtain.wall_index == 0: 
+               # def mesh_for_recboard(name,xs,ys,zs):
+               xs = [curtain.position-curtain.width/2,curtain.position+curtain.width/2]
+               ys = [-w/2+curtain.offset,-w/2+curtain.offset]
+               zs = [0,curtain.height]
+           elif curtain.wall_index == 1:
+               xs = [curtain.position+curtain.width/2,curtain.position-curtain.width/2]
+               ys = [w/2-curtain.offset,w/2-curtain.offset]
+               zs = [0,curtain.height]
+
+           elif curtain.wall_index == 2: 
+               xs = [-l/2+curtain.offset, -l/2+curtain.offset]
+               ys = [curtain.position+curtain.width/2,curtain.position-curtain.width/2]
+               zs = [0,curtain.height]
+
+           elif curtain.wall_index == 3: 
+               xs = [l/2-curtain.offset, l/2-curtain.offset]
+               ys = [curtain.position-curtain.width/2,curtain.position+curtain.width/2]
+               zs = [0,curtain.height]
+
+           object_name = 'curtain' + str(idx)
+           rec_mesh = bm.mesh_for_vertical_plane(object_name, xs, ys, zs)
+           rec_ob =  bm.object_from_data(
+                                        rec_mesh.name,
+                                        rec_mesh
+                                        )
+           room_list.append(rec_ob)
+    # Parents the list af all objects to an empty    
+    room_ = bm.list_parent('room',room_list)
+    return room_
