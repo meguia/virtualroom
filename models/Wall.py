@@ -57,9 +57,12 @@ class Wall(ElementWithMaterial):
         Returns holes values index by wall index
         """
         holes_array = [[]]*4
-        for hole in self.holes:
-            holes_array[hole.wall_index] = [[
-                                            [hole.hpos, hole.hpos+hole.hsize],
-                                            [hole.vpos, hole.vpos+hole.vsize]
-                                            ]]
-            return holes_array
+        for idx in range(len(holes_array)):
+            position_dims = []
+            for hole in self.holes:
+                if hole.wall_index == idx:
+                    position_dims.append([[hole.hpos, hole.hpos+hole.hsize], [hole.vpos, hole.vpos+hole.vsize]])
+            holes_array[idx] = position_dims
+            position_dims = []
+                                          
+        return holes_array
