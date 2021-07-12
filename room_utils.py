@@ -505,6 +505,8 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False):
     # For placing the hole in an array of empty arrays
     holes = [[]]*4
     holes[dn] = [[[dp,dp+dw],[0,dh]]]
+    # agrege esto
+    #holes = room.wall.holes_as_array()
     bandmats = [mat_dict[room.wall.material.name]]
     
     for n in range(4):

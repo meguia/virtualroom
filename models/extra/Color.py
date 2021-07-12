@@ -4,9 +4,9 @@ from ..validation.NumberValidator import NumberValidator
 
 class Color:
     """
-    A class to represent a Color.
+    a class to represent a color.
 
-    Attributes
+    attributes
     ----------
     r: float 
         number representig red value
@@ -18,14 +18,14 @@ class Color:
         number representig red value
     """
 
-    r = NumberValidator()
-    g = NumberValidator()
-    b = NumberValidator()
+    r =     NumberValidator()
+    g =     NumberValidator()
+    b =     NumberValidator()
     alpha = NumberValidator()
 
     def __init__(self, desc = {}):
         """
-        Constructs all the necessary attributes for the Color object.
+        Constructs all the necessary attributes for the color object.
         
         Parameters
         -----------
@@ -47,7 +47,7 @@ class Color:
 
     def __str__(self):
         """
-        Returns string with Color object info.
+        returns string with color object info.
         """
         return(
                '\tColor:\n'

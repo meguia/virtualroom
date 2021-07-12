@@ -15,7 +15,16 @@
                     "sbs_name": "concrete_raw_grey",
                     "category": "Concrete",
                     "preset": "preset1"
-                }
+                },
+                "holes": [
+                    {
+                        "wall_index": 0,
+                        "hpos": 1.0,
+                        "hsize":1.5,
+                        "vpos": 1.0,
+                        "vsize":1.5
+                    }
+                ]
             },
             "ceiling": {
                 "uv_scale": 1.0,
@@ -90,24 +99,24 @@
                 "height": 1.25,
                 "positions": [
                     {
-                    "x": -1,
-                    "y": 0,
-                    "rotation": 180
+                        "x": -1,
+                        "y": 0,
+                        "rotation": 180
                     },
                     {
-                    "x": 0,
-                    "y": 0,
-                    "rotation": 180
+                        "x": 0,
+                        "y": 0,
+                        "rotation": 180
                     },
                     {
-                    "x": 1.5,
-                    "y": 0,
-                    "rotation": 180
+                        "x": 1.5,
+                        "y": 0,
+                        "rotation": 180
                     },
                     {
-                    "x": 3,
-                    "y": 0,
-                    "rotation": 180
+                        "x": 3,
+                        "y": 0,
+                        "rotation": 180
                     }
                 ]
             }
