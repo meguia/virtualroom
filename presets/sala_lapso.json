@@ -90,7 +90,21 @@
                 "position": 1.0
                 }
               ]
-
+            },
+            "cable_tray_arrangement":{
+                "x-offset": 0.35,
+                "y-offset": 0.22,
+                "z-offset": 0.35,
+                "assets_info": [
+                  {
+                    "name": "Tray",
+                    "lib": "ACableTray.blend"
+                  },
+                  {
+                    "name": "TrayConnector",
+                    "lib": "ACableTray.blend"
+                  }
+                ]
             },
             "source": {
                 "lib": "Sources.blend",

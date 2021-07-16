@@ -12,7 +12,10 @@ class ElementWithMaterial:
 
     def __init__(self, desc, uv_scale):
         """
-        Constructs all the necessary attributes for the Element with material object object.
+
+        Constructs all the necessary attributes for the Element with
+        material object object.
+
         """
         self.material = Material(desc)
         self.uv_scale = uv_scale 

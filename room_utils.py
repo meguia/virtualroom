@@ -449,6 +449,7 @@ def tilt_base(base, rotation):
     base.location.z = z
     var.location.z = -l
 
+
 def inject_metadata(direxe,pathimg,w=4000,h=2000):
     # inyecta metadata
     metadata360 = {
@@ -579,3 +580,81 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False):
     # Parents the list af all objects to an empty    
     room_ = bm.list_parent('room',room_list)
     return room_
+
+def make_cable_tray(room, asset_data):
+    '''
+    Returns a list of blender object
+    Parameters
+    ----------
+        room (Room): An object containing room data
+        asset data (blender object data array): blender object data
+        representing a cable tray and a cable tray connector
+    '''
+    cable_tray_object_list  = []
+    try:
+        if(asset_data == None):
+            raise ValueError('asset_data should contain blender object data')
+        # check Tray and TrayConnector exist in resource
+        tray_connector_asset_data = None 
+        tray_asset_data = None 
+        for asset in asset_data:
+            if asset.name == 'TrayConnector':
+                tray_connector_asset_data = asset.data
+            if asset.name == 'Tray':
+                tray_asset_data = asset.data
+        if(not tray_connector_asset_data and not tray_asset_data):
+            raise ValueError('asset_data should contain blender objects with name Tray and TrayConnector')
+
+        for idx in range(4):
+            tray_connector_name = 'TrayConnector_' + str(idx)
+            tray_connector_obj = bm.object_from_data(tray_connector_name, tray_connector_asset_data)
+            tray_name = 'Tray_' + str(idx)
+            tray_obj = bm.object_from_data(tray_name, tray_asset_data)
+            if idx == 0:
+                location = [
+                           room.depth/2 - room.cable_tray_arrangement.y_offset, 
+                           room.width/2 - room.cable_tray_arrangement.x_offset, 
+                           room.height - room.cable_tray_arrangement.z_offset,
+                           ]
+                tray_connector_obj.location = location
+                tray_connector_obj.rotation_euler = [0,0,0]
+                tray_obj.location = location
+                tray_obj.rotation_euler = [0,0,radians(180)] 
+            if idx == 1:
+                location = [
+                           -room.depth/2 + room.cable_tray_arrangement.y_offset, 
+                           room.width/2 - room.cable_tray_arrangement.x_offset, 
+                           room.height - room.cable_tray_arrangement.z_offset,
+                           ]
+                tray_connector_obj.location = location
+                tray_connector_obj.rotation_euler = [0,0,radians(90)]
+                tray_obj.location = location
+                tray_obj.rotation_euler = [0,0,radians(-90)] 
+            if idx == 2:
+                location = [
+                           -room.depth/2 + room.cable_tray_arrangement.y_offset, 
+                           -room.width/2 + room.cable_tray_arrangement.x_offset, 
+                           room.height - room.cable_tray_arrangement.z_offset,
+                           ]
+                tray_connector_obj.location = location
+                tray_connector_obj.rotation_euler = [0,0,radians(180)]
+                tray_obj.location = location
+                tray_obj.rotation_euler = [0,0,0] 
+            if idx == 3:
+                location = [
+                           room.depth/2 - room.cable_tray_arrangement.y_offset, 
+                           -room.width/2 + room.cable_tray_arrangement.x_offset, 
+                           room.height - room.cable_tray_arrangement.z_offset,
+                           ]
+                tray_connector_obj.location = location
+                tray_connector_obj.rotation_euler = [0,0,radians(-90)]
+                tray_obj.location = location
+                tray_obj.rotation_euler = [0,0,radians(90)] 
+            cable_tray_object_list.append(tray_connector_obj)
+            cable_tray_object_list.append(tray_obj)
+
+    except Exception as error:
+        print('Error'+repr(error))
+    #cable_tray_= bm.list_parent('cable-tray',cable_tray_object_list)
+    #return cable_tray_
+    return cable_tray_object_list

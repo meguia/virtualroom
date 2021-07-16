@@ -100,6 +100,7 @@ bm.list_link(object_list, col_obj)
 # importar asset
 if(room.lighting.light_source.object == 'asset'):
     assets_names = room.lighting.light_source.assets_names_as_array()
+    asset_object_array = []
     for asset_lib_name in room.lighting.light_source.libs_names_as_array():
         lib_filepath = libdir / asset_lib_name
         with bpy.data.libraries.load(str(lib_filepath)) as (data_from, data_to):
@@ -107,17 +108,34 @@ if(room.lighting.light_source.object == 'asset'):
                 for asset_name in assets_names:
                     if (name == asset_name):
                          data_to.objects.append(name)
-        asset_object_array = [ob for ob in bpy.data.objects if ob.name in assets_names]
-        light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__], asset_object_array)
+        asset_object_array += [ob for ob in bpy.data.objects if ob.name in assets_names]
+    light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__], asset_object_array)
 else:
     light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__])
 
 bm.list_link([light_source, mount],col_luces)
 
+#CABLE TRAY 
+# import assets
+if(room.cable_tray_arrangement is not None):
+    assets_names = room.cable_tray_arrangement.assets_names_as_array()
+    asset_object_array = []
+    # este for no se si esta bien
+    for asset_lib_name in room.cable_tray_arrangement.libs_names_as_array():
+        lib_filepath = libdir / asset_lib_name
+        with bpy.data.libraries.load(str(lib_filepath)) as (data_from, data_to):
+            for name in data_from.objects:
+                for asset_name in assets_names:
+                    if (name == asset_name):
+                         data_to.objects.append(name)
+        asset_object_array = [ob for ob in bpy.data.objects if ob.name in assets_names]
+        # aca va funcion de room utls
+    cable_tray = room_utils.make_cable_tray(room, asset_object_array)
+    print(cable_tray)
+    bm.list_link(cable_tray,col_obj)
+
 #bpy.context.view_layer.update()
 #bm.apply_transforms(light_source)
-
-
 
 #CAMARA 360
 bm.set_cycles()

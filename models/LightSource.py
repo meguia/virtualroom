@@ -11,7 +11,9 @@ from .extra.Color import Color
 from .Mount import Mount
 from .Asset import Asset
 
-class LightSource:
+from .extra.AssetManagerModel import AssetManagerModel
+
+class LightSource(AssetManagerModel):
     """
     A class to represent a Light Source.
 
@@ -56,13 +58,7 @@ class LightSource:
             #validate_simple_spot_schema(desc)
             pass
         elif self.object == 'asset':
-            try:
-                for asset in desc['assets_info']:
-                    self.assets.append(Asset(asset))
-            except KeyError:
-                error_msg = 'Missing assets_info key'
-                print(error_msg)
-            pass
+            super().__init__(desc)
 
         (
         self.iesfile,
@@ -94,19 +90,6 @@ class LightSource:
                 self.color.g,
                 self.color.b,
                ]
-
-    def assets_names_as_array(self):
-        """
-        Returns an array of strings containing assets names
-        """
-        return [asset.name for asset in self.assets]
-
-    def libs_names_as_array(self):
-        """
-        Returns a unique list of libs names 
-        """
-        libs_list = [asset.lib for asset in self.assets]
-        return list(set(libs_list))
 
     def __str__(self):
         """

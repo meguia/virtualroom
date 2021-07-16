@@ -36,25 +36,6 @@ class Lighting:
                      'y',
                      )(desc['arrangement'])
         self.light_source = LightSource(desc['light_source'])
-    '''
-        {
-            "lighting": {
-                "arrangement" : {"x": valx, "y": valy},
-                "light_source": {
-                    "object" : "Tube",
-                    "iesfile": "file/path",
-                    "intensity" : 400,
-                    "mount": {
-                        "size": {
-                        "x": 10.0,
-                        "y": 10.0,
-                        "z": 10.0,
-                        }
-                    }
-                }
-            }
-        }
-    '''
 
     def __str__(self):
         """
