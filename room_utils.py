@@ -95,40 +95,6 @@ def make_room(room, mat_dict=None, with_uv=True, with_tiles=False):
     if with_uv:    
         uv.uv_board(door.data,[dw,dh,t],scale=room.door.uv_scale,rot90=True) 
 
-    # add curtains
-    # dpos = [[l/2-dp-dw/2,-w/2-t/2,0],[-l/2+dp+dw/2,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
-    if room.curtain_arrangement is not None:
-        for idx, curtain in enumerate(room.curtain_arrangement.curtains):
-           xs = []
-           ys = [] 
-           zs = []
-           if curtain.wall_index == 0: 
-               # def mesh_for_recboard(name,xs,ys,zs):
-               xs = [curtain.position-curtain.width/2,curtain.position+curtain.width/2]
-               ys = [-w/2+curtain.offset,-w/2+curtain.offset]
-               zs = [0,curtain.height]
-           elif curtain.wall_index == 1:
-               xs = [curtain.position+curtain.width/2,curtain.position-curtain.width/2]
-               ys = [w/2-curtain.offset,w/2-curtain.offset]
-               zs = [0,curtain.height]
-
-           elif curtain.wall_index == 2: 
-               xs = [-l/2+curtain.offset, -l/2+curtain.offset]
-               ys = [curtain.position+curtain.width/2,curtain.position-curtain.width/2]
-               zs = [0,curtain.height]
-
-           elif curtain.wall_index == 3: 
-               xs = [l/2-curtain.offset, l/2-curtain.offset]
-               ys = [curtain.position-curtain.width/2,curtain.position+curtain.width/2]
-               zs = [0,curtain.height]
-
-           object_name = 'curtain' + str(idx)
-           rec_mesh = bm.mesh_for_vertical_plane(object_name, xs, ys, zs)
-           rec_ob =  bm.object_from_data(
-                                        rec_mesh.name,
-                                        rec_mesh
-                                        )
-           room_list.append(rec_ob)
 
     # Parents the list af all objects to an empty    
     room_ = bm.list_parent('room',room_list)
@@ -542,41 +508,6 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False):
         room.append(door)
     if with_uv:    
         uv.uv_board(door.data,[dw,dh,t],scale=room.door.uv_scale,rot90=True) 
-
-    # add curtains
-    # dpos = [[l/2-dp-dw/2,-w/2-t/2,0],[-l/2+dp+dw/2,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
-    if room.curtain_arrangement is not None:
-        for idx, curtain in enumerate(room.curtain_arrangement.curtains):
-           xs = []
-           ys = [] 
-           zs = []
-           if curtain.wall_index == 0: 
-               # def mesh_for_recboard(name,xs,ys,zs):
-               xs = [curtain.position-curtain.width/2,curtain.position+curtain.width/2]
-               ys = [-w/2+curtain.offset,-w/2+curtain.offset]
-               zs = [0,curtain.height]
-           elif curtain.wall_index == 1:
-               xs = [curtain.position+curtain.width/2,curtain.position-curtain.width/2]
-               ys = [w/2-curtain.offset,w/2-curtain.offset]
-               zs = [0,curtain.height]
-
-           elif curtain.wall_index == 2: 
-               xs = [-l/2+curtain.offset, -l/2+curtain.offset]
-               ys = [curtain.position+curtain.width/2,curtain.position-curtain.width/2]
-               zs = [0,curtain.height]
-
-           elif curtain.wall_index == 3: 
-               xs = [l/2-curtain.offset, l/2-curtain.offset]
-               ys = [curtain.position-curtain.width/2,curtain.position+curtain.width/2]
-               zs = [0,curtain.height]
-
-           object_name = 'curtain' + str(idx)
-           rec_mesh = bm.mesh_for_vertical_plane(object_name, xs, ys, zs)
-           rec_ob =  bm.object_from_data(
-                                        rec_mesh.name,
-                                        rec_mesh
-                                        )
-           room_list.append(rec_ob)
     # Parents the list af all objects to an empty    
     room_ = bm.list_parent('room',room_list)
     return room_
@@ -609,47 +540,87 @@ def make_cable_tray(room, asset_data):
             tray_connector_name = 'TrayConnector_' + str(idx)
             tray_connector_obj = bm.object_from_data(tray_connector_name, tray_connector_asset_data)
             tray_name = 'Tray_' + str(idx)
-            tray_obj = bm.object_from_data(tray_name, tray_asset_data)
+            tray_obj = None
             if idx == 0:
                 location = [
                            room.depth/2 - room.cable_tray_arrangement.y_offset, 
-                           room.width/2 - room.cable_tray_arrangement.x_offset, 
+                           -room.width/2 + room.cable_tray_arrangement.x_offset, 
                            room.height - room.cable_tray_arrangement.z_offset,
                            ]
                 tray_connector_obj.location = location
                 tray_connector_obj.rotation_euler = [0,0,0]
+                tray_copy = tray_asset_data.copy()
+                tray_obj = bm.object_from_data(tray_name, tray_copy)
+                me = tray_obj.data
+                me.name = tray_name
+                # increment = room depth + 0.2 (tray width) + y offset * 2 + 0.2 (connector)-1(initial size)
+                increment = room.depth - room.cable_tray_arrangement.y_offset*2- 0.2 - 1
+                bm.linear_stretch(me, 1, 0.9, increment)
+                uv.stretch_uv(me, 'UVMap', 1, 0.9, increment)
+                # hardcoding tray offset todo make it object attribute
+                location[0] -= 0.10
                 tray_obj.location = location
-                tray_obj.rotation_euler = [0,0,radians(180)] 
+                tray_obj.rotation_euler = [0,0,radians(90)] 
             if idx == 1:
                 location = [
-                           -room.depth/2 + room.cable_tray_arrangement.y_offset, 
+                           room.depth/2 - room.cable_tray_arrangement.y_offset, 
                            room.width/2 - room.cable_tray_arrangement.x_offset, 
                            room.height - room.cable_tray_arrangement.z_offset,
                            ]
                 tray_connector_obj.location = location
                 tray_connector_obj.rotation_euler = [0,0,radians(90)]
+                tray_copy = tray_asset_data.copy()
+                tray_obj = bm.object_from_data(tray_name, tray_copy)
+                me = tray_obj.data
+                me.name = tray_name
+                # increment = room width+ x offset * 2 + 0.2 (connector)-1(initial size)
+                increment = room.width- room.cable_tray_arrangement.x_offset*2- 0.2 - 1
+                bm.linear_stretch(me, 1, 0.9, increment)
+                uv.stretch_uv(me, 'UVMap', 1, 0.9, increment)
+                # hardcoding tray offset todo make it object attribute
+                location[1] -= 0.10
+                tray_obj.location = location
+                tray_obj.rotation_euler = [0,0,radians(180)] 
+            if idx == 2:
+                location = [
+                           -room.depth/2 + room.cable_tray_arrangement.y_offset, 
+                           room.width/2 - room.cable_tray_arrangement.x_offset, 
+                           room.height - room.cable_tray_arrangement.z_offset,
+                           ]
+                tray_connector_obj.location = location
+                tray_connector_obj.rotation_euler = [0,0,radians(180)]
+                tray_copy = tray_asset_data.copy()
+                tray_obj = bm.object_from_data(tray_name, tray_copy)
+                me = tray_obj.data
+                me.name = tray_name
+                # increment = room depth + 0.2 (tray width) + y offset * 2 + 0.2 (connector)-1(initial size)
+                increment = room.depth - room.cable_tray_arrangement.y_offset*2- 0.2 - 1
+                bm.linear_stretch(me, 1, 0.9, increment)
+                uv.stretch_uv(me, 'UVMap', 1, 0.9, increment)
+                # hardcoding tray offset todo make it object attribute
+                location[0] += 0.10
                 tray_obj.location = location
                 tray_obj.rotation_euler = [0,0,radians(-90)] 
-            if idx == 2:
+            if idx == 3:
                 location = [
                            -room.depth/2 + room.cable_tray_arrangement.y_offset, 
                            -room.width/2 + room.cable_tray_arrangement.x_offset, 
                            room.height - room.cable_tray_arrangement.z_offset,
                            ]
                 tray_connector_obj.location = location
-                tray_connector_obj.rotation_euler = [0,0,radians(180)]
+                tray_connector_obj.rotation_euler = [0,0,radians(-90)]
+                tray_copy = tray_asset_data.copy()
+                tray_obj = bm.object_from_data(tray_name, tray_copy)
+                me = tray_obj.data
+                me.name = tray_name
+                # increment = room width+ x offset * 2 + 0.2 (connector)-1(initial size)
+                increment = room.width- room.cable_tray_arrangement.x_offset*2- 0.2 - 1
+                bm.linear_stretch(me, 1, 0.9, increment)
+                uv.stretch_uv(me, 'UVMap', 1, 0.9, increment)
+                # hardcoding tray offset todo make it object attribute
+                location[1] += 0.10
                 tray_obj.location = location
                 tray_obj.rotation_euler = [0,0,0] 
-            if idx == 3:
-                location = [
-                           room.depth/2 - room.cable_tray_arrangement.y_offset, 
-                           -room.width/2 + room.cable_tray_arrangement.x_offset, 
-                           room.height - room.cable_tray_arrangement.z_offset,
-                           ]
-                tray_connector_obj.location = location
-                tray_connector_obj.rotation_euler = [0,0,radians(-90)]
-                tray_obj.location = location
-                tray_obj.rotation_euler = [0,0,radians(90)] 
             cable_tray_object_list.append(tray_connector_obj)
             cable_tray_object_list.append(tray_obj)
 
@@ -658,3 +629,41 @@ def make_cable_tray(room, asset_data):
     #cable_tray_= bm.list_parent('cable-tray',cable_tray_object_list)
     #return cable_tray_
     return cable_tray_object_list
+
+def add_curtains(room):
+    # add curtains
+    # dpos = [[l/2-dp-dw/2,-w/2-t/2,0],[-l/2+dp+dw/2,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
+    room_list = []
+    if room.curtain_arrangement is not None:
+        for idx, curtain in enumerate(room.curtain_arrangement.curtains):
+           xs = []
+           ys = [] 
+           zs = []
+           if curtain.wall_index == 0: 
+               # def mesh_for_recboard(name,xs,ys,zs):
+               xs = [curtain.position-curtain.width/2,curtain.position+curtain.width/2]
+               ys = [-room.width/2+curtain.offset,-room.width/2+curtain.offset]
+               zs = [0,curtain.height]
+           elif curtain.wall_index == 1:
+               xs = [curtain.position+curtain.width/2,curtain.position-curtain.width/2]
+               ys = [room.width/2-curtain.offset,room.width/2-curtain.offset]
+               zs = [0,curtain.height]
+
+           elif curtain.wall_index == 2: 
+               xs = [-room.length/2+curtain.offset, -room.length/2+curtain.offset]
+               ys = [curtain.position+curtain.width/2,curtain.position-curtain.width/2]
+               zs = [0,curtain.height]
+
+           elif curtain.wall_index == 3: 
+               xs = [room.length/2-curtain.offset, room.length/2-curtain.offset]
+               ys = [curtain.position-curtain.width/2,curtain.position+curtain.width/2]
+               zs = [0,curtain.height]
+
+           object_name = 'curtain' + str(idx)
+           rec_mesh = bm.mesh_for_vertical_plane(object_name, xs, ys, zs)
+           rec_ob =  bm.object_from_data(
+                                        rec_mesh.name,
+                                        rec_mesh
+                                        )
+           room_list.append(rec_ob)
+    return room_list
