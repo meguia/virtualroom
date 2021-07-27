@@ -18,11 +18,11 @@
                 },
                 "holes": [
                     {
-                        "wall_index": 0,
+                        "wall_index": 2,
                         "hpos": 1.0,
-                        "hsize":1.5,
+                        "hsize":1.2,
                         "vpos": 0.0,
-                        "vsize":1.5
+                        "vsize":2.2
                     }
                 ]
             },

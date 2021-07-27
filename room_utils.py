@@ -451,9 +451,10 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False):
     (l,w,h,t) = [room.depth, room.width, room.height, room.wall_thickness] # length, width, height, thickness
     (dn, dp, dw, dh) = [room.door.wall_index, room.door.position, room.door.width, room.door.height] # wall number, position from border, width, height
     # Makes floor and ceiling
-    floor = nm.floor(type(room.floor).__name__, mat_dict[room.floor.material.name],pos=[0,0,-t],dims=[l+2*t,w+2*t,t])
-    ceil = nm.floor(type(room.ceiling).__name__,mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
+    floor = bm.floor(type(room.floor).__name__, mat_dict[room.floor.material.name],pos=[0,0,-t],dims=[l+2*t,w+2*t,t])
+    ceil = bm.floor(type(room.ceiling).__name__,mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
     if with_uv:
+        # esto esta bien?
         uv.uv_board(ceil.data, [l,w,t], front=1, scale = room.ceiling.uv_scale)
         uv.uv_board(floor.data, [l+2*t,w+2*t,t], front=2, scale = room.floor.uv_scale)
     room_list = [floor,ceil]    
@@ -470,10 +471,10 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False):
             [-l/2+tdim,-w/2+dp,-l/2+tdim,-w/2+dp+dw],[l/2-tdim,w/2-dp,l/2-tdim,w/2-dp-dw]]
     dim2=[l,l,w,w]
     # For placing the hole in an array of empty arrays
-    holes = [[]]*4
-    holes[dn] = [[[dp,dp+dw],[0,dh]]]
+    #holes = [[]]*4
+    #holes[dn] = [[[dp,dp+dw],[0,dh]]]
     # agrege esto
-    #holes = room.wall.holes_as_array()
+    holes = room.wall.holes_as_array()
     bandmats = [mat_dict[room.wall.material.name]]
     
     for n in range(4):
@@ -489,11 +490,10 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False):
         bandmats.append(mat_dict[room.wall.material.name])
         print(bandmats)
         print(bands)
-        wall = nm.wall('wall_' + str(n),pos=pos[n],rot=rots[n],dims=[dim[n],t/2,h],holes=holes[n],bandmats=bandmats,bands=bands)
+        wall = nm.wall('wall_' + str(n),pos=pos[n],rot=rots[n],dims=[dim[n],h,t/2],holes=holes[n],bandmats=bandmats,bands=bands)
         if with_uv:
-            pass
             #pendiente
-            #uv.uv_board(wall.data,[dim[n],h+t,t],scale=room.wall.uv_scale)    
+            uv.uv_board_hbands(wall.data, scale=1)
         room_list.append(wall)    
     # Makes door and frame 
     if room.door.frame is not None: 
