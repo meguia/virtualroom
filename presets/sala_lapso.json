@@ -43,7 +43,7 @@
                         "thickness" : [0.0, 0.0],
                         "uv_scale": 3.0,
                         "material":  {
-                            "sbs_name": "concrete_raw_grey",
+                            "sbs_name": "concrete_raw_black",
                             "category": "Concrete",
                             "preset": "preset1"
                         }
