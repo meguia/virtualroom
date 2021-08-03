@@ -186,6 +186,8 @@ class Room:
                     self.door.frame.material,
                     self.base.material,
                     ]
+        for material in self.wall.fetch_bands_materials():
+            materials.append(material)
         mat_dict_substance = {}
         for m in materials:
             mat_dict_substance[m.name] = m          

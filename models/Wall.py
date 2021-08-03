@@ -107,3 +107,9 @@ class Wall(ElementWithMaterial):
             if wall_index in band.wall_indexes:
                 wanted_bands.append(band)
         return wanted_bands
+
+    def fetch_bands_materials(self):
+        materials = []
+        for band in self.bands:
+            materials.append(band.material)
+        return materials
