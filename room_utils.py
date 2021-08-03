@@ -475,19 +475,25 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False):
     #holes[dn] = [[[dp,dp+dw],[0,dh]]]
     # agrege esto
     holes = room.wall.holes_as_array()
-    bandmats = [mat_dict[room.wall.material.name]]
+    #bandmats = [mat_dict[room.wall.material.name]]
     
     for n in range(4):
-        bands = []
+        #bands = []
+        #bandmats = [mat_dict[room.wall.material.name]]
+        #if room.base is not None:
+        #    (bh,bt) = [room.base.height, room.base.thickness]
+        #    bands.append([[0,bh,bh*1.1],[bt,bt,0]])
+        #    bandmats.append(mat_dict[room.base.material.name])
+        ## puesto a mano esto despues se saca de room franja de pintura de arriba
+        #bands.append([[h-0.2,h],[0,0]])
+        ## por ahora el mismo material
+        #bandmats.append(mat_dict[room.wall.material.name])
         bandmats = [mat_dict[room.wall.material.name]]
-        if room.base is not None:
-            (bh,bt) = [room.base.height, room.base.thickness]
-            bands.append([[0,bh,bh*1.1],[bt,bt,0]])
-            bandmats.append(mat_dict[room.base.material.name])
-        # puesto a mano esto despues se saca de room franja de pintura de arriba
-        bands.append([[h-0.2,h],[0,0]])
-        # por ahora el mismo material
-        bandmats.append(mat_dict[room.wall.material.name])
+        bands = []
+        bands_by_wall_index = room.wall.fetch_bands_by_wall_index(n)
+        for band in bands_by_wall_index:
+            bands.append([band.heights, band.thickness])
+            bandmats.append(mat_dict[band.material.name])
         print(bandmats)
         print(bands)
         wall = nm.wall('wall_' + str(n),pos=pos[n],rot=rots[n],dims=[dim[n],h,t/2],holes=holes[n],bandmats=bandmats,bands=bands)

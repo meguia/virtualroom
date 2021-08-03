@@ -24,6 +24,30 @@
                         "vpos": 0.0,
                         "vsize":2.2
                     }
+                ],
+                "bands": [
+                    {
+                        "wall_index": [0,1,2,3],
+                        "heights": [0.0, 0.12, 0.132],
+                        "thickness" : [0.025, 0.025, 0],
+                        "uv_scale": 3.0,
+                        "material":  {
+                            "sbs_name": "wood_black_walnut_striped",
+                            "category": "Wood",
+                            "preset": "preset1"
+                        }
+                    },
+                    {
+                        "wall_index": [0,1,2,3],
+                        "heights": [2.8, 3.0],
+                        "thickness" : [0.0, 0.0],
+                        "uv_scale": 3.0,
+                        "material":  {
+                            "sbs_name": "concrete_raw_grey",
+                            "category": "Concrete",
+                            "preset": "preset1"
+                        }
+                    }
                 ]
             },
             "ceiling": {
