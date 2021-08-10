@@ -543,97 +543,155 @@ def make_cable_tray(room, asset_data):
             raise ValueError('asset_data should contain blender objects with name Tray and TrayConnector')
 
         for idx in range(4):
-            tray_connector_name = 'TrayConnector_' + str(idx)
-            tray_connector_obj = bm.object_from_data(tray_connector_name, tray_connector_asset_data)
-            tray_name = 'Tray_' + str(idx)
-            tray_obj = None
             if idx == 0:
+                config = room.cable_tray_arrangement.get_wall_config_by_wall_index(idx)
+                if(not config['Tray'] and not config['Connector']):
+                    # exit early if no tray or connector
+                    continue
                 location = [
                            room.depth/2 - room.cable_tray_arrangement.y_offset, 
                            -room.width/2 + room.cable_tray_arrangement.x_offset, 
                            room.height - room.cable_tray_arrangement.z_offset,
                            ]
-                tray_connector_obj.location = location
-                tray_connector_obj.rotation_euler = [0,0,0]
-                tray_copy = tray_asset_data.copy()
-                tray_obj = bm.object_from_data(tray_name, tray_copy)
-                me = tray_obj.data
-                me.name = tray_name
-                # increment = room depth + 0.2 (tray width) + y offset * 2 + 0.2 (connector)-1(initial size)
-                increment = room.depth - room.cable_tray_arrangement.y_offset*2- 0.2 - 1
-                bm.linear_stretch(me, 1, 0.9, increment)
-                uv.stretch_uv(me, 'UVMap', 1, 0.9, increment)
-                # hardcoding tray offset todo make it object attribute
-                location[0] -= 0.10
-                tray_obj.location = location
-                tray_obj.rotation_euler = [0,0,radians(90)] 
+                # Connector
+                if(config['Connector']):
+                    tray_connector_name = 'TrayConnector_' + str(idx)
+                    tray_connector_obj = bm.object_from_data(tray_connector_name,
+                            tray_connector_asset_data)
+                    tray_connector_obj.location = location
+                    tray_connector_obj.rotation_euler = [0,0,0]
+                    cable_tray_object_list.append(tray_connector_obj)
+
+                #Tray
+                if(config['Tray']):
+                    tray_name = 'Tray_' + str(idx)
+                    tray_copy = tray_asset_data.copy()
+                    tray_obj = bm.object_from_data(tray_name, tray_copy)
+                    me = tray_obj.data
+                    me.name = tray_name
+                    # increment = room depth + 0.2 (tray width) + y offset * 2 + 0.2 (connector)-1(initial size)
+                    increment = room.depth - room.cable_tray_arrangement.y_offset*2- 0.2 - 1
+                    bm.linear_stretch(me, 1, 0.9, increment)
+                    uv.stretch_uv(me, 'UVMap', 1, 0.9, increment)
+                    # hardcoding tray offset todo make it object attribute
+                    location[0] -= 0.10
+                    tray_obj.location = location
+                    tray_obj.rotation_euler = [0,0,radians(90)] 
+                    cable_tray_object_list.append(tray_obj)
+
             if idx == 1:
+                config = room.cable_tray_arrangement.get_wall_config_by_wall_index(idx)
+                if(not config['Tray'] and not config['Connector']):
+                    # exit early if no tray or connector
+                    continue
                 location = [
                            room.depth/2 - room.cable_tray_arrangement.y_offset, 
                            room.width/2 - room.cable_tray_arrangement.x_offset, 
                            room.height - room.cable_tray_arrangement.z_offset,
                            ]
-                tray_connector_obj.location = location
-                tray_connector_obj.rotation_euler = [0,0,radians(90)]
-                tray_copy = tray_asset_data.copy()
-                tray_obj = bm.object_from_data(tray_name, tray_copy)
-                me = tray_obj.data
-                me.name = tray_name
-                # increment = room width+ x offset * 2 + 0.2 (connector)-1(initial size)
-                increment = room.width- room.cable_tray_arrangement.x_offset*2- 0.2 - 1
-                bm.linear_stretch(me, 1, 0.9, increment)
-                uv.stretch_uv(me, 'UVMap', 1, 0.9, increment)
-                # hardcoding tray offset todo make it object attribute
-                location[1] -= 0.10
-                tray_obj.location = location
-                tray_obj.rotation_euler = [0,0,radians(180)] 
+
+                # Connector
+                if(config['Connector']):
+                    tray_connector_name = 'TrayConnector_' + str(idx)
+                    tray_connector_obj = bm.object_from_data(tray_connector_name,
+                            tray_connector_asset_data)
+                    tray_connector_obj.location = location
+                    tray_connector_obj.rotation_euler = [0,0,radians(90)]
+                    cable_tray_object_list.append(tray_connector_obj)
+
+                #Tray
+                if(config['Tray']):
+                    tray_name = 'Tray_' + str(idx)
+                    tray_copy = tray_asset_data.copy()
+                    tray_obj = bm.object_from_data(tray_name, tray_copy)
+                    me = tray_obj.data
+                    me.name = tray_name
+                    # increment = room width+ x offset * 2 + 0.2 (connector)-1(initial size)
+                    increment = room.width- room.cable_tray_arrangement.x_offset*2- 0.2 - 1
+                    bm.linear_stretch(me, 1, 0.9, increment)
+                    uv.stretch_uv(me, 'UVMap', 1, 0.9, increment)
+                    # hardcoding tray offset todo make it object attribute
+                    location[1] -= 0.10
+                    tray_obj.location = location
+                    tray_obj.rotation_euler = [0,0,radians(180)] 
+                    cable_tray_object_list.append(tray_obj)
+                
             if idx == 2:
+                config = room.cable_tray_arrangement.get_wall_config_by_wall_index(idx)
+                if(not config['Tray'] and not config['Connector']):
+                    # exit early if no tray or connector
+                    continue 
                 location = [
                            -room.depth/2 + room.cable_tray_arrangement.y_offset, 
                            room.width/2 - room.cable_tray_arrangement.x_offset, 
                            room.height - room.cable_tray_arrangement.z_offset,
                            ]
-                tray_connector_obj.location = location
-                tray_connector_obj.rotation_euler = [0,0,radians(180)]
-                tray_copy = tray_asset_data.copy()
-                tray_obj = bm.object_from_data(tray_name, tray_copy)
-                me = tray_obj.data
-                me.name = tray_name
-                # increment = room depth + 0.2 (tray width) + y offset * 2 + 0.2 (connector)-1(initial size)
-                increment = room.depth - room.cable_tray_arrangement.y_offset*2- 0.2 - 1
-                bm.linear_stretch(me, 1, 0.9, increment)
-                uv.stretch_uv(me, 'UVMap', 1, 0.9, increment)
-                # hardcoding tray offset todo make it object attribute
-                location[0] += 0.10
-                tray_obj.location = location
-                tray_obj.rotation_euler = [0,0,radians(-90)] 
+
+                # Connector
+                if(config['Connector']):
+                    tray_connector_name = 'TrayConnector_' + str(idx)
+                    tray_connector_obj = bm.object_from_data(tray_connector_name,
+                            tray_connector_asset_data)
+                    tray_connector_obj.location = location
+                    tray_connector_obj.rotation_euler = [0,0,radians(180)]
+                    cable_tray_object_list.append(tray_connector_obj)
+
+                #Tray
+                if(config['Tray']):
+                    tray_name = 'Tray_' + str(idx)
+                    tray_copy = tray_asset_data.copy()
+                    tray_obj = bm.object_from_data(tray_name, tray_copy)
+                    me = tray_obj.data
+                    me.name = tray_name
+                    # increment = room depth + 0.2 (tray width) + y offset * 2 + 0.2 (connector)-1(initial size)
+                    increment = room.depth - room.cable_tray_arrangement.y_offset*2- 0.2 - 1
+                    bm.linear_stretch(me, 1, 0.9, increment)
+                    uv.stretch_uv(me, 'UVMap', 1, 0.9, increment)
+                    # hardcoding tray offset todo make it object attribute
+                    location[0] += 0.10
+                    tray_obj.location = location
+                    tray_obj.rotation_euler = [0,0,radians(-90)] 
+                    cable_tray_object_list.append(tray_obj)
+
             if idx == 3:
+                config = room.cable_tray_arrangement.get_wall_config_by_wall_index(idx)
+                if(not config['Tray'] and not config['Connector']):
+                    # exit early if no tray or connector
+                    continue
                 location = [
                            -room.depth/2 + room.cable_tray_arrangement.y_offset, 
                            -room.width/2 + room.cable_tray_arrangement.x_offset, 
                            room.height - room.cable_tray_arrangement.z_offset,
                            ]
-                tray_connector_obj.location = location
-                tray_connector_obj.rotation_euler = [0,0,radians(-90)]
-                tray_copy = tray_asset_data.copy()
-                tray_obj = bm.object_from_data(tray_name, tray_copy)
-                me = tray_obj.data
-                me.name = tray_name
-                # increment = room width+ x offset * 2 + 0.2 (connector)-1(initial size)
-                increment = room.width- room.cable_tray_arrangement.x_offset*2- 0.2 - 1
-                bm.linear_stretch(me, 1, 0.9, increment)
-                uv.stretch_uv(me, 'UVMap', 1, 0.9, increment)
-                # hardcoding tray offset todo make it object attribute
-                location[1] += 0.10
-                tray_obj.location = location
-                tray_obj.rotation_euler = [0,0,0] 
-            cable_tray_object_list.append(tray_connector_obj)
-            cable_tray_object_list.append(tray_obj)
+
+                # Connector
+                if(config['Connector']):
+                    tray_connector_name = 'TrayConnector_' + str(idx)
+                    tray_connector_obj = bm.object_from_data(tray_connector_name,
+                            tray_connector_asset_data)
+                    tray_connector_obj.location = location
+                    tray_connector_obj.rotation_euler = [0,0,radians(-90)]
+                    cable_tray_object_list.append(tray_connector_obj)
+
+                #Tray
+                if(config['Tray']):
+                    tray_name = 'Tray_' + str(idx)
+                    tray_copy = tray_asset_data.copy()
+                    tray_obj = bm.object_from_data(tray_name, tray_copy)
+                    me = tray_obj.data
+                    me.name = tray_name
+                    # increment = room width+ x offset * 2 + 0.2 (connector)-1(initial size)
+                    increment = room.width- room.cable_tray_arrangement.x_offset*2- 0.2 - 1
+                    bm.linear_stretch(me, 1, 0.9, increment)
+                    uv.stretch_uv(me, 'UVMap', 1, 0.9, increment)
+                    # hardcoding tray offset todo make it object attribute
+                    location[1] += 0.10
+                    tray_obj.location = location
+                    tray_obj.rotation_euler = [0,0,0] 
+                    cable_tray_object_list.append(tray_obj)
 
     except Exception as error:
         print('Error'+repr(error))
-    #cable_tray_= bm.list_parent('cable-tray',cable_tray_object_list)
-    #return cable_tray_
     return cable_tray_object_list
 
 def add_curtains(room):

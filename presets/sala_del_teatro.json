@@ -1,0 +1,224 @@
+{
+    "room": {
+        "name": "Sala del teatro",
+        "dimensions": {
+            "depth": 9.90,
+            "width": 4.33,
+            "height": 3.80
+        },
+        "wall_thickness" : 0.15,
+        "elements": {
+            "wall": {
+                "thickness": 0.15,
+                "uv_scale": 1.5,
+                "material":  {
+                    "sbs_name": "concrete_raw_grey",
+                    "category": "Concrete",
+                    "preset": "preset1"
+                },
+                "holes": [
+                    {
+                        "wall_index": 2,
+                        "hpos": 1.0,
+                        "hsize":1.2,
+                        "vpos": 0.0,
+                        "vsize":2.2
+                    }
+                ],
+                "bands": [
+                    {
+                        "wall_index": [0,1,2,3],
+                        "heights": [0.0, 0.12, 0.132],
+                        "thickness" : [0.025, 0.025, 0],
+                        "uv_scale": 3.0,
+                        "material":  {
+                            "sbs_name": "wood_black_walnut_striped",
+                            "category": "Wood",
+                            "preset": "preset1"
+                        }
+                    },
+                    {
+                        "wall_index": [0,1,2,3],
+                        "heights": [2.8, 3.8],
+                        "thickness" : [0.0, 0.0],
+                        "uv_scale": 3.0,
+                        "material":  {
+                            "sbs_name": "concrete_raw_black",
+                            "category": "Concrete",
+                            "preset": "preset1"
+                        }
+                    }
+                ]
+            },
+            "ceiling": {
+                "uv_scale": 1.0,
+                "material":  {
+                    "sbs_name": "concrete_raw_black",
+                    "category": "Concrete",
+                    "preset": "preset1"
+                }
+            },
+            "floor": {
+               "uv_scale": 3.0,
+               "material":  {
+                   "sbs_name": "parquet_european_ash_grey",
+                   "category": "Wood",
+                   "preset": "preset1"
+               }
+            },
+            "door": {
+                "wall_index": 2,
+                "position": 1,
+                "width": 1.2,
+                "height": 2.2,
+                "uv_scale": 2.0,
+                "material":  {
+                    "sbs_name": "wood_wenge",
+                    "category": "Wood",
+                    "preset": "preset1"
+                },
+                "frame": {
+                    "width": 0.08,
+                    "thickness": 0.03,
+                    "uv_scale": 1.0,
+                    "material":  {
+                        "sbs_name": "wood_black_walnut_striped",
+                        "category": "Wood",
+                        "preset": "preset1"
+                    }
+                }
+            },
+            "base": {
+              "height": 0.12,
+              "thickness" : 0.025,
+              "uv_scale": 3.0,
+              "material":  {
+                  "sbs_name": "wood_black_walnut_striped",
+                  "category": "Wood",
+                  "preset": "preset1"
+              }
+            },
+            "curtain_arrangement":{
+              "material":  {
+                  "sbs_name": "wood_black_walnut_striped",
+                  "category": "Wood",
+                  "preset": "preset1"
+              },
+              "uv_scale": 2.0,
+              "curtains": [
+                {
+                "wall_index": 0,
+                "offset": 0.05,
+                "width": 1.75,
+                "height": 2.75,
+                "position": 1.0
+                }
+              ]
+            },
+            "cable_tray_arrangement":{
+                "x-offset": 0.35,
+                "y-offset": 0.22,
+                "z-offset": 0.35,
+                "assets_info": [
+                  {
+                    "name": "Tray",
+                    "lib": "ACableTray.blend"
+                  },
+                  {
+                    "name": "TrayConnector",
+                    "lib": "ACableTray.blend"
+                  }
+                ],
+                "config": [
+                    {
+                        "wall_index": 0,
+                        "has_tray": true,
+                        "has_connector":false 
+                    },
+                    {
+                        "wall_index": 1,
+                        "has_tray": false,
+                        "has_connector": false 
+                    },
+                    {
+                        "wall_index": 2,
+                        "has_tray": true,
+                        "has_connector": true 
+                    },
+                    {
+                        "wall_index": 3,
+                        "has_tray": true,
+                        "has_connector": true 
+                    }
+                ]
+            },
+            "source": {
+                "lib": "Sources.blend",
+                "speaker": "Genelec",
+                "stand": "Tilt_Stand",
+                "height": 1.25,
+                "positions": [
+                    {
+                        "x": -1,
+                        "y": 0,
+                        "rotation": 180
+                    },
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "rotation": 180
+                    },
+                    {
+                        "x": 1.5,
+                        "y": 0,
+                        "rotation": 180
+                    },
+                    {
+                        "x": 3,
+                        "y": 0,
+                        "rotation": 180
+                    }
+                ]
+            }
+        },
+        "lighting": {
+            "arrangement" : {"x": 3, "y": 2},
+            "light_source": {
+                "object" : "asset",
+                "assets_info": [
+                  {
+                    "name": "Lamp",
+                    "lib": "Assets.blend"
+                  },
+                  {
+                    "name": "Bulb",
+                    "lib": "Assets.blend"
+                  }
+                ],
+                "iesfile": "lib/ies/spot1.ies",
+                "color" : {
+                    "r" : 1.0,
+                    "g" : 0.8,
+                    "b" : 0.8,
+                    "alpha" :1.0 
+                },
+                "intensity" : 5,
+                "mount": {
+                    "size": {
+                    "x": 0.1,
+                    "y": 0.1,
+                    "z": 0.12
+                    }
+                }
+            }
+        },
+        "camera": {
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": 1.3
+            },
+            "rotation": -90
+        }
+    }
+}
