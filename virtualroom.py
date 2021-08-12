@@ -109,11 +109,16 @@ if(room.lighting.light_source.object == 'asset'):
                     if (name == asset_name):
                          data_to.objects.append(name)
         asset_object_array += [ob for ob in bpy.data.objects if ob.name in assets_names]
-    light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__], asset_object_array)
+    if(len(room.lighting.positions) > 0):
+        light_source, mount = room_utils.ceiling_lighting_by_positions(room, bpy.data.objects[type(room.ceiling).__name__], asset_object_array)
+        bm.list_link(light_source,col_luces)
+        bm.list_link(mount,col_luces)
+    else:
+        light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__], asset_object_array)
+        bm.list_link([light_source, mount],col_luces)
 else:
     light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__])
-
-bm.list_link([light_source, mount],col_luces)
+    bm.list_link([light_source, mount],col_luces)
 
 #CABLE TRAY 
 # import assets
@@ -131,7 +136,6 @@ if(room.cable_tray_arrangement is not None):
         asset_object_array = [ob for ob in bpy.data.objects if ob.name in assets_names]
         # aca va funcion de room utls
     cable_tray = room_utils.make_cable_tray(room, asset_object_array)
-    print(cable_tray)
     bm.list_link(cable_tray,col_obj)
 
 #bpy.context.view_layer.update()

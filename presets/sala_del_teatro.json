@@ -32,8 +32,8 @@
                         "thickness" : [0.025, 0.025, 0],
                         "uv_scale": 3.0,
                         "material":  {
-                            "sbs_name": "wood_black_walnut_striped",
-                            "category": "Wood",
+                            "sbs_name": "concrete_raw_grey",
+                            "category": "Concrete",
                             "preset": "preset1"
                         }
                     },
@@ -183,6 +183,32 @@
         },
         "lighting": {
             "arrangement" : {"x": 3, "y": 2},
+            "positions": [
+                {
+                    "x": 1.95,
+                    "y": 0.965
+                },
+                {
+                    "x": -0.05,
+                    "y": 0.965
+                },
+                {
+                    "x": -2.05,
+                    "y": 0.965
+                },
+                {
+                    "x": 1.95,
+                    "y": -0.965
+                },
+                {
+                    "x": -0.05,
+                    "y": -0.965
+                },
+                {
+                    "x": -2.05,
+                    "y": -0.965
+                }
+            ],
             "light_source": {
                 "object" : "asset",
                 "assets_info": [

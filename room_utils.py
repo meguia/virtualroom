@@ -346,6 +346,58 @@ def ceiling_lighting(room, ceiling, asset_data=None):
     return light_source,mount
 
 
+def ceiling_lighting_by_positions(room, ceiling, asset_data=None):
+    '''
+    Function to add lighting assets on roof by position
+    TODO: add spot and tube by position
+    '''
+    #tray_name = 'Tray_' + str(idx)
+    #tray_copy = tray_asset_data.copy()
+    #tray_obj = bm.object_from_data(tray_name, tray_copy)
+    mount_type = room.lighting.light_source.object #'tube'
+    mount = []
+    light_source = []
+    if mount_type == 'asset':
+        #stand_name_ob = room.source.stand_name+ '_' + str(idx)
+        try:
+            if(asset_data == None):
+                raise ValueError('asset_data should contain blender object data')
+            for asset in asset_data:
+                if asset.name == 'Lamp':
+                    mount_asset_data = asset.data
+                    #mount = bm.object_from_data('Lamp', asset.data)
+            z = ceiling.location.z
+            ies_path = str(thisdir / room.lighting.light_source.iesfile)
+            for idx, pos in enumerate(room.lighting.positions):
+                lamp_name = 'Lamp_' + str(idx)
+                lamp_copy = mount_asset_data.copy()
+                lamp_object = bm.object_from_data(lamp_name, lamp_copy)
+                lamp_object.location = [pos['x'], pos['y'], z]
+                spot_strength = room.lighting.light_source.intensity
+                spot_color = room.lighting.light_source.color_as_rgb_array()
+                spot = bm.new_ieslight(ies_path,color=spot_color,power=spot_strength)
+                ## offest hardcodeado para que no quede en z igual a techo
+                spot.location = lamp_object.location
+                spot.location.z -= 0.80
+                mount.append(lamp_object)
+                light_source.append(spot)
+            #mount.location = [x0, y0, z0]
+            #spot_strength = room.lighting.light_source.intensity
+            #spot_color = room.lighting.light_source.color_as_rgb_array()
+            ## creamos el spot aplicando IES
+            #ies_path = str(thisdir / room.lighting.light_source.iesfile)
+            #spot = bm.new_ieslight(ies_path,color=spot_color,power=spot_strength)
+            ## offest hardcodeado para que no quede en z igual a techo
+            #spot.location.z -= 0.40
+            #light_source = bm.light_grid(spot,Nx-1,Ny-1,dx,dy)
+            #light_source.show_instancer_for_viewport = False
+            #light_source.show_instancer_for_render = False
+
+        except Exception as error:
+            print('Error'+repr(error))
+    #light_source.parent = mount
+    return light_source,mount
+
 
 # en room utils 
 # make_speaker_array(room,speaker_data,[pie_data,pie_data2],speaker_height)

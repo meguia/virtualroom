@@ -16,13 +16,15 @@ class Lighting:
         lighting y array size
         
     """
-    array_x = NumberValidator()
-    array_y = NumberValidator()
+    array_x = NumberValidator(minvalue=1, int_only=True)
+    array_y = NumberValidator(minvalue=1, int_only=True)
 
     def __init__(self, desc = {}):
         """
         Constructs all the necessary attributes for the Lighting object.
-        
+        By default arrangement should be specified.
+        Specifying positions(optional) overrides arrangement.
+
         Parameters
         -----------
             desc: dict
@@ -35,6 +37,14 @@ class Lighting:
                      'x',
                      'y',
                      )(desc['arrangement'])
+        self.positions = []
+        if 'positions' in desc:
+            for pos in desc['positions']:
+                self.positions.append({
+                                       'x': pos['x'],
+                                       'y': pos['y'],
+                                     })
+
         self.light_source = LightSource(desc['light_source'])
 
     def __str__(self):
@@ -43,6 +53,14 @@ class Lighting:
         """
 
         light_source_string = self.light_source.__str__()
+        positions_string = ''
+        if(len(self.positions) > 0):
+            positions_string += '\tMount positions:\n'
+            for idx, pos in enumerate(self.positions):
+                positions_string += '\tLight ' + str(idx) +':\n'
+                positions_string += '\tX: ' + str(pos['x']) +'\n'
+                positions_string += '\tY: ' + str(pos['y']) +'\n'
+
 
         return(
               'Lighting:\n'
@@ -50,6 +68,7 @@ class Lighting:
               '\tX:  {0:6.2f}\n'
               '\tY:  {1:6.2f}\n' 
               f'{ light_source_string }\n'
+              f'{ positions_string }'
               .format(
                      self.array_x,
                      self.array_y,
