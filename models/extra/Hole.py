@@ -1,6 +1,7 @@
 from operator import itemgetter
 
 from ..validation.NumberValidator import NumberValidator
+from ..Door import Door
 
 class Hole:
     """
@@ -20,9 +21,11 @@ class Hole:
         vertical height of hole 
     vsize: float 
         vertical size of hole 
+    Door: object
+        door object
     """
 
-    wall_index = NumberValidator(minvalue=0, maxvalue=4, additional_msg="Wall index", int_only=True)
+    wall_index = NumberValidator(minvalue=0, maxvalue=3, additional_msg="Wall index", int_only=True)
     hpos  = NumberValidator()
     hsize = NumberValidator()
     vpos  = NumberValidator()
@@ -49,11 +52,21 @@ class Hole:
                        'vsize',
                        'wall_index',
                        )(desc)
+        self.door = None
+        if 'door' in desc:
+            self.door = Door(desc['door'])
+            #perform validdation door size should be smaller
+            self.door.wall_index = self.wall_index
 
     def __str__(self):
         """
         returns string with color object info.
         """
+        door_string = ''
+        if self.door is not None:
+            door_string += '\tHas door:\n'
+            door_string += self.door.__str__()
+
         return(
                '\tWall index: {}\n'
                '\tHorizontal:\n'
@@ -62,6 +75,8 @@ class Hole:
                '\tVertical:\n'
                '\t- Position: {:6.2f}\n'
                '\t- Size:     {:6.2f}\n'
+               f'{ door_string }'
+
                .format(
                       self.wall_index,
                       self.hpos,

@@ -24,12 +24,7 @@ class Door(ElementWithMaterial):
     frame: type Frame 
         represent door frame
     """
-    wall_index = NumberValidator(
-                                minvalue=0, 
-                                maxvalue=3, 
-                                int_only= True,
-                                additional_msg="Wall index"
-                                )
+
     position = NumberValidator(additional_msg="Door position")
     width = NumberValidator(additional_msg="Door width")
     height = NumberValidator(additional_msg="Door height")
@@ -44,33 +39,36 @@ class Door(ElementWithMaterial):
             desc: dict
                 dictionary representing Door's information
         """
-        validate_door_schema(desc)
+        #validate_door_schema(desc)
         super().__init__(desc['material'], desc['uv_scale'])
         (
-        self.wall_index,
         self.position,
         self.width,
         self.height
-        ) = itemgetter('wall_index','position','width','height')(desc)
-        self.frame = Frame(desc['frame'])
+        ) = itemgetter('position','width','height')(desc)
+
+        self.frame = None
+        if 'frame' in desc:
+            self.frame = Frame(desc['frame'])
 
     def __str__(self):
         """
         Returns string with Door object info.
         """
 
-        frame_string = self.frame.__str__()
+        frame_string = ''
+        if self.frame is not None:
+            frame_string = self.frame.__str__()
         material_string = self.material.__str__()
+
         return(
               'Door:\n'
-              '\tWall index: {:6d} \n' 
               '\tPosition:      {:6.2f}\n' 
               '\tWidth:         {:6.2f}\n' 
               '\tHeight:        {:6.2f}\n'
               f'{super().__str__()}'
               f'{ frame_string }\n'
               .format(
-                     self.wall_index,
                      self.position,
                      self.width,
                      self.height

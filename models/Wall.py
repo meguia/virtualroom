@@ -113,3 +113,14 @@ class Wall(ElementWithMaterial):
         for band in self.bands:
             materials.append(band.material)
         return materials
+
+    def fetch_doors_by_wall_index(self, wall_index):
+        """"
+        Return doors belonging to given wall
+        """
+        doors = []
+        for hole in self.holes:
+            if wall_index == hole.wall_index and hole.door is not None:
+                doors.append(hole.door)
+        return doors 
+
