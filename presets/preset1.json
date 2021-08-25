@@ -196,5 +196,38 @@
         "rotate_90": 0,
         "veins_contrast": 0.0,
         "wood_roughness": 0.5
+    },
+    "parquet_wood_wenge": {
+        "$outputsize": [
+            10,
+            10
+        ],
+        "Technical parameters": {
+            "contrast": 0.0,
+            "height_position": 0.5,
+            "height_range": 0.05,
+            "hue_shift": 0.0,
+            "luminosity": 0.519,
+            "normal_format": 0,
+            "normal_intensity": 0.5,
+            "saturation": 0.5
+        },
+        "color": [
+            0.196078,
+            0.141176,
+            0.101961
+        ],
+        "pattern_type": "English",
+        "x_amount": 1,
+        "y_amount": 35,
+        "english_pattern_offset": 0,
+        "bevel_intensity": 0.703,
+        "bevel_x_distance": 0.40,
+        "bevel_y_distance": 0.40,
+        "finish_type": "Natural",
+        "knots_amount": 0.080,
+        "planks_contrast": 0.60,
+        "veins_contrast": 0.949,
+        "wood_roughness": 0.137
     }
 }

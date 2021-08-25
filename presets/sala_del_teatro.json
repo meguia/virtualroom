@@ -86,7 +86,7 @@
             "floor": {
                "uv_scale": 3.0,
                "material":  {
-                   "sbs_name": "parquet_european_ash_grey",
+                   "sbs_name": "parquet_wood_wenge",
                    "category": "Wood",
                    "preset": "preset1"
                }
