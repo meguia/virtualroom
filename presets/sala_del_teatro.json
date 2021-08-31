@@ -24,7 +24,7 @@
                         "vpos": 0.0,
                         "vsize":1.8,
                         "door": {
-                            "position": 0.6,
+                            "position": 0.60,
                             "width": 0.7,
                             "height": 1.8,
                             "uv_scale": 2.0,

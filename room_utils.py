@@ -545,7 +545,7 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False):
             # Makes door and frame 
             #recalculo
             (dp, dw, dh) = [door.position, door.width, door.height] # position from border, width, height
-            dpos = [[l/2-dp-dw/2,-w/2-t/2,0],[-l/2+dp+dw/2,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
+            dpos = [[l/2-dp-dw/2+t,-w/2-t/2,0],[-l/2+dp+dw/2-t,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
             if door.frame is not None: 
                 framedim = [room.door.frame.width, room.door.frame.thickness]   
                 door_obj,fr = frame_door(
