@@ -1,12 +1,13 @@
 from operator import itemgetter
 
 from .ElementWithMaterial import ElementWithMaterial
+from .extra.AssetManagerModel import AssetManagerModel
 
 from .Frame import Frame
 from .validation.schema_validation_methods import validate_door_schema
 from .validation.NumberValidator import NumberValidator
 
-class Door(ElementWithMaterial):
+class Door(ElementWithMaterial, AssetManagerModel):
     """
     A class to represent a door.
 
@@ -40,7 +41,22 @@ class Door(ElementWithMaterial):
                 dictionary representing Door's information
         """
         #validate_door_schema(desc)
-        super().__init__(desc['material'], desc['uv_scale'])
+        # door should be one of these ElementWithMaterial or AssetManagerModel 
+        # not two
+        # if material in desc instantiate as ElementWithMaterial
+        try:
+            if 'material' in desc:
+                ElementWithMaterial.__init__(self,desc['material'], desc['uv_scale'])
+                print(self.material)
+                if 'assets_info' in desc:
+                    raise KeyError
+            # if asset in desc instantiate as AssetManagerModel 
+            elif 'assets_info' in desc:
+                AssetManagerModel.__init__(self,desc['assets_info'])
+                if 'material' in desc:
+                    raise KeyError
+        except KeyError:
+            print('Error Door should contain one of two material or assets_info')
         (
         self.position,
         self.width,
@@ -59,15 +75,31 @@ class Door(ElementWithMaterial):
         frame_string = ''
         if self.frame is not None:
             frame_string = self.frame.__str__()
-        material_string = self.material.__str__()
+
+        material_string = ''
+        if hasattr(self, 'material'):
+            if self.material.name is not None:
+                print('door has material')
+                material_string += ElementWithMaterial.__str__(self)
+
+        asset_string = ''
+        if hasattr(self, 'assets'): 
+            if len(self.assets) != 0:
+                print('door has assets')
+                asset_string += AssetManagerModel.__str__(self)
+        #except AttributeError as err:
+        #    print('asset string error')
+            # aca agregar para debuggin un flag en env
+            # material_string += "
+        
 
         return(
               'Door:\n'
               '\tPosition:      {:6.2f}\n' 
               '\tWidth:         {:6.2f}\n' 
               '\tHeight:        {:6.2f}\n'
-              f'{super().__str__()}'
-              f'{ frame_string }\n'
+              f'{ material_string }'
+              f'{ asset_string }\n'
               .format(
                      self.position,
                      self.width,

@@ -40,7 +40,18 @@
                         "hpos": 2.15,
                         "hsize":1.30,
                         "vpos": 0.0,
-                        "vsize":3.23
+                        "vsize":3.23,
+                        "door": {
+                            "position": 0.60,
+                            "width": 0.7,
+                            "height": 1.8,
+                            "assets_info": [
+                              {
+                                "name": "Door",
+                                "lib": "ADoor.blend"
+                              }
+                            ]
+                        }
                     },
                     {
                         "wall_index": 0,
@@ -90,28 +101,6 @@
                    "category": "Wood",
                    "preset": "preset1"
                }
-            },
-            "door": {
-                "wall_index": 2,
-                "position": 1,
-                "width": 1.2,
-                "height": 2.2,
-                "uv_scale": 2.0,
-                "material":  {
-                    "sbs_name": "wood_wenge",
-                    "category": "Wood",
-                    "preset": "preset1"
-                },
-                "frame": {
-                    "width": 0.08,
-                    "thickness": 0.03,
-                    "uv_scale": 1.0,
-                    "material":  {
-                        "sbs_name": "wood_black_walnut_striped",
-                        "category": "Wood",
-                        "preset": "preset1"
-                    }
-                }
             },
             "base": {
               "height": 0.12,

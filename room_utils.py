@@ -501,7 +501,7 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False):
     also asigns uv maps (and lightmaps) to objects with scale
     '''
     (l,w,h,t) = [room.depth, room.width, room.height, room.wall_thickness] # length, width, height, thickness
-    (dp, dw, dh) = [room.door.position, room.door.width, room.door.height] # wall number, position from border, width, height
+    #(dp, dw, dh) = [room.door.position, room.door.width, room.door.height] # wall number, position from border, width, height
     # Makes floor and ceiling
     floor = bm.floor(type(room.floor).__name__, mat_dict[room.floor.material.name],pos=[0,0,-t],dims=[l+2*t,w+2*t,t])
     ceil = bm.floor(type(room.ceiling).__name__,mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
@@ -514,13 +514,13 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False):
     # first define rotation, position, door position, main dimension (dim)
     rots = [radians(180),0,radians(90),radians(-90)]
     pos=[[0,-w/2-t/2,0],[0,w/2+t/2,0],[-l/2-t/2,0,0],[l/2+t/2,0,0]]
-    dpos = [[l/2-dp-dw/2,-w/2-t/2,0],[-l/2+dp+dw/2,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
+    #dpos = [[l/2-dp-dw/2,-w/2-t/2,0],[-l/2+dp+dw/2,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
     dim=[l+2*t,l+2*t,w,w]
     tdim = 0.005
     #para tiles (no se usa por ahora)
     pos2=[[l/2,-w/2+tdim],[-l/2,w/2-tdim],[-l/2+tdim,-w/2],[l/2-tdim,w/2]]
-    dpos2 = [[l/2-dp,-w/2+tdim,l/2-dp-dw,-w/2+tdim],[-l/2+dp,w/2-tdim,-l/2+dp+dw,w/2-tdim],
-            [-l/2+tdim,-w/2+dp,-l/2+tdim,-w/2+dp+dw],[l/2-tdim,w/2-dp,l/2-tdim,w/2-dp-dw]]
+    #dpos2 = [[l/2-dp,-w/2+tdim,l/2-dp-dw,-w/2+tdim],[-l/2+dp,w/2-tdim,-l/2+dp+dw,w/2-tdim],
+    #        [-l/2+tdim,-w/2+dp,-l/2+tdim,-w/2+dp+dw],[l/2-tdim,w/2-dp,l/2-tdim,w/2-dp-dw]]
     dim2=[l,l,w,w]
 
     holes = room.wall.holes_as_array()
@@ -532,20 +532,24 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False):
         for band in bands_by_wall_index:
             bands.append([band.heights, band.thickness])
             bandmats.append(mat_dict[band.material.name])
-        print(bandmats)
-        print(bands)
+
         wall = nm.wall('wall_' + str(n),pos=pos[n],rot=rots[n],dims=[dim[n],h,t/2],holes=holes[n],bandmats=bandmats,bands=bands)
         if with_uv:
             #pendiente
             uv.uv_board_hbands(wall.data, scale=1)
         room_list.append(wall)    
         doors = room.wall.fetch_doors_by_wall_index(n)
-        #todo: fix problem position of door in hole
+
         for door in doors:
             # Makes door and frame 
             #recalculo
             (dp, dw, dh) = [door.position, door.width, door.height] # position from border, width, height
-            dpos = [[l/2-dp-dw/2+t,-w/2-t/2,0],[-l/2+dp+dw/2-t,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
+            dpos = [
+                    [l/2-dp-dw/2+t,-w/2-t/2,0],
+                    [-l/2+dp+dw/2-t,w/2+t/2,0],
+                    [-l/2-t/2,-w/2+dp+dw/2,0],
+                    [l/2+t/2,w/2-dp-dw/2,0]
+                   ]
             if door.frame is not None: 
                 framedim = [room.door.frame.width, room.door.frame.thickness]   
                 door_obj,fr = frame_door(
@@ -560,25 +564,23 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False):
                     uv.uv_planks(fr.data, scale = door.frame.uv_scale)
                 room_list.extend([door_obj,fr])
             else:
-                door_obj = simple_door(mat_dict[door.material.name],dpos[n],rots[n],[door.width,door.height,t])   
-                # este no deberia ser room_list?
-                room_list.append(door_obj)
-            if with_uv:    
-                uv.uv_board(door_obj.data,[door.width,door.height,t],scale=door.uv_scale,rot90=True) 
-    # Makes door and frame 
-    #if room.door.frame is not None: 
-    #    framedim = [room.door.frame.width, room.door.frame.thickness]   
-    #    door,fr = frame_door(mat_dict[room.door.material.name],mat_dict[room.door.frame.material.name],dpos[dn],rots[dn],[dw,dh,t],framedim)
-    #    if with_uv:
-    #        uv.uv_planks(fr.data, scale = room.door.frame.uv_scale)
-    #    room_list.extend([door,fr])
-    #else:
-    #    door = simple_door(mat_dict[room.door.material.name],dpos[dn],rots[dn],[dw,dh,t])   
-    #    # este no deberia ser room_list?
-    #    room.append(door)
-    #if with_uv:    
-    #    uv.uv_board(door.data,[dw,dh,t],scale=room.door.uv_scale,rot90=True) 
-    # Parents the list af all objects to an empty    
+                if hasattr(door, 'material'):
+                    if door.material is not None:
+                        door_obj = simple_door(
+                                              mat_dict[door.material.name],
+                                              dpos[n],
+                                              rots[n],
+                                              [door.width,door.height,t]
+                                              )   
+                        # este no deberia ser room_list?
+                        room_list.append(door_obj)
+                    if with_uv:    
+                        uv.uv_board(
+                                    door_obj.data,
+                                    [door.width,door.height,t],
+                                    scale=door.uv_scale,
+                                    rot90=True
+                                    ) 
     room_ = bm.list_parent('room',room_list)
     return room_
 

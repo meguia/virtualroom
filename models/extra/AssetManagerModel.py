@@ -16,8 +16,10 @@ class AssetManagerModel:
         '''
         self.assets= []
         try:
-            for asset in desc['assets_info']:
+            for asset_idx in range(len(desc)):
+                asset = desc[asset_idx]
                 self.assets.append(Asset(asset))
+
         except KeyError:
             error_msg = 'Missing assets_info key'
             print(error_msg)
@@ -34,3 +36,14 @@ class AssetManagerModel:
         """
         libs_list = [asset.lib for asset in self.assets]
         return list(set(libs_list))
+
+    def __str__(self):
+        """
+        Returns asset names and libs
+        """
+        asset_names_str = self.assets_names_as_array()
+        libs_str = self.libs_names_as_array()
+        return(
+              f'\t{ asset_names_str }\n'
+              f'\t{ libs_str }\n'
+              )

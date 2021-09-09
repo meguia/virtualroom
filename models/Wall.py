@@ -1,6 +1,7 @@
 from operator import itemgetter
 
 from .ElementWithMaterial import ElementWithMaterial 
+from .extra.AssetManagerModel import AssetManagerModel
 
 from .validation.NumberValidator import NumberValidator
 
@@ -124,3 +125,14 @@ class Wall(ElementWithMaterial):
                 doors.append(hole.door)
         return doors 
 
+    def fetch_doors_materials(self):
+        """"
+        Return list of materials used by doors
+        """
+        doors_materials = []
+        for hole in self.holes:
+            if hole.door is not None:
+                if hasattr(hole.door, 'material'):
+                    if hole.door.material.name is not None:
+                        doors_materials.append(hole.door.material)
+        return list(set(doors_materials)) 

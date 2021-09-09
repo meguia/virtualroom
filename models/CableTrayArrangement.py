@@ -37,7 +37,11 @@ class CableTrayArrangement(AssetManagerModel):
             desc: dict
                 dictionary representing cable tray arrangement information
         """
-        super().__init__(desc)
+        try:
+            super().__init__(desc['assets_info'])
+        except KeyError as err:
+            print(repr(err))
+            print('missing assets_info key')
         (
         self.x_offset,
         self.y_offset,

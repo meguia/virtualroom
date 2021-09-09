@@ -69,6 +69,7 @@ mat_dict = room_utils.mat_room(mats_path,presetdir,mat_dict_substance)
 
 # CREA LA SALA
 #Escala de los mapas UV orden paredes,piso,techo,puerta,zocalos
+# aca se deberian importar asset de door
 sala = room_utils.make_room2(room,mat_dict,with_tiles=False)
 bm.link_all(sala,col_sala)
  

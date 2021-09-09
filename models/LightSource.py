@@ -58,7 +58,11 @@ class LightSource(AssetManagerModel):
             #validate_simple_spot_schema(desc)
             pass
         elif self.object == 'asset':
-            super().__init__(desc)
+            try:
+                super().__init__(desc['assets_info'])
+            except KeyError as err:
+                print(repr(err))
+                print('missing assets_info key')
 
         (
         self.iesfile,

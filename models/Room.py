@@ -120,7 +120,6 @@ class Room:
         """
         roomString = self.__str__()
         sourceString = self.source.__str__()
-        doorString = self.door.__str__()
         baseString = self.base.__str__()
         wallString = self.wall.__str__()
         ceilingString = self.ceiling.__str__()
@@ -136,8 +135,6 @@ class Room:
                     f'{roomString}'
                     '\n------------------------------------------------------------\n'
                     f'{sourceString} ' 
-                    '\n------------------------------------------------------------\n'
-                    f'{doorString}'
                     '\n------------------------------------------------------------\n'
                     f'{baseString}'
                     '\n------------------------------------------------------------\n'
@@ -182,11 +179,13 @@ class Room:
                     self.wall.material,
                     self.floor.material,
                     self.ceiling.material,
-                    self.door.material,
-                    self.door.frame.material,
+                    #self.door.material,
+                    #self.door.frame.material,
                     self.base.material,
                     ]
         for material in self.wall.fetch_bands_materials():
+            materials.append(material)
+        for material in self.wall.fetch_doors_materials():
             materials.append(material)
         mat_dict_substance = {}
         for m in materials:
@@ -198,8 +197,8 @@ class Room:
                     self.wall.material,
                     self.floor.material,
                     self.ceiling.material,
-                    self.door.material,
-                    self.door.frame.material,
+                    #self.door.material,
+                    #self.door.frame.material,
                     self.base.material,
                     ]
         return materials
