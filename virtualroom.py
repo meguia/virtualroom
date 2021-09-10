@@ -70,27 +70,44 @@ mat_dict = room_utils.mat_room(mats_path,presetdir,mat_dict_substance)
 # CREA LA SALA
 #Escala de los mapas UV orden paredes,piso,techo,puerta,zocalos
 # aca se deberian importar asset de door
-#add_door_assets = any([len(door.assets)>0 for door in room.wall.fetch_doors() if(hasattr(door, 'assets'))])
-#
-#if add_door_assets:
-#    assets_names = []
-#    doors_with_assets =  [door for door in room.wall.fetch_doors() if(hasattr(door, 'assets'))]
-#    for door in doors_with_assets:
-#        asset_names.extend(door.assets_names_as_array())
-#    assets_names = set(assets_names)
-#    
-#    asset_object_array = []
-#    for asset_lib_name in room.lighting.light_source.libs_names_as_array():
-#        lib_filepath = libdir / asset_lib_name
-#        with bpy.data.libraries.load(str(lib_filepath)) as (data_from, data_to):
-#            for name in data_from.objects:
-#                for asset_name in assets_names:
-#                    if (name == asset_name):
-#                         data_to.objects.append(name)
-#        asset_object_array += [ob for ob in bpy.data.objects if ob.name in assets_names]
+add_door_assets = any([len(door.assets)>0 for door in room.wall.fetch_doors() if(hasattr(door, 'assets'))])
 
-sala = room_utils.make_room2(room,mat_dict,with_tiles=False)
-bm.link_all(sala,col_sala)
+if add_door_assets:
+    assets_names = []
+    assets_lib_names = []
+    doors_with_assets =  [door for door in room.wall.fetch_doors() if(hasattr(door, 'assets'))]
+    for door in doors_with_assets:
+        assets_names.extend(door.assets_names_as_array())
+        assets_lib_names.extend(door.libs_names_as_array())
+    assets_names = list(set(assets_names))
+    assets_lib_names = list(set(assets_lib_names))
+
+    asset_object_array = []
+    for asset_lib_name in assets_lib_names:
+        lib_filepath = libdir / asset_lib_name
+        with bpy.data.libraries.load(str(lib_filepath)) as (data_from, data_to):
+            for name in data_from.objects:
+                for asset_name in assets_names:
+                    if (name == asset_name):
+                         data_to.objects.append(name)
+        asset_object_array += [ob for ob in bpy.data.objects if ob.name in assets_names]
+        try:
+            print('asset object array')
+            print(asset_object_array)
+            if(not len(asset_object_array) > 0):
+                raise ValueError
+            sala = room_utils.make_room2(
+                                        room,
+                                        mat_dict,
+                                        with_tiles=False,
+                                        asset_data=asset_object_array
+                                        )
+            bm.link_all(sala,col_sala)
+        except ValueError as err:
+            print(repr(err) + 'Door assets empty')
+else:
+    sala = room_utils.make_room2(room,mat_dict,with_tiles=False)
+    bm.link_all(sala,col_sala)
  
 # CARGA SPEAKER y STAND de la libreria source
 filepath = libdir / room.source.lib

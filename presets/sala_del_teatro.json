@@ -42,9 +42,9 @@
                         "vpos": 0.0,
                         "vsize":3.23,
                         "door": {
-                            "position": 0.60,
-                            "width": 0.7,
-                            "height": 1.8,
+                            "position": 2.15,
+                            "width": 1.30,
+                            "height": 3.23,
                             "assets_info": [
                               {
                                 "name": "Door",
@@ -58,7 +58,18 @@
                         "hpos": 7.25,
                         "hsize":1.3,
                         "vpos": 0.0,
-                        "vsize":3.23
+                        "vsize":3.23,
+                        "door": {
+                            "position": 7.25,
+                            "width": 1.30,
+                            "height": 3.23,
+                            "assets_info": [
+                              {
+                                "name": "Door",
+                                "lib": "ADoor.blend"
+                              }
+                            ]
+                        }
                     }
                 ],
                 "bands": [

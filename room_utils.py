@@ -506,8 +506,8 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False, asset_data=N
     #dpos2 = [[l/2-dp,-w/2+tdim,l/2-dp-dw,-w/2+tdim],[-l/2+dp,w/2-tdim,-l/2+dp+dw,w/2-tdim],
     #        [-l/2+tdim,-w/2+dp,-l/2+tdim,-w/2+dp+dw],[l/2-tdim,w/2-dp,l/2-tdim,w/2-dp-dw]]
     dim2=[l,l,w,w]
-
     holes = room.wall.holes_as_array()
+    door_count = 0
     
     for n in range(4):
         bandmats = [mat_dict[room.wall.material.name]]
@@ -522,8 +522,8 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False, asset_data=N
             #pendiente
             uv.uv_board_hbands(wall.data, scale=1)
         room_list.append(wall)    
-        doors = room.wall.fetch_doors_by_wall_index(n)
 
+        doors = room.wall.fetch_doors_by_wall_index(n)
         for door in doors:
             # Makes door and frame 
             #recalculo
@@ -565,10 +565,37 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False, asset_data=N
                                     scale=door.uv_scale,
                                     rot90=True
                                     ) 
-                elif hasattr(door, 'asset'):
+                elif hasattr(door, 'assets'):
                     if len(door.assets) > 0:
-                        pass
-                    pass
+                        # for all imported assets
+                        for asset in asset_data:
+                            # for assets in door 
+                            for door_asset in door.assets:
+                                # if name of asset of door equals name of imported
+                                if door_asset.name == asset.name:
+                                    print('llegue hasta aca')
+                                    door_count += 1
+                                    # create
+                                    door_name = 'Door-'+str(door_count)+'-Wall-'+str(n)
+                                    door_obj = bm.object_from_data(door_name,
+                                            asset.data)
+                                    # door context
+                                    if n == 0:
+                                        door_obj.location = dpos[n]
+                                        door_obj.rotation_euler = [0.0,0.0,radians(180)]
+                                        #l/2-dp-dw/2+t
+                                    if n == 1:
+                                        door_obj.location = dpos[n]
+                                        door_obj.rotation_euler = [0.0,0.0,radians(90)]
+                                    if n == 2:
+                                        door_obj.location = dpos[n]
+                                        door_obj.rotation_euler = [0.0,0.0,radians(180)]
+                                    if n == 3:
+                                        door_obj.location = dpos[n]
+                                        door_obj.rotation_euler = [0.0,0.0,radians(270)]
+                                    #door_obj.rotation_euler =
+                                    room_list.append(door_obj)
+
     room_ = bm.list_parent('room',room_list)
     return room_
 
