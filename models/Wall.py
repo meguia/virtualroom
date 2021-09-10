@@ -115,6 +115,15 @@ class Wall(ElementWithMaterial):
             materials.append(band.material)
         return materials
 
+    def fetch_doors(self):
+        """
+        Returns doors on walls
+        """
+        doors = []
+        for hole in self.holes:
+            doors.append(hole.door)
+        return doors 
+
     def fetch_doors_by_wall_index(self, wall_index):
         """"
         Return doors belonging to given wall

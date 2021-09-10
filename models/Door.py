@@ -47,7 +47,6 @@ class Door(ElementWithMaterial, AssetManagerModel):
         try:
             if 'material' in desc:
                 ElementWithMaterial.__init__(self,desc['material'], desc['uv_scale'])
-                print(self.material)
                 if 'assets_info' in desc:
                     raise KeyError
             # if asset in desc instantiate as AssetManagerModel 
@@ -79,19 +78,12 @@ class Door(ElementWithMaterial, AssetManagerModel):
         material_string = ''
         if hasattr(self, 'material'):
             if self.material.name is not None:
-                print('door has material')
                 material_string += ElementWithMaterial.__str__(self)
 
         asset_string = ''
         if hasattr(self, 'assets'): 
             if len(self.assets) != 0:
-                print('door has assets')
                 asset_string += AssetManagerModel.__str__(self)
-        #except AttributeError as err:
-        #    print('asset string error')
-            # aca agregar para debuggin un flag en env
-            # material_string += "
-        
 
         return(
               'Door:\n'

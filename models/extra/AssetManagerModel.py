@@ -44,6 +44,7 @@ class AssetManagerModel:
         asset_names_str = self.assets_names_as_array()
         libs_str = self.libs_names_as_array()
         return(
+               '\tAssets manager model: \n'
               f'\t{ asset_names_str }\n'
               f'\t{ libs_str }\n'
               )
