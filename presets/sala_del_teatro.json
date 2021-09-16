@@ -12,8 +12,8 @@
                 "thickness": 0.15,
                 "uv_scale": 1.5,
                 "material":  {
-                    "sbs_name": "concrete_raw_grey",
-                    "category": "Concrete",
+                    "sbs_name": "basic_painted_wall",
+                    "category": "Plaster",
                     "preset": "preset1"
                 },
                 "holes": [
@@ -79,8 +79,8 @@
                         "thickness" : [0.025, 0.025, 0],
                         "uv_scale": 3.0,
                         "material":  {
-                            "sbs_name": "concrete_raw_grey",
-                            "category": "Concrete",
+                            "sbs_name": "basic_painted_wall",
+                            "category": "Plaster",
                             "preset": "preset1"
                         }
                     },
