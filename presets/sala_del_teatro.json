@@ -204,7 +204,135 @@
                         "rotation": 180
                     }
                 ]
-            }
+            },
+            "misc_assets_arrangement": [
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":3.25,
+                        "y":-2.15,
+                        "z":1.24
+                    },
+                    "rotation":{
+                        "x":90.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":3.10,
+                        "y":-2.15,
+                        "z":1.30
+                    },
+                    "rotation":{
+                        "x":90.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":1.43,
+                        "y":-2.15,
+                        "z":1.30
+                    },
+                    "rotation":{
+                        "x":90.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":1.25,
+                        "y":-2.15,
+                        "z":1.80
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":1.43,
+                        "y":-2.15,
+                        "z":0.28
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":1.08,
+                        "y":-2.15,
+                        "z":0.28
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                }
+            ]
         },
         "lighting": {
             "arrangement" : {"x": 3, "y": 2},

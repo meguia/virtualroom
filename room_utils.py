@@ -573,7 +573,6 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False, asset_data=N
                             for door_asset in door.assets:
                                 # if name of asset of door equals name of imported
                                 if door_asset.name == asset.name:
-                                    print('llegue hasta aca')
                                     door_count += 1
                                     # create
                                     door_name = 'Door-'+str(door_count)+'-Wall-'+str(n)
@@ -598,6 +597,36 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False, asset_data=N
 
     room_ = bm.list_parent('room',room_list)
     return room_
+
+def create_misc_objects(room,asset_data):
+    '''
+    Returns a list of blender object
+    Parameters
+    ----------
+        room (Room): An object containing room data
+        asset data (blender object data array): blender object data
+        representing a miscelanneous objects 
+    '''
+    misc_obj_list = []
+    misc_obj_idx = 0
+    try:
+        if(asset_data == None):
+            raise ValueError('asset_data should contain blender object data')
+        for blender_obj in room.misc_assets_arrangement.blender_objects:
+            for asset in asset_data:
+                if blender_obj.asset.name == asset.name:
+                    misc_obj_name = asset.name + str(misc_obj_idx)
+                    misc_obj_idx += 1
+                    misc_obj = bm.object_from_data(misc_obj_name,
+                            asset.data)
+                    misc_obj.location = blender_obj.location_as_array()
+                    misc_obj.rotation_euler = blender_obj.rotation_as_array()
+                    misc_obj.scale = blender_obj.scale_as_array()
+                    misc_obj_list.append(misc_obj)
+
+    except Exception as error:
+        print('Error'+repr(error))
+    return misc_obj_list
 
 def make_cable_tray(room, asset_data):
     '''
@@ -774,6 +803,7 @@ def make_cable_tray(room, asset_data):
     except Exception as error:
         print('Error'+repr(error))
     return cable_tray_object_list
+
 
 def add_curtains(room):
     # add curtains

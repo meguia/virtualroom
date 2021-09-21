@@ -73,7 +73,10 @@ class Wall(ElementWithMaterial):
             position_dims = []
             for hole in self.holes:
                 if hole.wall_index == idx:
-                    position_dims.append([[hole.hpos, hole.hpos+hole.hsize], [hole.vpos, hole.vpos+hole.vsize]])
+                    position_dims.append([
+                                         [hole.hpos, hole.hpos+hole.hsize], 
+                                         [hole.vpos, hole.vpos+hole.vsize]
+                                         ])
             holes_array[idx] = position_dims
             position_dims = []
                                           

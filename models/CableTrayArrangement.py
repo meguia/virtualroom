@@ -24,9 +24,9 @@ class CableTrayArrangement(AssetManagerModel):
         connector on different walls
     '''
     
-    x_offset = NumberValidator(minvalue= 0.0, additional_msg="X offest")
-    y_offset = NumberValidator(minvalue= 0.0, additional_msg="Y offest")
-    z_offset = NumberValidator(minvalue= 0.0, additional_msg="Z offest")
+    x_offset = NumberValidator(minvalue= 0.0, additional_msg="X offset")
+    y_offset = NumberValidator(minvalue= 0.0, additional_msg="Y offset")
+    z_offset = NumberValidator(minvalue= 0.0, additional_msg="Z offset")
 
     def __init__(self, desc= {}):
         """

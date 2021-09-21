@@ -14,6 +14,7 @@ from .ElementWithMaterial import ElementWithMaterial
 from .SoundSource import SoundSource
 from .CurtainArrangement import CurtainArrangement
 from .CableTrayArrangement import CableTrayArrangement
+from .MiscAssetArrangement import MiscAssetArrangement
 
 from .validation.schema_validation_methods import validate_room_schema 
 from .validation.NumberValidator import NumberValidator
@@ -89,6 +90,8 @@ class Room:
                 self.curtain_arrangement = CurtainArrangement(elements[element]) 
             elif(element == 'cable_tray_arrangement'):
                 self.cable_tray_arrangement = CableTrayArrangement(elements[element]) 
+            elif(element == 'misc_assets_arrangement'):
+                self.misc_assets_arrangement = MiscAssetArrangement(elements[element])
 
         self.lighting = Lighting(desc['lighting'])
 
@@ -127,6 +130,10 @@ class Room:
         lightingString = self.lighting.__str__()
         curtainsArrangementString = self.curtain_arrangement.__str__()
         cableTrayArrangementString = self.cable_tray_arrangement.__str__()
+        miscAssetsArrengementString = ''
+        if self.misc_assets_arrangement is not None:
+            miscAssetsArrengementString += self.misc_assets_arrangement.__str__()
+
 
         cameraString = self.camera.__str__()
         room_info = (
@@ -152,6 +159,7 @@ class Room:
                     '\n------------------------------------------------------------\n'
                     f'{cableTrayArrangementString}'
                     '\n------------------------------------------------------------\n'
+                    f'{miscAssetsArrengementString}'
                     '\n------------------------------------------------------------\n'
                     )
         return(room_info)

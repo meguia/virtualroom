@@ -69,7 +69,7 @@ mat_dict = room_utils.mat_room(mats_path,presetdir,mat_dict_substance)
 
 # CREA LA SALA
 #Escala de los mapas UV orden paredes,piso,techo,puerta,zocalos
-# aca se deberian importar asset de door
+#IMPORTAR assets de door
 add_door_assets = any([len(door.assets)>0 for door in room.wall.fetch_doors() if(hasattr(door, 'assets'))])
 
 if add_door_assets:
@@ -186,6 +186,22 @@ if(room.cable_tray_arrangement is not None):
 
 #bpy.context.view_layer.update()
 #bm.apply_transforms(light_source)
+
+#MISCELLANEOUS ASSETS
+#import assets
+if(room.misc_assets_arrangement is not None):
+    assets_names = room.misc_assets_arrangement.assets_names_as_array()
+    asset_object_array = []
+    for asset_lib_name in room.misc_assets_arrangement.libs_names_as_array():
+        lib_filepath = libdir / asset_lib_name
+        with bpy.data.libraries.load(str(lib_filepath)) as (data_from, data_to):
+            for name in data_from.objects:
+                for asset_name in assets_names:
+                    if (name == asset_name):
+                         data_to.objects.append(name)
+        asset_object_array = [ob for ob in bpy.data.objects if ob.name in assets_names]
+    misc_objects = room_utils.create_misc_objects(room, asset_object_array)
+    bm.list_link(misc_objects, col_obj)
 
 #CAMARA 360
 bm.set_cycles()
