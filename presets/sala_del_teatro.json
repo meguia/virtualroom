@@ -317,7 +317,7 @@
                         "lib": "APowerSocket.blend"
                     },
                     "location":{
-                        "x":1.08,
+                        "x":0.80,
                         "y":-2.15,
                         "z":0.28
                     },
@@ -328,6 +328,111 @@
                     },
                     "scale":{
                         "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":0.82,
+                        "y":2.15,
+                        "z":0.37
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":270.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":1.08,
+                        "y":2.15,
+                        "z":0.28
+                    },
+                    "rotation":{
+                        "x":-90.0,
+                        "y":0.0,
+                        "z":270.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":3.76,
+                        "y":2.15,
+                        "z":0.28
+                    },
+                    "rotation":{
+                        "x":-90.0,
+                        "y":0.0,
+                        "z":270.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Mattress-1",
+                        "lib": "AMattress1.blend"
+                    },
+                    "location":{
+                        "x":4.28,
+                        "y":1.27,
+                        "z":2.80
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":17.0,
+                        "z":208.0
+                    },
+                    "scale":{
+                        "x":0.3,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Mattress-2",
+                        "lib": "AMattress2.blend"
+                    },
+                    "location":{
+                        "x":4.28,
+                        "y":-1.30,
+                        "z":2.80
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":17.0,
+                        "z":148.0
+                    },
+                    "scale":{
+                        "x":0.3,
                         "y":1.0,
                         "z":1.0
                     }
