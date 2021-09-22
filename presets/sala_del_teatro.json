@@ -479,14 +479,14 @@
                     "lib": "Assets.blend"
                   }
                 ],
-                "iesfile": "lib/ies/spot1.ies",
+                "iesfile": "lib/ies/ies-db/2.ies",
                 "color" : {
                     "r" : 1.0,
                     "g" : 0.8,
                     "b" : 0.8,
                     "alpha" :1.0 
                 },
-                "intensity" : 5,
+                "intensity" : 10,
                 "mount": {
                     "size": {
                     "x": 0.1,
