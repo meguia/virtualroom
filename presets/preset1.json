@@ -204,8 +204,8 @@
         ],
         "Technical parameters": {
             "contrast": 0.0,
-            "height_position": 0.5,
-            "height_range": 0.005,
+            "height_position": 0.0,
+            "height_range": 0.0005,
             "hue_shift": 0.0,
             "luminosity": 0.519,
             "normal_format": 0,

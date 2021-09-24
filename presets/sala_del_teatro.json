@@ -86,7 +86,7 @@
                     },
                     {
                         "wall_index": [0,1,2,3],
-                        "heights": [2.8, 3.8],
+                        "heights": [3.23, 3.8],
                         "thickness" : [0.0, 0.0],
                         "uv_scale": 3.0,
                         "material":  {
@@ -435,6 +435,27 @@
                         "x":0.3,
                         "y":1.0,
                         "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "CortinaFondo",
+                        "lib": "ACortinaFondo.blend"
+                    },
+                    "location":{
+                        "x":-3.90,
+                        "y":0.00,
+                        "z":0.00
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.9,
+                        "z":1.9
                     }
                 }
             ]
