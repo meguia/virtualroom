@@ -588,10 +588,10 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False, asset_data=N
                                         door_obj.rotation_euler = [0.0,0.0,radians(90)]
                                     if n == 2:
                                         door_obj.location = dpos[n]
-                                        door_obj.rotation_euler = [0.0,0.0,radians(180)]
+                                        door_obj.rotation_euler = [0.0,0.0,0.0]
                                     if n == 3:
                                         door_obj.location = dpos[n]
-                                        door_obj.rotation_euler = [0.0,0.0,radians(270)]
+                                        door_obj.rotation_euler = [0.0,0.0,radians(-90)]
                                     #door_obj.rotation_euler =
                                     room_list.append(door_obj)
 

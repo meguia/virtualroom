@@ -91,19 +91,19 @@ if add_door_assets:
                     if (name == asset_name):
                          data_to.objects.append(name)
         asset_object_array += [ob for ob in bpy.data.objects if ob.name in assets_names]
-        try:
-            print('asset object array')
-            print(asset_object_array)
-            if(not len(asset_object_array) > 0):
-                raise ValueError
-            sala = room_utils.make_room2(
-                                        room,
-                                        mat_dict,
-                                        with_tiles=False,
-                                        asset_data=asset_object_array
-                                        )
-            bm.link_all(sala,col_sala)
-        except ValueError as err:
+    try:
+        print('asset object array')
+        print(asset_object_array)
+        if(not len(asset_object_array) > 0):
+            raise ValueError
+        sala = room_utils.make_room2(
+                                    room,
+                                    mat_dict,
+                                    with_tiles=False,
+                                    asset_data=asset_object_array
+                                    )
+        bm.link_all(sala,col_sala)
+    except ValueError as err:
             print(repr(err) + 'Door assets empty')
 else:
     sala = room_utils.make_room2(room,mat_dict,with_tiles=False)

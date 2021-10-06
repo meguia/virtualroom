@@ -27,12 +27,12 @@
                             "position": 0.60,
                             "width": 0.7,
                             "height": 1.8,
-                            "uv_scale": 2.0,
-                            "material":  {
-                                "sbs_name": "wood_wenge",
-                                "category": "Wood",
-                                "preset": "preset1"
-                            }
+                            "assets_info": [
+                              {
+                                "name": "WhiteDoor",
+                                "lib": "AWhiteDoor.blend"
+                              }
+                            ]
                         }
                     },
                     {
