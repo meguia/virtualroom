@@ -26,7 +26,7 @@
                         "door": {
                             "position": 0.60,
                             "width": 0.7,
-                            "height": 1.8,
+                            "height": 1.7,
                             "assets_info": [
                               {
                                 "name": "WhiteDoor",

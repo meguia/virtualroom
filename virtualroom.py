@@ -91,9 +91,8 @@ if add_door_assets:
                     if (name == asset_name):
                          data_to.objects.append(name)
         asset_object_array += [ob for ob in bpy.data.objects if ob.name in assets_names]
+        asset_object_array = list(set(asset_object_array))
     try:
-        print('asset object array')
-        print(asset_object_array)
         if(not len(asset_object_array) > 0):
             raise ValueError
         sala = room_utils.make_room2(

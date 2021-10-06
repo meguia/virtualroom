@@ -524,6 +524,9 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False, asset_data=N
         room_list.append(wall)    
 
         doors = room.wall.fetch_doors_by_wall_index(n)
+        print('doors by index')
+        print(doors)
+        #import pdb; pdb.set_trace()
         for door in doors:
             # Makes door and frame 
             #recalculo
