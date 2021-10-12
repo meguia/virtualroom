@@ -402,12 +402,14 @@ def make_speaker_array(room, speaker_data, stand_data_array, speaker_height, poi
     object_list = []
     for idx, p in enumerate(room.source.positions):
         stand_name_ob = room.source.stand_name+ '_' + str(idx)
-        stand = bm.object_from_data(stand_name_ob, stand_data_array[0])
+        stand_data_copy = stand_data_array[0].copy()
+        stand = bm.object_from_data(stand_name_ob, stand_data_copy)
         stand.location = [p.x, p.y, speaker_height]
         object_list.append(stand)
         if len(stand_data_array) > 1:
             stand_name_ob = room.source.stand_name + '_' + str(idx) + '_B'
-            stand2 = bm.object_from_data(stand_name_ob, stand_data_array[1])
+            stand2_data_copy = stand_data_array[1].copy()
+            stand2 = bm.object_from_data(stand_name_ob, stand2_data_copy)
             stand2.parent = stand
             object_list.append(stand2)    
         if point_camera:
@@ -417,7 +419,8 @@ def make_speaker_array(room, speaker_data, stand_data_array, speaker_height, poi
         else:
             stand.rotation_euler = [0,0,radians(p.rotation)]
         speaker_name_ob = room.source.speaker_name+ '_' + str(idx)
-        speaker = bm.object_from_data(speaker_name_ob, speaker_data)
+        speaker_data_copy = speaker_data.copy()
+        speaker = bm.object_from_data(speaker_name_ob, speaker_data_copy)
         speaker.parent = stand
         object_list.append(speaker)
     return object_list
@@ -579,8 +582,9 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False, asset_data=N
                                     door_count += 1
                                     # create
                                     door_name = 'Door-'+str(door_count)+'-Wall-'+str(n)
+                                    asset_data_copy = asset.data.copy()
                                     door_obj = bm.object_from_data(door_name,
-                                            asset.data)
+                                            asset_data_copy)
                                     # door context
                                     if n == 0:
                                         door_obj.location = dpos[n]
@@ -620,8 +624,9 @@ def create_misc_objects(room,asset_data):
                 if blender_obj.asset.name == asset.name:
                     misc_obj_name = asset.name + str(misc_obj_idx)
                     misc_obj_idx += 1
+                    asset_data_copy = asset.data.copy()
                     misc_obj = bm.object_from_data(misc_obj_name,
-                            asset.data)
+                            asset_data_copy)
                     misc_obj.location = blender_obj.location_as_array()
                     misc_obj.rotation_euler = blender_obj.rotation_as_array()
                     misc_obj.scale = blender_obj.scale_as_array()
@@ -669,8 +674,9 @@ def make_cable_tray(room, asset_data):
                 # Connector
                 if(config['Connector']):
                     tray_connector_name = 'TrayConnector_' + str(idx)
+                    tray_connector_asset_data_copy = tray_connector_asset_data.copy()
                     tray_connector_obj = bm.object_from_data(tray_connector_name,
-                            tray_connector_asset_data)
+                            tray_connector_asset_data_copy)
                     tray_connector_obj.location = location
                     tray_connector_obj.rotation_euler = [0,0,0]
                     cable_tray_object_list.append(tray_connector_obj)
@@ -706,8 +712,9 @@ def make_cable_tray(room, asset_data):
                 # Connector
                 if(config['Connector']):
                     tray_connector_name = 'TrayConnector_' + str(idx)
+                    tray_connector_asset_data_copy = tray_connector_asset_data.copy()
                     tray_connector_obj = bm.object_from_data(tray_connector_name,
-                            tray_connector_asset_data)
+                            tray_connector_asset_data_copy)
                     tray_connector_obj.location = location
                     tray_connector_obj.rotation_euler = [0,0,radians(90)]
                     cable_tray_object_list.append(tray_connector_obj)
@@ -743,8 +750,9 @@ def make_cable_tray(room, asset_data):
                 # Connector
                 if(config['Connector']):
                     tray_connector_name = 'TrayConnector_' + str(idx)
+                    tray_connector_asset_data_copy = tray_connector_asset_data.copy()
                     tray_connector_obj = bm.object_from_data(tray_connector_name,
-                            tray_connector_asset_data)
+                            tray_connector_asset_data_copy)
                     tray_connector_obj.location = location
                     tray_connector_obj.rotation_euler = [0,0,radians(180)]
                     cable_tray_object_list.append(tray_connector_obj)
@@ -780,8 +788,9 @@ def make_cable_tray(room, asset_data):
                 # Connector
                 if(config['Connector']):
                     tray_connector_name = 'TrayConnector_' + str(idx)
+                    tray_connector_asset_data_copy = tray_connector_asset_data.copy()
                     tray_connector_obj = bm.object_from_data(tray_connector_name,
-                            tray_connector_asset_data)
+                            tray_connector_asset_data_copy)
                     tray_connector_obj.location = location
                     tray_connector_obj.rotation_euler = [0,0,radians(-90)]
                     cable_tray_object_list.append(tray_connector_obj)
