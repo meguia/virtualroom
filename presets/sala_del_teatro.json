@@ -457,6 +457,783 @@
                         "y":1.9,
                         "z":1.9
                     }
+                },
+                {
+                    "asset":{
+                        "name": "Cano_long",
+                        "lib": "ACanos.blend"
+                    },
+                    "location":{
+                        "x":0.00,
+                        "y":1.64,
+                        "z":3.80
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":2.42,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Cano_long",
+                        "lib": "ACanos.blend"
+                    },
+                    "location":{
+                        "x":0.00,
+                        "y":-1.64,
+                        "z":3.80
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":2.42,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Cano_trans",
+                        "lib": "ACanos.blend"
+                    },
+                    "location":{
+                        "x":-0.05,
+                        "y":0.00,
+                        "z":3.83
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Cano_trans",
+                        "lib": "ACanos.blend"
+                    },
+                    "location":{
+                        "x":-2.05,
+                        "y":0.00,
+                        "z":3.83
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Cano_trans",
+                        "lib": "ACanos.blend"
+                    },
+                    "location":{
+                        "x":1.95,
+                        "y":0.00,
+                        "z":3.83
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot1_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.95,
+                        "y":0.00,
+                        "z":3.22
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":-90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot1_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.95,
+                        "y":0.00,
+                        "z":3.22
+                    },
+                    "rotation":{
+                        "x":-20.0,
+                        "y":0.0,
+                        "z":-90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot1_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.95,
+                        "y":0.00,
+                        "z":3.22
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.95,
+                        "y":1.53,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":103.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.95,
+                        "y":1.53,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":103.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.95,
+                        "y":1.53,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":2.17,
+                        "y":1.64,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":225.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":2.17,
+                        "y":1.64,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":225.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":2.17,
+                        "y":1.64,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":0.10,
+                        "y":1.64,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":225.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":0.10,
+                        "y":1.64,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":225.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":0.10,
+                        "y":1.64,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot1_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.05,
+                        "y":1.54,
+                        "z":3.22
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":-90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot1_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.05,
+                        "y":1.54,
+                        "z":3.22
+                    },
+                    "rotation":{
+                        "x":-20.0,
+                        "y":0.0,
+                        "z":-90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot1_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.05,
+                        "y":1.54,
+                        "z":3.22
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.05,
+                        "y":1.31,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":243.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.05,
+                        "y":1.31,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":243.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.05,
+                        "y":1.31,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.95,
+                        "y":-1.60,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":52.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.95,
+                        "y":-1.60,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":52.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.95,
+                        "y":-1.60,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":2.17,
+                        "y":-1.64,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":290.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":2.17,
+                        "y":-1.64,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":290.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":2.17,
+                        "y":-1.64,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":0.13,
+                        "y":-1.64,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":290.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":0.13,
+                        "y":-1.64,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":290.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":0.13,
+                        "y":-1.64,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.05,
+                        "y":-1.50,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":282.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.05,
+                        "y":-1.50,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":282.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.05,
+                        "y":-1.50,
+                        "z":3.18
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "CortinaNegra",
+                        "lib": "ACortinaNegra.blend"
+                    },
+                    "location":{
+                        "x":-0.50,
+                        "y":1.63,
+                        "z":0.00
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":0.6,
+                        "z":1.66
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "CortinaNegra",
+                        "lib": "ACortinaNegra.blend"
+                    },
+                    "location":{
+                        "x":1.16,
+                        "y":-1.63,
+                        "z":0.00
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":0.6,
+                        "z":1.66
+                    }
                 }
             ]
         },
