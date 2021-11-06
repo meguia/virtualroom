@@ -212,9 +212,9 @@ bm.link_all(eqcam,col_luces)
 ##RENDER CYCLES
 # 4k para probar
 png_name = 'room360d.jpg'
-(w,h) = [4000,2000]
+(w,h) = [8000,4000]
 bm.set_resolution(w,h)
-bm.set_render_cycles(samples = 128, clmp = 0.5, denoise = False, ao = True)
+bm.set_render_cycles(samples = 128, clmp = 0.5, denoise = True, ao = True)
 bm.set_render_output(str(savedir / png_name),format='JPEG',quality=100)
 if render:
     bm.render_cam(cam = eqcam)

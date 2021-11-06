@@ -140,12 +140,14 @@ def mat_room(mats_path, preset_path, materials):
         sbs_path = mats_path / material.sbs_file
         if not os.path.exists(texture_path):
             # the material folder was not even created 
+            print("LA CARPETA NO FUE CREADA")
             os.makedirs(texture_path)
             generate_textures = True
         else:     
             # the material folder exists
             if not all(mu.check_imagedict(texture_path,channels)):
                  #not all textures were generated
+                print("LA CARPETA EXISTE PERO NO ESTAN TODAS LAS TEXTURAS GENERADAS")
                 generate_textures = True
             else:     
                 # the material folder exists and all textures were generated
@@ -154,6 +156,7 @@ def mat_room(mats_path, preset_path, materials):
                     parameters_generated = json.load(json_file)
                 if parameters != parameters_generated:
                     # (agregar un chequeo de diferencia minima)
+                    print("LAS TEXTURAS ESTAN GENERADAS PERO LOS PARAMETYROS NO COINCIDEN")
                     generate_textures = True    
         if generate_textures:
             print('rendering textures of ' + str(texture_path))
