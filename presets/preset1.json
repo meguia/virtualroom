@@ -1,49 +1,35 @@
 {
-    "concrete_raw_grey": {
+    "painted_plaster":{
         "$outputsize": [
             12,
             12
         ],
-        "Technical parameters": {
-            "contrast": 0.0,
-            "height_position": 0.5,
-            "height_range": 0.5,
-            "hue_shift": 0.0,
-            "luminosity": 0.5,
-            "normal_format": 0,
-            "normal_intensity": 0.5,
-            "saturation": 0.5
-        },
-        "color": [
-            0.831006,
-            0.867826,
-            0.894118
+        "random_seed": 0,
+        "plaster_color":[
+            1.00,
+            1.00,
+            1.00,
+            1.00
         ],
-        "concrete_roughness": 0.5,
-        "roughness_variations": 0.3
-    },
-    "concrete_raw_white": {
-        "$outputsize": [
-            12,
-            12
-        ],
+        "roughness": 0.680,
+        "brush_stroke_quantity": 0.660,
+        "brush_stroke_intensity": 0.660,
+        "brush_stroke_covering": 0.520,
+        "brush_stroke_size": 2,
+        "stroke_direction": -0.908,
+        "brush_width": 5.8,
+        "surface_damages": 0.7,
+        "peel_amount": 0.5,
         "technical_parameters": {
             "contrast": 0.0,
             "height_position": 0.5,
-            "height_range": 0.5,
+            "height_range": 1.0,
             "hue_shift": 0.0,
             "luminosity": 0.5,
             "normal_format": 0,
             "normal_intensity": 0.5,
             "saturation": 0.5
-        },
-        "color": [
-            0.931006,
-            0.967826,
-            0.994118
-        ],
-        "concrete_roughness": 0.5,
-        "roughness_variations": 0.3
+        }
     },
     "concrete_raw_black": {
         "$outputsize": [
