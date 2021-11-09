@@ -44,7 +44,7 @@ def sbsar_getvalues(param_dict, use_technical=False):
         if type(value) is list:
             values.append( "" + key + "@" + ",".join(str(x) for x in value))
         elif type(value) is dict:
-            if not use_technical and 'Technical' in key:
+            if not use_technical and 'technical' in key:
                 pass
             else:
                 for key2,value2 in value.items():
