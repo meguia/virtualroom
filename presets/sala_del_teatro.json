@@ -10,7 +10,7 @@
         "elements": {
             "wall": {
                 "thickness": 0.15,
-                "uv_scale": 1.5,
+                "uv_scale": 4.5,
                 "material":  {
                     "sbs_name": "painted_plaster",
                     "category": "Plaster",

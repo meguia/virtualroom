@@ -526,7 +526,7 @@ def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False, asset_data=N
         wall = nm.wall('wall_' + str(n),pos=pos[n],rot=rots[n],dims=[dim[n],h,t/2],holes=holes[n],bandmats=bandmats,bands=bands)
         if with_uv:
             #pendiente
-            uv.uv_board_hbands(wall.data, scale=1)
+            uv.uv_board_hbands(wall.data, scale=room.wall.uv_scale)
         room_list.append(wall)    
 
         doors = room.wall.fetch_doors_by_wall_index(n)
