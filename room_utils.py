@@ -23,7 +23,8 @@ imp.reload(uv)
 imp.reload(bu)
 imp.reload(sbs)
 
-def make_room(room, mat_dict=None, with_uv=True, with_tiles=False):
+
+def make_room(room, mat_dict=None, with_uv=True, with_tiles=False, asset_data=None):
     '''
     Makes room as objects parented to an empty
     the objects are defined in the class Room
@@ -31,72 +32,120 @@ def make_room(room, mat_dict=None, with_uv=True, with_tiles=False):
     also asigns uv maps (and lightmaps) to objects with scale
     '''
     (l,w,h,t) = [room.depth, room.width, room.height, room.wall_thickness] # length, width, height, thickness
-    (dn, dp, dw, dh) = [room.door.wall_index, room.door.position, room.door.width, room.door.height] # wall number, position from border, width, height
+    #(dp, dw, dh) = [room.door.position, room.door.width, room.door.height] # wall number, position from border, width, height
     # Makes floor and ceiling
-    floor = bm.floor(type(room.floor).__name__, mat_dict[room.floor.material.name],pos=[0,0,-t],dims=[l,w,t])
+    floor = bm.floor(type(room.floor).__name__, mat_dict[room.floor.material.name],pos=[0,0,-t],dims=[l+2*t,w+2*t,t])
     ceil = bm.floor(type(room.ceiling).__name__,mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
     if with_uv:
+        # esto esta bien?
         uv.uv_board(ceil.data, [l,w,t], front=1, scale = room.ceiling.uv_scale)
         uv.uv_board(floor.data, [l+2*t,w+2*t,t], front=2, scale = room.floor.uv_scale)
     room_list = [floor,ceil]    
     # Makes walls with bases in a loop
     # first define rotation, position, door position, main dimension (dim)
     rots = [radians(180),0,radians(90),radians(-90)]
-    pos=[[0,-w/2,-t],[0,w/2,-t],[-l/2,0,-t],[l/2,0,-t]]
-    dpos = [[l/2-dp-dw/2,-w/2-t/2,0],[-l/2+dp+dw/2,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
+    pos=[[0,-w/2-t/2,0],[0,w/2+t/2,0],[-l/2-t/2,0,0],[l/2+t/2,0,0]]
+    #dpos = [[l/2-dp-dw/2,-w/2-t/2,0],[-l/2+dp+dw/2,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
     dim=[l+2*t,l+2*t,w,w]
     tdim = 0.005
+    #para tiles (no se usa por ahora)
     pos2=[[l/2,-w/2+tdim],[-l/2,w/2-tdim],[-l/2+tdim,-w/2],[l/2-tdim,w/2]]
-    dpos2 = [[l/2-dp,-w/2+tdim,l/2-dp-dw,-w/2+tdim],[-l/2+dp,w/2-tdim,-l/2+dp+dw,w/2-tdim],
-            [-l/2+tdim,-w/2+dp,-l/2+tdim,-w/2+dp+dw],[l/2-tdim,w/2-dp,l/2-tdim,w/2-dp-dw]]
+    #dpos2 = [[l/2-dp,-w/2+tdim,l/2-dp-dw,-w/2+tdim],[-l/2+dp,w/2-tdim,-l/2+dp+dw,w/2-tdim],
+    #        [-l/2+tdim,-w/2+dp,-l/2+tdim,-w/2+dp+dw],[l/2-tdim,w/2-dp,l/2-tdim,w/2-dp-dw]]
     dim2=[l,l,w,w]
-
-    # For placing the hole an array giving None when there is no hole and the dimensions 
-    # of the hole in  the dn wall
-    hole=[None]*4
-    hole[dn] = [dp, t, dw, dh, dpos2[dn]]
+    holes = room.wall.holes_as_array()
+    door_count = 0
+    
     for n in range(4):
-        if room.base is not None:
-            basedim = [dim[n], room.base.height, room.base.thickness]
-            wall,base= bm.wall('wall_' + str(n),mat_dict[room.wall.material.name] ,pos=pos[n],rot=rots[n],dims=[dim[n],h+t,t],hole=hole[n],
-                        basemat= mat_dict[room.base.material.name],basedim=[room.base.height, room.base.thickness])            
-            if with_uv:
-                if n==dn:
-                    uv.uv_board_with_hole(base.data,basedim,hole[dn],scale=room.wall.uv_scale,internal=False)
-                else:
-                    uv.uv_board(base.data,basedim,scale=room.base.uv_scale)    
-            room_list.append(base)   
-            if with_tiles:
-                pos2[n].append(basedim[1]-t)
-                print(n)
-                tiles =  wall_tiles('tiles_' +str(n),[dim2[n],h-basedim[1]+t],[1,1],pos=pos2[n],rot=[radians(90),0,rots[n]],hole=hole[n],mats=None)
-                room_list.extend(tiles)       
-        else:
-            wall = bm.wall('wall_' + str(n),mat_dict[room.wall.material.name] ,pos=pos[n],rot=rots[n],dims=[dim[n],h+t,t],hole=hole[n])
+        bandmats = [mat_dict[room.wall.material.name]]
+        bands = []
+        bands_by_wall_index = room.wall.fetch_bands_by_wall_index(n)
+        for band in bands_by_wall_index:
+            bands.append([band.heights, band.thickness])
+            bandmats.append(mat_dict[band.material.name])
+
+        wall = nm.wall('wall_' + str(n),pos=pos[n],rot=rots[n],dims=[dim[n],h,t/2],holes=holes[n],bandmats=bandmats,bands=bands)
         if with_uv:
-            if n==dn:
-                uv.uv_board_with_hole(wall.data,[dim[n],h+t,t],hole[dn],scale=room.wall.uv_scale)
-            else:
-                uv.uv_board(wall.data,[dim[n],h+t,t],scale=room.wall.uv_scale)
-        # agregar condicion para dividir la pared y que lea a que altura
-        bu.face_split(wall.data,4,edge_indices=[1,3],fac=0.9)        
+            #pendiente
+            uv.uv_board_hbands(wall.data, scale=room.wall.uv_scale)
         room_list.append(wall)    
-    # Makes door and frame 
-    if room.door.frame is not None: 
-        framedim = [room.door.frame.width, room.door.frame.thickness]   
-        door,fr = frame_door(mat_dict[room.door.material.name],mat_dict[room.door.frame.material.name],dpos[dn],rots[dn],[dw,dh,t],framedim)
-        if with_uv:
-            uv.uv_planks(fr.data, scale = room.door.frame.uv_scale)
-        room_list.extend([door,fr])
-    else:
-        door = simple_door(mat_dict[room.door.material.name],dpos[dn],rots[dn],[dw,dh,t])   
-        # este no deberia ser room_list?
-        room.append(door)
-    if with_uv:    
-        uv.uv_board(door.data,[dw,dh,t],scale=room.door.uv_scale,rot90=True) 
 
+        doors = room.wall.fetch_doors_by_wall_index(n)
+        print('doors by index')
+        print(doors)
+        #import pdb; pdb.set_trace()
+        for door in doors:
+            # Makes door and frame 
+            #recalculo
+            (dp, dw, dh) = [door.position, door.width, door.height] # position from border, width, height
+            dpos = [
+                    [l/2-dp-dw/2+t,-w/2-t/2,0],
+                    [-l/2+dp+dw/2-t,w/2+t/2,0],
+                    [-l/2-t/2,-w/2+dp+dw/2,0],
+                    [l/2+t/2,w/2-dp-dw/2,0]
+                   ]
+            if door.frame is not None: 
+                framedim = [room.door.frame.width, room.door.frame.thickness]   
+                door_obj,fr = frame_door(
+                                    mat_dict[door.material.name],
+                                    mat_dict[door.frame.material.name],
+                                    dpos[n],
+                                    rots[n],
+                                    [door.width,door.height,t],
+                                    framedim
+                                    )
+                if with_uv:
+                    uv.uv_planks(fr.data, scale = door.frame.uv_scale)
+                room_list.extend([door_obj,fr])
+            else:
+                if hasattr(door, 'material'):
+                    if door.material is not None:
+                        door_obj = simple_door(
+                                              mat_dict[door.material.name],
+                                              dpos[n],
+                                              rots[n],
+                                              [door.width,door.height,t]
+                                              )   
+                        # este no deberia ser room_list?
+                        room_list.append(door_obj)
+                    if with_uv:    
+                        uv.uv_board(
+                                    door_obj.data,
+                                    [door.width,door.height,t],
+                                    scale=door.uv_scale,
+                                    rot90=True
+                                    ) 
+                elif hasattr(door, 'assets'):
+                    if len(door.assets) > 0:
+                        # for all imported assets
+                        for asset in asset_data:
+                            # for assets in door 
+                            for door_asset in door.assets:
+                                # if name of asset of door equals name of imported
+                                if door_asset.name == asset.name:
+                                    door_count += 1
+                                    # create
+                                    door_name = 'Door-'+str(door_count)+'-Wall-'+str(n)
+                                    asset_data_copy = asset.data.copy()
+                                    door_obj = bm.object_from_data(door_name,
+                                            asset_data_copy)
+                                    # door context
+                                    if n == 0:
+                                        door_obj.location = dpos[n]
+                                        door_obj.rotation_euler = [0.0,0.0,radians(180)]
+                                        #l/2-dp-dw/2+t
+                                    if n == 1:
+                                        door_obj.location = dpos[n]
+                                        door_obj.rotation_euler = [0.0,0.0,radians(90)]
+                                    if n == 2:
+                                        door_obj.location = dpos[n]
+                                        door_obj.rotation_euler = [0.0,0.0,0.0]
+                                    if n == 3:
+                                        door_obj.location = dpos[n]
+                                        door_obj.rotation_euler = [0.0,0.0,radians(-90)]
+                                    #door_obj.rotation_euler =
+                                    room_list.append(door_obj)
 
-    # Parents the list af all objects to an empty    
     room_ = bm.list_parent('room',room_list)
     return room_
 
@@ -386,10 +435,6 @@ def ceiling_lighting_by_positions(room, ceiling, asset_data=None):
     return light_source,mount
 
 
-# en room utils 
-# make_speaker_array(room,speaker_data,[pie_data,pie_data2],speaker_height)
-# devuelve object_list
-
 def make_speaker_array(room, speaker_data, stand_data_array, speaker_height, point_camera):
     '''
     A function to create blender objects such as a speaker and a stand
@@ -483,130 +528,6 @@ def inject_metadata(direxe,pathimg,w=4000,h=2000):
     os.system(cmd)
 
 
-def make_room2(room, mat_dict=None, with_uv=True, with_tiles=False, asset_data=None):
-    '''
-    Makes room as objects parented to an empty
-    the objects are defined in the class Room
-    mat_dict contains a dictionary of substance materiales
-    also asigns uv maps (and lightmaps) to objects with scale
-    '''
-    (l,w,h,t) = [room.depth, room.width, room.height, room.wall_thickness] # length, width, height, thickness
-    #(dp, dw, dh) = [room.door.position, room.door.width, room.door.height] # wall number, position from border, width, height
-    # Makes floor and ceiling
-    floor = bm.floor(type(room.floor).__name__, mat_dict[room.floor.material.name],pos=[0,0,-t],dims=[l+2*t,w+2*t,t])
-    ceil = bm.floor(type(room.ceiling).__name__,mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
-    if with_uv:
-        # esto esta bien?
-        uv.uv_board(ceil.data, [l,w,t], front=1, scale = room.ceiling.uv_scale)
-        uv.uv_board(floor.data, [l+2*t,w+2*t,t], front=2, scale = room.floor.uv_scale)
-    room_list = [floor,ceil]    
-    # Makes walls with bases in a loop
-    # first define rotation, position, door position, main dimension (dim)
-    rots = [radians(180),0,radians(90),radians(-90)]
-    pos=[[0,-w/2-t/2,0],[0,w/2+t/2,0],[-l/2-t/2,0,0],[l/2+t/2,0,0]]
-    #dpos = [[l/2-dp-dw/2,-w/2-t/2,0],[-l/2+dp+dw/2,w/2+t/2,0],[-l/2-t/2,-w/2+dp+dw/2,0],[l/2+t/2,w/2-dp-dw/2,0]]
-    dim=[l+2*t,l+2*t,w,w]
-    tdim = 0.005
-    #para tiles (no se usa por ahora)
-    pos2=[[l/2,-w/2+tdim],[-l/2,w/2-tdim],[-l/2+tdim,-w/2],[l/2-tdim,w/2]]
-    #dpos2 = [[l/2-dp,-w/2+tdim,l/2-dp-dw,-w/2+tdim],[-l/2+dp,w/2-tdim,-l/2+dp+dw,w/2-tdim],
-    #        [-l/2+tdim,-w/2+dp,-l/2+tdim,-w/2+dp+dw],[l/2-tdim,w/2-dp,l/2-tdim,w/2-dp-dw]]
-    dim2=[l,l,w,w]
-    holes = room.wall.holes_as_array()
-    door_count = 0
-    
-    for n in range(4):
-        bandmats = [mat_dict[room.wall.material.name]]
-        bands = []
-        bands_by_wall_index = room.wall.fetch_bands_by_wall_index(n)
-        for band in bands_by_wall_index:
-            bands.append([band.heights, band.thickness])
-            bandmats.append(mat_dict[band.material.name])
-
-        wall = nm.wall('wall_' + str(n),pos=pos[n],rot=rots[n],dims=[dim[n],h,t/2],holes=holes[n],bandmats=bandmats,bands=bands)
-        if with_uv:
-            #pendiente
-            uv.uv_board_hbands(wall.data, scale=room.wall.uv_scale)
-        room_list.append(wall)    
-
-        doors = room.wall.fetch_doors_by_wall_index(n)
-        print('doors by index')
-        print(doors)
-        #import pdb; pdb.set_trace()
-        for door in doors:
-            # Makes door and frame 
-            #recalculo
-            (dp, dw, dh) = [door.position, door.width, door.height] # position from border, width, height
-            dpos = [
-                    [l/2-dp-dw/2+t,-w/2-t/2,0],
-                    [-l/2+dp+dw/2-t,w/2+t/2,0],
-                    [-l/2-t/2,-w/2+dp+dw/2,0],
-                    [l/2+t/2,w/2-dp-dw/2,0]
-                   ]
-            if door.frame is not None: 
-                framedim = [room.door.frame.width, room.door.frame.thickness]   
-                door_obj,fr = frame_door(
-                                    mat_dict[door.material.name],
-                                    mat_dict[door.frame.material.name],
-                                    dpos[n],
-                                    rots[n],
-                                    [door.width,door.height,t],
-                                    framedim
-                                    )
-                if with_uv:
-                    uv.uv_planks(fr.data, scale = door.frame.uv_scale)
-                room_list.extend([door_obj,fr])
-            else:
-                if hasattr(door, 'material'):
-                    if door.material is not None:
-                        door_obj = simple_door(
-                                              mat_dict[door.material.name],
-                                              dpos[n],
-                                              rots[n],
-                                              [door.width,door.height,t]
-                                              )   
-                        # este no deberia ser room_list?
-                        room_list.append(door_obj)
-                    if with_uv:    
-                        uv.uv_board(
-                                    door_obj.data,
-                                    [door.width,door.height,t],
-                                    scale=door.uv_scale,
-                                    rot90=True
-                                    ) 
-                elif hasattr(door, 'assets'):
-                    if len(door.assets) > 0:
-                        # for all imported assets
-                        for asset in asset_data:
-                            # for assets in door 
-                            for door_asset in door.assets:
-                                # if name of asset of door equals name of imported
-                                if door_asset.name == asset.name:
-                                    door_count += 1
-                                    # create
-                                    door_name = 'Door-'+str(door_count)+'-Wall-'+str(n)
-                                    asset_data_copy = asset.data.copy()
-                                    door_obj = bm.object_from_data(door_name,
-                                            asset_data_copy)
-                                    # door context
-                                    if n == 0:
-                                        door_obj.location = dpos[n]
-                                        door_obj.rotation_euler = [0.0,0.0,radians(180)]
-                                        #l/2-dp-dw/2+t
-                                    if n == 1:
-                                        door_obj.location = dpos[n]
-                                        door_obj.rotation_euler = [0.0,0.0,radians(90)]
-                                    if n == 2:
-                                        door_obj.location = dpos[n]
-                                        door_obj.rotation_euler = [0.0,0.0,0.0]
-                                    if n == 3:
-                                        door_obj.location = dpos[n]
-                                        door_obj.rotation_euler = [0.0,0.0,radians(-90)]
-                                    #door_obj.rotation_euler =
-                                    room_list.append(door_obj)
-
-    room_ = bm.list_parent('room',room_list)
-    return room_
 
 def create_misc_objects(room,asset_data):
     '''

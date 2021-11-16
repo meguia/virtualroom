@@ -95,7 +95,7 @@ if add_door_assets:
     try:
         if(not len(asset_object_array) > 0):
             raise ValueError
-        sala = room_utils.make_room2(
+        sala = room_utils.make_room(
                                     room,
                                     mat_dict,
                                     with_tiles=False,
@@ -105,7 +105,7 @@ if add_door_assets:
     except ValueError as err:
             print(repr(err) + 'Door assets empty')
 else:
-    sala = room_utils.make_room2(room,mat_dict,with_tiles=False)
+    sala = room_utils.make_room(room,mat_dict,with_tiles=False)
     bm.link_all(sala,col_sala)
  
 # CARGA SPEAKER y STAND de la libreria source
