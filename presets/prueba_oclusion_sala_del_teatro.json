@@ -1,0 +1,1375 @@
+{
+    "room": {
+        "name": "Sala del teatro",
+        "dimensions": {
+            "depth": 9.90,
+            "width": 4.33,
+            "height": 3.80
+        },
+        "wall_thickness" : 0.15,
+        "elements": {
+            "wall": {
+                "thickness": 0.15,
+                "uv_scale": 4.5,
+                "material":  {
+                    "sbs_name": "painted_plaster",
+                    "category": "Plaster",
+                    "preset": "preset1"
+                },
+                "holes": [
+                    {
+                        "wall_index": 0,
+                        "hpos": 0.6,
+                        "hsize":0.7,
+                        "vpos": 0.0,
+                        "vsize":1.8,
+                        "door": {
+                            "position": 0.60,
+                            "width": 0.7,
+                            "height": 1.7,
+                            "assets_info": [
+                              {
+                                "name": "WhiteDoor",
+                                "lib": "AWhiteDoor.blend"
+                              }
+                            ]
+                        }
+                    },
+                    {
+                        "wall_index": 0,
+                        "hpos": 2.17,
+                        "hsize":1.26,
+                        "vpos": 0.0,
+                        "vsize":3.20,
+                        "door": {
+                            "position": 2.15,
+                            "width": 1.30,
+                            "height": 3.23,
+                            "assets_info": [
+                              {
+                                "name": "Door",
+                                "lib": "ADoor.blend"
+                              }
+                            ]
+                        }
+                    },
+                    {
+                        "wall_index": 0,
+                        "hpos": 7.27,
+                        "hsize":1.2,
+                        "vpos": 0.0,
+                        "vsize":3.20,
+                        "door": {
+                            "position": 7.25,
+                            "width": 1.30,
+                            "height": 3.23,
+                            "assets_info": [
+                              {
+                                "name": "Door",
+                                "lib": "ADoor.blend"
+                              }
+                            ]
+                        }
+                    }
+                ],
+                "bands": [
+                    {
+                        "wall_index": [0,1,2,3],
+                        "heights": [0.0, 0.12, 0.132],
+                        "thickness" : [0.025, 0.025, 0],
+                        "uv_scale": 3.0,
+                        "material":  {
+                            "sbs_name": "painted_plaster",
+                            "category": "Plaster",
+                            "preset": "preset1"
+                        }
+                    },
+                    {
+                        "wall_index": [0,1,2,3],
+                        "heights": [3.23, 3.8],
+                        "thickness" : [0.0, 0.0],
+                        "uv_scale": 3.0,
+                        "material":  {
+                            "sbs_name": "concrete_raw_black",
+                            "category": "Concrete",
+                            "preset": "preset1"
+                        }
+                    }
+                ]
+            },
+            "ceiling": {
+                "uv_scale": 1.0,
+                "material":  {
+                    "sbs_name": "concrete_raw_black",
+                    "category": "Concrete",
+                    "preset": "preset1"
+                }
+            },
+            "floor": {
+               "uv_scale": 3.0,
+               "material":  {
+                   "sbs_name": "parquet_wood_wenge",
+                   "category": "Wood",
+                   "preset": "preset1"
+               }
+            },
+            "base": {
+              "height": 0.12,
+              "thickness" : 0.025,
+              "uv_scale": 3.0,
+              "material":  {
+                  "sbs_name": "wood_black_walnut_striped",
+                  "category": "Wood",
+                  "preset": "preset1"
+              }
+            },
+            "curtain_arrangement":{
+              "material":  {
+                  "sbs_name": "wood_black_walnut_striped",
+                  "category": "Wood",
+                  "preset": "preset1"
+              },
+              "uv_scale": 2.0,
+              "curtains": [
+                {
+                "wall_index": 0,
+                "offset": 0.05,
+                "width": 1.75,
+                "height": 2.75,
+                "position": 1.0
+                }
+              ]
+            },
+            "cable_tray_arrangement":{
+                "x-offset": 0.35,
+                "y-offset": 0.22,
+                "z-offset": 0.35,
+                "assets_info": [
+                  {
+                    "name": "Tray",
+                    "lib": "ACableTray.blend"
+                  },
+                  {
+                    "name": "TrayConnector",
+                    "lib": "ACableTray.blend"
+                  }
+                ],
+                "config": [
+                    {
+                        "wall_index": 0,
+                        "has_tray": true,
+                        "has_connector":false 
+                    },
+                    {
+                        "wall_index": 1,
+                        "has_tray": false,
+                        "has_connector": false 
+                    },
+                    {
+                        "wall_index": 2,
+                        "has_tray": true,
+                        "has_connector": true 
+                    },
+                    {
+                        "wall_index": 3,
+                        "has_tray": true,
+                        "has_connector": true 
+                    }
+                ]
+            },
+            "source": {
+                "lib": "Sources.blend",
+                "speaker": "Genelec",
+                "stand": "Tilt_Stand",
+                "height": 1.25,
+                "positions": [
+                    {
+                        "x": 3.13,
+                        "y": 0,
+                        "rotation": 180
+                    }
+                ]
+            },
+            "misc_assets_arrangement": [
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":3.25,
+                        "y":-2.15,
+                        "z":1.24
+                    },
+                    "rotation":{
+                        "x":90.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":3.10,
+                        "y":-2.15,
+                        "z":1.30
+                    },
+                    "rotation":{
+                        "x":90.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":1.43,
+                        "y":-2.15,
+                        "z":1.30
+                    },
+                    "rotation":{
+                        "x":90.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":1.25,
+                        "y":-2.15,
+                        "z":1.80
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":1.43,
+                        "y":-2.15,
+                        "z":0.28
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":0.80,
+                        "y":-2.15,
+                        "z":0.28
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":0.82,
+                        "y":2.15,
+                        "z":0.37
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":270.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":1.08,
+                        "y":2.15,
+                        "z":0.28
+                    },
+                    "rotation":{
+                        "x":-90.0,
+                        "y":0.0,
+                        "z":270.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "PowerSocket",
+                        "lib": "APowerSocket.blend"
+                    },
+                    "location":{
+                        "x":3.76,
+                        "y":2.15,
+                        "z":0.28
+                    },
+                    "rotation":{
+                        "x":-90.0,
+                        "y":0.0,
+                        "z":270.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Mattress-1",
+                        "lib": "AMattress1.blend"
+                    },
+                    "location":{
+                        "x":4.28,
+                        "y":1.27,
+                        "z":2.80
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":17.0,
+                        "z":208.0
+                    },
+                    "scale":{
+                        "x":0.3,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Mattress-2",
+                        "lib": "AMattress1.blend"
+                    },
+                    "location":{
+                        "x":4.28,
+                        "y":-1.30,
+                        "z":2.80
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":17.0,
+                        "z":148.0
+                    },
+                    "scale":{
+                        "x":0.3,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "CortinaFondo",
+                        "lib": "ACortinaFondo.blend"
+                    },
+                    "location":{
+                        "x":-3.90,
+                        "y":0.00,
+                        "z":0.00
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.9,
+                        "z":1.9
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Cano_long",
+                        "lib": "ACanos.blend"
+                    },
+                    "location":{
+                        "x":0.00,
+                        "y":1.64,
+                        "z":3.80
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":2.42,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Cano_long",
+                        "lib": "ACanos.blend"
+                    },
+                    "location":{
+                        "x":0.00,
+                        "y":-1.64,
+                        "z":3.80
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":2.42,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Cano_trans",
+                        "lib": "ACanos.blend"
+                    },
+                    "location":{
+                        "x":-0.45,
+                        "y":0.00,
+                        "z":3.83
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Cano_trans",
+                        "lib": "ACanos.blend"
+                    },
+                    "location":{
+                        "x":-2.53,
+                        "y":0.00,
+                        "z":3.83
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Cano_trans",
+                        "lib": "ACanos.blend"
+                    },
+                    "location":{
+                        "x":1.55,
+                        "y":0.00,
+                        "z":3.83
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot1_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.55,
+                        "y":0.00,
+                        "z":3.26
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":-90.0
+                    },
+                    "scale":{
+                        "x":0.8,
+                        "y":0.8,
+                        "z":0.8
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot1_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.55,
+                        "y":0.00,
+                        "z":3.26
+                    },
+                    "rotation":{
+                        "x":-20.0,
+                        "y":0.0,
+                        "z":-90.0
+                    },
+                    "scale":{
+                        "x":0.80,
+                        "y":0.80,
+                        "z":0.80
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot1_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.55,
+                        "y":0.00,
+                        "z":3.28
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":0.88,
+                        "y":0.68,
+                        "z":0.68
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.55,
+                        "y":1.53,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":103.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.55,
+                        "y":1.53,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":103.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.55,
+                        "y":1.53,
+                        "z":3.26
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":0.68,
+                        "z":0.68
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":2.17,
+                        "y":1.64,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":225.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":2.17,
+                        "y":1.64,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":225.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":2.17,
+                        "y":1.64,
+                        "z":3.26
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":0.68,
+                        "z":0.68
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":0.10,
+                        "y":1.64,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":225.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":0.10,
+                        "y":1.64,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":225.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":0.10,
+                        "y":1.64,
+                        "z":3.26
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":0.68,
+                        "z":0.68
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot1_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.53,
+                        "y":1.54,
+                        "z":3.26
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":-90.0
+                    },
+                    "scale":{
+                        "x":0.8,
+                        "y":0.8,
+                        "z":0.8
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot1_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.53,
+                        "y":1.54,
+                        "z":3.26
+                    },
+                    "rotation":{
+                        "x":-20.0,
+                        "y":0.0,
+                        "z":-90.0
+                    },
+                    "scale":{
+                        "x":0.8,
+                        "y":0.8,
+                        "z":0.8
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot1_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.53,
+                        "y":1.54,
+                        "z":3.28
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":0.88,
+                        "y":0.68,
+                        "z":0.68
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.53,
+                        "y":1.31,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":243.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.53,
+                        "y":1.31,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":243.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.53,
+                        "y":1.31,
+                        "z":3.26
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":0.68,
+                        "z":0.68
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.55,
+                        "y":-1.60,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":52.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.55,
+                        "y":-1.60,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":52.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":1.55,
+                        "y":-1.60,
+                        "z":3.26
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":0.68,
+                        "z":0.68
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":2.17,
+                        "y":-1.64,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":290.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":2.17,
+                        "y":-1.64,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":290.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":2.17,
+                        "y":-1.64,
+                        "z":3.26
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":0.68,
+                        "z":0.68
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":0.13,
+                        "y":-1.64,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":290.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":0.13,
+                        "y":-1.64,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":290.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":0.13,
+                        "y":-1.64,
+                        "z":3.26
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":0.68,
+                        "z":0.68
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_0",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.53,
+                        "y":-1.50,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":282.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_1",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.53,
+                        "y":-1.50,
+                        "z":3.25
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":282.0
+                    },
+                    "scale":{
+                        "x":0.7,
+                        "y":0.7,
+                        "z":0.7
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Spot2_2",
+                        "lib": "ASpots.blend"
+                    },
+                    "location":{
+                        "x":-2.53,
+                        "y":-1.50,
+                        "z":3.26
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":0.68,
+                        "z":0.68
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "CortinaNegra",
+                        "lib": "ACortinaNegra.blend"
+                    },
+                    "location":{
+                        "x":-0.73,
+                        "y":2.04,
+                        "z":0.00
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":0.6,
+                        "z":1.70
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "CortinaNegra",
+                        "lib": "ACortinaNegra.blend"
+                    },
+                    "location":{
+                        "x":0.86,
+                        "y":-2.08,
+                        "z":0.00
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":90.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":0.6,
+                        "z":1.70
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Postigon",
+                        "lib": "ADoor.blend"
+                    },
+                    "location":{
+                        "x":-2.80,
+                        "y":-2.35,
+                        "z":0.00
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":180.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Postigon",
+                        "lib": "ADoor.blend"
+                    },
+                    "location":{
+                        "x":2.33,
+                        "y":-2.35,
+                        "z":0.00
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":180.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":1.0
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Cable-3",
+                        "lib": "ACables.blend"
+                    },
+                    "location":{
+                        "x":2.80,
+                        "y":0.00,
+                        "z":0.00
+                    },
+                    "rotation":{
+                        "x":-180.0,
+                        "y":180.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":1.0,
+                        "y":1.0,
+                        "z":0.3
+                    }
+                },
+                {
+                    "asset":{
+                        "name": "Cubo",
+                        "lib": "ACubo.blend"
+                    },
+                    "location":{
+                        "x":-1.00,
+                        "y":0.00,
+                        "z":0.00
+                    },
+                    "rotation":{
+                        "x":0.0,
+                        "y":0.0,
+                        "z":0.0
+                    },
+                    "scale":{
+                        "x":0.05,
+                        "y":2.5,
+                        "z":0.40
+                    }
+                }
+            ]
+        },
+        "lighting": {
+            "arrangement" : {"x": 3, "y": 2},
+            "positions": [
+                {
+                    "x": 1.55,
+                    "y": 0.8
+                },
+                {
+                    "x": -0.45,
+                    "y": 0.8
+                },
+                {
+                    "x": -2.53,
+                    "y": 0.8
+                },
+                {
+                    "x": 1.55,
+                    "y": -0.8
+                },
+                {
+                    "x": -0.45,
+                    "y": -0.8
+                },
+                {
+                    "x": -2.53,
+                    "y": -0.8
+                }
+            ],
+            "light_source": {
+                "object" : "asset",
+                "assets_info": [
+                  {
+                    "name": "Lamp",
+                    "lib": "Assets.blend"
+                  },
+                  {
+                    "name": "Bulb",
+                    "lib": "Assets.blend"
+                  }
+                ],
+                "iesfile": "lib/ies/ies-db/2.ies",
+                "color" : {
+                    "r" : 1.0,
+                    "g" : 0.8,
+                    "b" : 0.8,
+                    "alpha" :1.0 
+                },
+                "intensity" : 10,
+                "mount": {
+                    "size": {
+                    "x": 0.1,
+                    "y": 0.1,
+                    "z": 0.12
+                    }
+                }
+            }
+        },
+        "camera": {
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": 1.3
+            },
+            "rotation": -90
+        }
+    }
+}
