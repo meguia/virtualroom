@@ -2,8 +2,8 @@
     "room": {
         "name": "Sala de Lapso",
         "dimensions": {
-            "depth": 8,
-            "width": 4,
+            "depth": 12,
+            "width": 7,
             "height": 3.0
         },
         "wall_thickness" : 0.15,
@@ -12,9 +12,9 @@
                 "thickness": 0.15,
                 "uv_scale": 1.5,
                 "material":  {
-                    "sbs_name": "concrete_raw_grey",
-                    "category": "Concrete",
-                    "preset": "preset1"
+                    "sbs_name": "acoustic_foam_fonac",
+                    "category": "Fonac",
+                    "preset": "preset2"
                 },
                 "holes": [
                     {
@@ -32,9 +32,9 @@
                         "thickness" : [0.025, 0.025, 0],
                         "uv_scale": 3.0,
                         "material":  {
-                            "sbs_name": "wood_black_walnut_striped",
-                            "category": "Wood",
-                            "preset": "preset1"
+                            "sbs_name": "acoustic_foam_fonac",
+                            "category": "Fonac",
+                            "preset": "preset2"
                         }
                     },
                     {
@@ -43,9 +43,9 @@
                         "thickness" : [0.0, 0.0],
                         "uv_scale": 3.0,
                         "material":  {
-                            "sbs_name": "concrete_raw_black",
-                            "category": "Concrete",
-                            "preset": "preset1"
+                            "sbs_name": "acoustic_foam_fonac",
+                            "category": "Fonac",
+                            "preset": "preset2"
                         }
                     }
                 ]
@@ -55,7 +55,7 @@
                 "material":  {
                     "sbs_name": "plaster_acoustic_ceiling",
                     "category": "Plaster",
-                    "preset": "preset1"
+                    "preset": "preset2"
                 }
             },
             "floor": {
@@ -63,30 +63,8 @@
                "material":  {
                    "sbs_name": "parquet_european_ash_grey",
                    "category": "Wood",
-                   "preset": "preset1"
+                   "preset": "preset2"
                }
-            },
-            "door": {
-                "wall_index": 2,
-                "position": 1,
-                "width": 1.2,
-                "height": 2.2,
-                "uv_scale": 2.0,
-                "material":  {
-                    "sbs_name": "wood_wenge",
-                    "category": "Wood",
-                    "preset": "preset1"
-                },
-                "frame": {
-                    "width": 0.08,
-                    "thickness": 0.03,
-                    "uv_scale": 1.0,
-                    "material":  {
-                        "sbs_name": "wood_black_walnut_striped",
-                        "category": "Wood",
-                        "preset": "preset1"
-                    }
-                }
             },
             "base": {
               "height": 0.12,
@@ -95,14 +73,14 @@
               "material":  {
                   "sbs_name": "wood_black_walnut_striped",
                   "category": "Wood",
-                  "preset": "preset1"
+                  "preset": "preset2"
               }
             },
             "curtain_arrangement":{
               "material":  {
                   "sbs_name": "wood_black_walnut_striped",
                   "category": "Wood",
-                  "preset": "preset1"
+                  "preset": "preset2"
               },
               "uv_scale": 2.0,
               "curtains": [
@@ -159,10 +137,11 @@
                 ]
             }
         },
+        "misc_assets_arrangement": [],
         "lighting": {
             "arrangement" : {"x": 5, "y": 2},
             "light_source": {
-                "object" : "asset",
+                "object" : "spot",
                 "assets_info": [
                   {
                     "name": "Lamp",

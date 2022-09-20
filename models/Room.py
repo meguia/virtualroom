@@ -131,8 +131,11 @@ class Room:
         curtainsArrangementString = self.curtain_arrangement.__str__()
         cableTrayArrangementString = self.cable_tray_arrangement.__str__()
         miscAssetsArrengementString = ''
-        if self.misc_assets_arrangement is not None:
-            miscAssetsArrengementString += self.misc_assets_arrangement.__str__()
+        try:
+            if self.misc_assets_arrangement is not None:
+                miscAssetsArrengementString += self.misc_assets_arrangement.__str__()
+        except AttributeError:
+            print('No misc assets declared for room')
 
 
         cameraString = self.camera.__str__()

@@ -10,7 +10,7 @@ savedir = homedir / 'Renders'
 utildir = homedir / 'blender_utils'
 libdir = thisdir / 'lib'
 presetdir = thisdir / 'presets'
-json_file_input = presetdir / 'sala_del_teatro.json'
+json_file_input = presetdir / 'sala_lapso.json'
 # Configuracion para probar oclusion de textura en el suelo
 #json_file_input = presetdir / 'prueba_oclusion_sala_del_teatro.json'
 json_material_template = thisdir / 'materials.json'
