@@ -28,18 +28,7 @@
                 "bands": [
                     {
                         "wall_index": [0,1,2,3],
-                        "heights": [0.0, 0.12, 0.132],
-                        "thickness" : [0.025, 0.025, 0],
-                        "uv_scale": 3.0,
-                        "material":  {
-                            "sbs_name": "acoustic_foam_fonac",
-                            "category": "Fonac",
-                            "preset": "preset2"
-                        }
-                    },
-                    {
-                        "wall_index": [0,1,2,3],
-                        "heights": [2.8, 3.0],
+                        "heights": [0.0, 3.0],
                         "thickness" : [0.0, 0.0],
                         "uv_scale": 3.0,
                         "material":  {
@@ -93,21 +82,6 @@
                 }
               ]
             },
-            "cable_tray_arrangement":{
-                "x-offset": 0.35,
-                "y-offset": 0.22,
-                "z-offset": 0.35,
-                "assets_info": [
-                  {
-                    "name": "Tray",
-                    "lib": "ACableTray.blend"
-                  },
-                  {
-                    "name": "TrayConnector",
-                    "lib": "ACableTray.blend"
-                  }
-                ]
-            },
             "source": {
                 "lib": "Sources.blend",
                 "speaker": "Genelec",
@@ -140,19 +114,77 @@
         "misc_assets_arrangement": [],
         "lighting": {
             "arrangement" : {"x": 5, "y": 2},
+            "positions": [
+                {
+                    "x": 3.5,
+                    "y": 2.25,
+                    "z": 2.9
+                },
+                {
+                    "x": 1.0,
+                    "y": 2.25,
+                    "z": 2.9
+                },
+                {
+                    "x": -1.5,
+                    "y": 2.25,
+                    "z": 2.9
+                },
+                {
+                    "x": -4.0,
+                    "y": 2.25,
+                    "z": 2.9
+                },
+                {
+                    "x": 3.5,
+                    "y": 0.00,
+                    "z": 2.7
+                },
+                {
+                    "x": 1.0,
+                    "y": 0.00,
+                    "z": 2.7
+                },
+                {
+                    "x": -1.5,
+                    "y": 0.00,
+                    "z": 2.7
+                },
+                {
+                    "x": -4.0,
+                    "y": 0.00,
+                    "z": 2.7
+                },
+                {
+                    "x": 3.5,
+                    "y": -2.25,
+                    "z": 2.7
+                },
+                {
+                    "x": 1.0,
+                    "y": -2.25,
+                    "z": 2.7
+                },
+                {
+                    "x": -1.5,
+                    "y": -2.25,
+                    "z": 2.7
+                },
+                {
+                    "x": -4.0,
+                    "y": -2.25,
+                    "z": 2.7
+                }
+            ],
             "light_source": {
-                "object" : "spot",
+                "object" : "asset",
                 "assets_info": [
                   {
                     "name": "Lamp",
-                    "lib": "Assets.blend"
-                  },
-                  {
-                    "name": "Bulb",
-                    "lib": "Assets.blend"
+                    "lib": "AApliqueTubos.blend"
                   }
                 ],
-                "iesfile": "lib/ies/spot1.ies",
+                "iesfile": "lib/ies/ies-db/2.ies",
                 "color" : {
                     "r" : 1.0,
                     "g" : 0.8,

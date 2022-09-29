@@ -169,40 +169,46 @@ else:
 
 #CABLE TRAY 
 # import assets
-if(room.cable_tray_arrangement is not None):
-    assets_names = room.cable_tray_arrangement.assets_names_as_array()
-    asset_object_array = []
-    # este for no se si esta bien
-    for asset_lib_name in room.cable_tray_arrangement.libs_names_as_array():
-        lib_filepath = libdir / asset_lib_name
-        with bpy.data.libraries.load(str(lib_filepath)) as (data_from, data_to):
-            for name in data_from.objects:
-                for asset_name in assets_names:
-                    if (name == asset_name):
-                         data_to.objects.append(name)
-        asset_object_array = [ob for ob in bpy.data.objects if ob.name in assets_names]
-        # aca va funcion de room utls
-    cable_tray = room_utils.make_cable_tray(room, asset_object_array)
-    bm.list_link(cable_tray,col_obj)
+try:
+    if(room.cable_tray_arrangement is not None):
+        assets_names = room.cable_tray_arrangement.assets_names_as_array()
+        asset_object_array = []
+        # este for no se si esta bien
+        for asset_lib_name in room.cable_tray_arrangement.libs_names_as_array():
+            lib_filepath = libdir / asset_lib_name
+            with bpy.data.libraries.load(str(lib_filepath)) as (data_from, data_to):
+                for name in data_from.objects:
+                    for asset_name in assets_names:
+                        if (name == asset_name):
+                             data_to.objects.append(name)
+            asset_object_array = [ob for ob in bpy.data.objects if ob.name in assets_names]
+            # aca va funcion de room utls
+        cable_tray = room_utils.make_cable_tray(room, asset_object_array)
+        bm.list_link(cable_tray,col_obj)
+except AttributeError:
+    print('No cable tray arrangement')
 
 #bpy.context.view_layer.update()
 #bm.apply_transforms(light_source)
 
 #MISCELLANEOUS ASSETS
 #import assets
-if(room.misc_assets_arrangement is not None):
-    assets_names = room.misc_assets_arrangement.assets_names_as_array()
-    asset_object_array = []
-    for asset_lib_name in room.misc_assets_arrangement.libs_names_as_array():
-        lib_filepath = libdir / asset_lib_name
-        with bpy.data.libraries.load(str(lib_filepath)) as (data_from, data_to):
-            for name in data_from.objects:
-                for asset_name in assets_names:
-                    if (name == asset_name):
-                         data_to.objects.append(name)
-        asset_object_array = [ob for ob in bpy.data.objects if ob.name in assets_names]
-    misc_objects = room_utils.create_misc_objects(room, asset_object_array)
-    bm.list_link(misc_objects, col_obj)
+try:
+    if(room.misc_assets_arrangement is not None):
+        assets_names = room.misc_assets_arrangement.assets_names_as_array()
+        asset_object_array = []
+        for asset_lib_name in room.misc_assets_arrangement.libs_names_as_array():
+            lib_filepath = libdir / asset_lib_name
+            with bpy.data.libraries.load(str(lib_filepath)) as (data_from, data_to):
+                for name in data_from.objects:
+                    for asset_name in assets_names:
+                        if (name == asset_name):
+                             data_to.objects.append(name)
+            asset_object_array = [ob for ob in bpy.data.objects if ob.name in assets_names]
+        misc_objects = room_utils.create_misc_objects(room, asset_object_array)
+        bm.list_link(misc_objects, col_obj)
+except AttributeError:
+    print('No misc assets arrangement')
 
 #CAMARA 360
 bm.set_cycles()

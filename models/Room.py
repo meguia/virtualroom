@@ -128,8 +128,19 @@ class Room:
         ceilingString = self.ceiling.__str__()
         floorString = self.floor.__str__()
         lightingString = self.lighting.__str__()
-        curtainsArrangementString = self.curtain_arrangement.__str__()
-        cableTrayArrangementString = self.cable_tray_arrangement.__str__()
+        curtainsArrangementString = ''
+        try:
+            if self.curtain_arrangement is not None:
+                curtainsArrangementString = self.curtain_arrangement.__str__()
+        except AttributeError:
+            print('No curtain arrangement declared for room')
+
+        cableTrayArrangementString = ''
+        try:
+            if self.cable_tray_arrangement is not None:
+                cableTrayArrangementString = self.cable_tray_arrangement.__str__()
+        except AttributeError:
+            print('No cablte tray arrangement declared for room')
         miscAssetsArrengementString = ''
         try:
             if self.misc_assets_arrangement is not None:
