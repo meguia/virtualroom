@@ -269,5 +269,30 @@
         "ColorHSL_Hue": 0.543,
         "ColorHSL_Saturation": 0.547,
         "ColorHSL_Lightness": 0.543
+    },
+    "fabric_0022": {
+        "$outputsize": [
+            12,
+            12
+        ],
+        "technical_parameters": {
+            "hue_shift": 0.81,
+            "saturation": 0.5,
+            "luminosity": 0.53,
+            "normal_intensity": 3.0,
+            "normal_format": 0,
+            "height_position": 0.4,
+            "height_range": 0.45,
+            "ambientocculation_intensity": 0.0
+        },
+        "carpet_color": [
+            0.122000,
+            0.198000,
+            0.266000,
+            1.00
+        ],
+        "noise": 0.61,
+        "shadow": 0.50,
+        "roughness": 0.98
     }
 }

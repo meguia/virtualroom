@@ -152,16 +152,16 @@
             "normal_intensity": 0.5,
             "saturation": 0.5
         },
-        "acoustic_ceiling_roughness": 0.83,
+        "acoustic_ceiling_roughness": 0.60,
         "color": [
-            0.653284,
-            0.659419,
-            0.694118
+            0.054000,
+            0.068000,
+            0.087000
         ],
         "color_frame": [
-            0.654902,
-            0.654902,
-            0.654902
+            0.014000,
+            0.014000,
+            0.016000
         ],
         "frame": 1
     },
