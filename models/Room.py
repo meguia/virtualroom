@@ -128,11 +128,11 @@ class Room:
         ceilingString = self.ceiling.__str__()
         floorString = self.floor.__str__()
         lightingString = self.lighting.__str__()
-        curtainsArrangementString = self.curtain_arrangement.__str__()
-        cableTrayArrangementString = self.cable_tray_arrangement.__str__()
-        miscAssetsArrengementString = ''
-        if self.misc_assets_arrangement is not None:
-            miscAssetsArrengementString += self.misc_assets_arrangement.__str__()
+        #curtainsArrangementString = self.curtain_arrangement.__str__()
+        #cableTrayArrangementString = self.cable_tray_arrangement.__str__()
+        #miscAssetsArrengementString = ''
+        #if self.misc_assets_arrangement is not None:
+        #    miscAssetsArrengementString += self.misc_assets_arrangement.__str__()
 
 
         cameraString = self.camera.__str__()
@@ -155,12 +155,12 @@ class Room:
                     '\n------------------------------------------------------------\n'
                     f'{cameraString}'
                     '\n------------------------------------------------------------\n'
-                    f'{curtainsArrangementString}'
-                    '\n------------------------------------------------------------\n'
-                    f'{cableTrayArrangementString}'
-                    '\n------------------------------------------------------------\n'
-                    f'{miscAssetsArrengementString}'
-                    '\n------------------------------------------------------------\n'
+                    #f'{curtainsArrangementString}'
+                    #'\n------------------------------------------------------------\n'
+                    #f'{cableTrayArrangementString}'
+                    #'\n------------------------------------------------------------\n'
+                    #f'{miscAssetsArrengementString}'
+                    #'\n------------------------------------------------------------\n'
                     )
         return(room_info)
 
