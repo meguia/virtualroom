@@ -43,6 +43,7 @@ class Lighting:
                 self.positions.append({
                                        'x': pos['x'],
                                        'y': pos['y'],
+                                       'z': pos['z'],
                                      })
 
         self.light_source = LightSource(desc['light_source'])
@@ -60,6 +61,7 @@ class Lighting:
                 positions_string += '\tLight ' + str(idx) +':\n'
                 positions_string += '\tX: ' + str(pos['x']) +'\n'
                 positions_string += '\tY: ' + str(pos['y']) +'\n'
+                positions_string += '\tZ: ' + str(pos['z']) +'\n'
 
 
         return(

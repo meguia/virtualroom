@@ -2,8 +2,8 @@
     "room": {
         "name": "Sala de Lapso",
         "dimensions": {
-            "depth": 8,
-            "width": 4,
+            "depth": 12,
+            "width": 7,
             "height": 3.0
         },
         "wall_thickness" : 0.15,
@@ -12,9 +12,9 @@
                 "thickness": 0.15,
                 "uv_scale": 1.5,
                 "material":  {
-                    "sbs_name": "concrete_raw_grey",
-                    "category": "Concrete",
-                    "preset": "preset1"
+                    "sbs_name": "acoustic_foam_fonac",
+                    "category": "Fonac",
+                    "preset": "preset2"
                 },
                 "holes": [
                     {
@@ -28,24 +28,13 @@
                 "bands": [
                     {
                         "wall_index": [0,1,2,3],
-                        "heights": [0.0, 0.12, 0.132],
-                        "thickness" : [0.025, 0.025, 0],
-                        "uv_scale": 3.0,
-                        "material":  {
-                            "sbs_name": "wood_black_walnut_striped",
-                            "category": "Wood",
-                            "preset": "preset1"
-                        }
-                    },
-                    {
-                        "wall_index": [0,1,2,3],
-                        "heights": [2.8, 3.0],
+                        "heights": [0.0, 3.0],
                         "thickness" : [0.0, 0.0],
                         "uv_scale": 3.0,
                         "material":  {
-                            "sbs_name": "concrete_raw_black",
-                            "category": "Concrete",
-                            "preset": "preset1"
+                            "sbs_name": "acoustic_foam_fonac",
+                            "category": "Fonac",
+                            "preset": "preset2"
                         }
                     }
                 ]
@@ -55,7 +44,7 @@
                 "material":  {
                     "sbs_name": "plaster_acoustic_ceiling",
                     "category": "Plaster",
-                    "preset": "preset1"
+                    "preset": "preset2"
                 }
             },
             "floor": {
@@ -63,30 +52,8 @@
                "material":  {
                    "sbs_name": "parquet_european_ash_grey",
                    "category": "Wood",
-                   "preset": "preset1"
+                   "preset": "preset2"
                }
-            },
-            "door": {
-                "wall_index": 2,
-                "position": 1,
-                "width": 1.2,
-                "height": 2.2,
-                "uv_scale": 2.0,
-                "material":  {
-                    "sbs_name": "wood_wenge",
-                    "category": "Wood",
-                    "preset": "preset1"
-                },
-                "frame": {
-                    "width": 0.08,
-                    "thickness": 0.03,
-                    "uv_scale": 1.0,
-                    "material":  {
-                        "sbs_name": "wood_black_walnut_striped",
-                        "category": "Wood",
-                        "preset": "preset1"
-                    }
-                }
             },
             "base": {
               "height": 0.12,
@@ -95,14 +62,14 @@
               "material":  {
                   "sbs_name": "wood_black_walnut_striped",
                   "category": "Wood",
-                  "preset": "preset1"
+                  "preset": "preset2"
               }
             },
             "curtain_arrangement":{
               "material":  {
                   "sbs_name": "wood_black_walnut_striped",
                   "category": "Wood",
-                  "preset": "preset1"
+                  "preset": "preset2"
               },
               "uv_scale": 2.0,
               "curtains": [
@@ -114,21 +81,6 @@
                 "position": 1.0
                 }
               ]
-            },
-            "cable_tray_arrangement":{
-                "x-offset": 0.35,
-                "y-offset": 0.22,
-                "z-offset": 0.35,
-                "assets_info": [
-                  {
-                    "name": "Tray",
-                    "lib": "ACableTray.blend"
-                  },
-                  {
-                    "name": "TrayConnector",
-                    "lib": "ACableTray.blend"
-                  }
-                ]
             },
             "source": {
                 "lib": "Sources.blend",
@@ -159,21 +111,80 @@
                 ]
             }
         },
+        "misc_assets_arrangement": [],
         "lighting": {
             "arrangement" : {"x": 5, "y": 2},
+            "positions": [
+                {
+                    "x": 3.5,
+                    "y": 2.25,
+                    "z": 2.9
+                },
+                {
+                    "x": 1.0,
+                    "y": 2.25,
+                    "z": 2.9
+                },
+                {
+                    "x": -1.5,
+                    "y": 2.25,
+                    "z": 2.9
+                },
+                {
+                    "x": -4.0,
+                    "y": 2.25,
+                    "z": 2.9
+                },
+                {
+                    "x": 3.5,
+                    "y": 0.00,
+                    "z": 2.7
+                },
+                {
+                    "x": 1.0,
+                    "y": 0.00,
+                    "z": 2.7
+                },
+                {
+                    "x": -1.5,
+                    "y": 0.00,
+                    "z": 2.7
+                },
+                {
+                    "x": -4.0,
+                    "y": 0.00,
+                    "z": 2.7
+                },
+                {
+                    "x": 3.5,
+                    "y": -2.25,
+                    "z": 2.7
+                },
+                {
+                    "x": 1.0,
+                    "y": -2.25,
+                    "z": 2.7
+                },
+                {
+                    "x": -1.5,
+                    "y": -2.25,
+                    "z": 2.7
+                },
+                {
+                    "x": -4.0,
+                    "y": -2.25,
+                    "z": 2.7
+                }
+            ],
             "light_source": {
                 "object" : "asset",
                 "assets_info": [
                   {
                     "name": "Lamp",
-                    "lib": "Assets.blend"
-                  },
-                  {
-                    "name": "Bulb",
-                    "lib": "Assets.blend"
+                    "lib": "AApliqueTubos.blend"
                   }
                 ],
-                "iesfile": "lib/ies/spot1.ies",
+                "iesfile": "lib/ies/ies-db/2.ies",
                 "color" : {
                     "r" : 1.0,
                     "g" : 0.8,

@@ -420,13 +420,13 @@ def ceiling_lighting_by_positions(room, ceiling, asset_data=None):
                 lamp_name = 'Lamp_' + str(idx)
                 lamp_copy = mount_asset_data.copy()
                 lamp_object = bm.object_from_data(lamp_name, lamp_copy)
-                lamp_object.location = [pos['x'], pos['y'], z]
+                lamp_object.location = [pos['x'], pos['y'], pos['z']]
                 spot_strength = room.lighting.light_source.intensity
                 spot_color = room.lighting.light_source.color_as_rgb_array()
                 spot = bm.new_ieslight(ies_path,color=spot_color,power=spot_strength)
                 ## offest hardcodeado para que no quede en z igual a techo
                 spot.location = lamp_object.location
-                spot.location.z -= 0.80
+                spot.location.z -= 0.20
                 mount.append(lamp_object)
                 light_source.append(spot)
 
