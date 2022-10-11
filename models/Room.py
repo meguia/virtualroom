@@ -128,25 +128,11 @@ class Room:
         ceilingString = self.ceiling.__str__()
         floorString = self.floor.__str__()
         lightingString = self.lighting.__str__()
-        curtainsArrangementString = ''
-        try:
-            if self.curtain_arrangement is not None:
-                curtainsArrangementString = self.curtain_arrangement.__str__()
-        except AttributeError:
-            print('No curtain arrangement declared for room')
-
-        cableTrayArrangementString = ''
-        try:
-            if self.cable_tray_arrangement is not None:
-                cableTrayArrangementString = self.cable_tray_arrangement.__str__()
-        except AttributeError:
-            print('No cablte tray arrangement declared for room')
-        miscAssetsArrengementString = ''
-        try:
-            if self.misc_assets_arrangement is not None:
-                miscAssetsArrengementString += self.misc_assets_arrangement.__str__()
-        except AttributeError:
-            print('No misc assets declared for room')
+        #curtainsArrangementString = self.curtain_arrangement.__str__()
+        #cableTrayArrangementString = self.cable_tray_arrangement.__str__()
+        #miscAssetsArrengementString = ''
+        #if self.misc_assets_arrangement is not None:
+        #    miscAssetsArrengementString += self.misc_assets_arrangement.__str__()
 
 
         cameraString = self.camera.__str__()
@@ -169,12 +155,12 @@ class Room:
                     '\n------------------------------------------------------------\n'
                     f'{cameraString}'
                     '\n------------------------------------------------------------\n'
-                    f'{curtainsArrangementString}'
-                    '\n------------------------------------------------------------\n'
-                    f'{cableTrayArrangementString}'
-                    '\n------------------------------------------------------------\n'
-                    f'{miscAssetsArrengementString}'
-                    '\n------------------------------------------------------------\n'
+                    #f'{curtainsArrangementString}'
+                    #'\n------------------------------------------------------------\n'
+                    #f'{cableTrayArrangementString}'
+                    #'\n------------------------------------------------------------\n'
+                    #f'{miscAssetsArrengementString}'
+                    #'\n------------------------------------------------------------\n'
                     )
         return(room_info)
 

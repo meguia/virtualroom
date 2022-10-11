@@ -54,6 +54,29 @@
         "concrete_roughness": 0.5,
         "roughness_variations": 0.3
     },
+    "concrete_raw_grey": {
+        "$outputsize": [
+            12,
+            12
+        ],
+        "Technical parameters": {
+            "contrast": 0.0,
+            "height_position": 0.5,
+            "height_range": 0.5,
+            "hue_shift": 0.0,
+            "luminosity": 0.5,
+            "normal_format": 0,
+            "normal_intensity": 0.5,
+            "saturation": 0.5
+        },
+        "color": [
+            0.531006,
+            0.567826,
+            0.524118
+        ],
+        "concrete_roughness": 0.5,
+        "roughness_variations": 0.3
+    },
     "acoustic_foam_fonac": {
         "$outputsize": [
             12,

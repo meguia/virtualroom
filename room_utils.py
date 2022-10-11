@@ -183,6 +183,7 @@ def mat_room(mats_path, preset_path, materials):
         # load parameters from preset 
         with open(str(preset_path / material.preset) + '.json') as json_file:
             preset = json.load(json_file)
+            print(preset.keys())
             parameters = preset[material.sbs_name]
         # test if path exist if not creates the folder
         texture_path = mats_path / material.texture_path
