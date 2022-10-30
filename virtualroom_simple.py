@@ -10,9 +10,7 @@ savedir = homedir / 'Renders'
 utildir = homedir / 'blender_utils'
 libdir = thisdir / 'lib'
 presetdir = thisdir / 'presets'
-json_file_input = presetdir / 'sala_lapso.json'
-# Configuracion para probar oclusion de textura en el suelo
-#json_file_input = presetdir / 'prueba_oclusion_sala_del_teatro.json'
+json_file_input = presetdir / 'sala_simple.json'
 json_material_template = thisdir / 'materials.json'
 modelsdir = thisdir / 'models'
 mats_path = homedir / 'Textures'
@@ -71,102 +69,14 @@ mat_dict = room_utils.mat_room(mats_path,presetdir,mat_dict_substance)
 
 # CREA LA SALA
 #Escala de los mapas UV orden paredes,piso,techo,puerta,zocalos
-#IMPORTAR assets de door
-add_door_assets = any([len(door.assets)>0 for door in room.wall.fetch_doors() if(hasattr(door, 'assets'))])
 
-if add_door_assets:
-    assets_names = []
-    assets_lib_names = []
-    doors_with_assets =  [door for door in room.wall.fetch_doors() if(hasattr(door, 'assets'))]
-    for door in doors_with_assets:
-        assets_names.extend(door.assets_names_as_array())
-        assets_lib_names.extend(door.libs_names_as_array())
-    assets_names = list(set(assets_names))
-    assets_lib_names = list(set(assets_lib_names))
-
-    asset_object_array = []
-    for asset_lib_name in assets_lib_names:
-        lib_filepath = libdir / asset_lib_name
-        with bpy.data.libraries.load(str(lib_filepath)) as (data_from, data_to):
-            for name in data_from.objects:
-                for asset_name in assets_names:
-                    if (name == asset_name):
-                         data_to.objects.append(name)
-        asset_object_array += [ob for ob in bpy.data.objects if ob.name in assets_names]
-        asset_object_array = list(set(asset_object_array))
-    try:
-        if(not len(asset_object_array) > 0):
-            raise ValueError
-        sala = room_utils.make_room(
-                                    room,
-                                    mat_dict,
-                                    with_tiles=False,
-                                    asset_data=asset_object_array
-                                    )
-        bm.link_all(sala,col_sala)
-    except ValueError as err:
-            print(repr(err) + 'Door assets empty')
-else:
-    sala = room_utils.make_room(room,mat_dict,with_tiles=False)
-    bm.link_all(sala,col_sala)
+sala = room_utils.make_room(room, mat_dict=mat_dict)
+bm.link_all(sala,col_sala)
  
-# CARGA SPEAKER y STAND de la libreria source
-filepath = libdir / room.source.lib
-
-with bpy.data.libraries.load(str(filepath)) as (data_from, data_to):
-    for name in data_from.objects:
-        if (name == room.source.speaker_name) or name.startswith(room.source.stand_name):
-             data_to.objects.append(name)
-         
-#PARLANTES
-print('Imported ', str(list(data_to.objects)))
-stand_data_array = [ob.data for ob in bpy.data.objects if ob.name.startswith(room.source.stand_name)]
-print(stand_data_array)
-speaker_data = bpy.data.objects[room.source.speaker_name].data
-print(speaker_data)
-speaker_height = 0.0
-if room.source.stand_name == 'Floor_Stand':
-    speaker_height = room.source.height
-else:
-    speaker_height = bpy.data.objects[room.source.stand_name].location[2]
-    if room.source.stand_name == 'Tilt_Stand':
-        point_camera = True
-    
-object_list = room_utils.make_speaker_array(room, speaker_data, stand_data_array, speaker_height, point_camera)
-bm.list_link(object_list, col_obj)
-
 #LUCES
 # importar asset
-if(room.lighting.light_source.object == 'asset'):
-    assets_names = room.lighting.light_source.assets_names_as_array()
-    asset_object_array = []
-    for asset_lib_name in room.lighting.light_source.libs_names_as_array():
-        lib_filepath = libdir / asset_lib_name
-        with bpy.data.libraries.load(str(lib_filepath)) as (data_from, data_to):
-            for name in data_from.objects:
-                for asset_name in assets_names:
-                    if (name == asset_name):
-                         data_to.objects.append(name)
-        asset_object_array += [ob for ob in bpy.data.objects if ob.name in assets_names]
-    if(len(room.lighting.positions) > 0):
-        light_source, mount = room_utils.ceiling_lighting_by_positions(
-                                                                      room, 
-                                                                      bpy.data.objects[type(room.ceiling).__name__], 
-                                                                      asset_object_array
-                                                                      )
-        bm.list_link(light_source,col_luces)
-        bm.list_link(mount,col_luces)
-    else:
-        light_source, mount = room_utils.ceiling_lighting(
-                                                         room, 
-                                                         bpy.data.objects[type(room.ceiling).__name__],
-                                                         asset_object_array
-                                                         )
-        bm.list_link([light_source, mount],col_luces)
-else:
-    light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__])
-    bm.list_link([light_source, mount],col_luces)
-
+light_source, mount = room_utils.ceiling_lighting(room, bpy.data.objects[type(room.ceiling).__name__])
+bm.list_link([light_source, mount],col_luces)
 
 
 #CAMARA 360

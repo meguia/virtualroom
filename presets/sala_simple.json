@@ -1,0 +1,130 @@
+{
+    "room": {
+        "name": "Sala Simple",
+        "dimensions": {
+            "depth": 12,
+            "width": 7,
+            "height": 3.0
+        },
+        "wall_thickness" : 0.15,
+        "elements": {
+            "wall": {
+                "thickness": 0.15,
+                "uv_scale": 1.5,
+                "material":  {
+                    "sbs_name": "basic",
+                    "category": "Plaster",
+                    "preset": "preset0"
+                },
+                "holes": [
+                    {
+                        "wall_index": 2,
+                        "hpos": 1.0,
+                        "hsize":1.2,
+                        "vpos": 0.0,
+                        "vsize":2.2
+                    }
+                ],
+                "bands": [
+                    {
+                        "wall_index": [0,1,2,3],
+                        "heights": [0.0, 3.0],
+                        "thickness" : [0.0, 0.0],
+                        "uv_scale": 3.0,
+                        "material":  {
+                            "sbs_name": "basic",
+                            "category": "Plaster",
+                            "preset": "preset0"
+                        }
+                    }
+                ]
+            },
+            "ceiling": {
+                "uv_scale": 1.0,
+                "material":  {
+                    "sbs_name": "basic",
+                    "category": "Plaster",
+                    "preset": "preset0"
+                }
+            },
+            "floor": {
+               "uv_scale": 3.0,
+               "material":  {
+                    "sbs_name": "basic",
+                    "category": "Plaster",
+                    "preset": "preset0"
+               }
+            },
+            "base": {
+                "height": 0.12,
+                "thickness" : 0.025,
+                "uv_scale": 3.0,
+                "material":  {
+                    "sbs_name": "basic",
+                    "category": "Plaster",
+                    "preset": "preset0"
+                }
+            },
+            "door": {
+                "wall_index": 2,
+                "position": 1,
+                "width": 1.2,
+                "height": 2.2,
+                "uv_scale": 2.0,
+                "material":  {
+                    "sbs_name": "basic",
+                    "category": "Plaster",
+                    "preset": "preset0"
+                },
+                "frame": {
+                    "width": 0.08,
+                    "thickness": 0.03,
+                    "uv_scale": 1.0,
+                    "material":  {
+                        "sbs_name": "basic",
+                        "category": "Plaster",
+                        "preset": "preset0"
+                    }
+                }
+            },
+            "source": {
+                "lib": "Sources.blend",
+                "speaker": "Genelec",
+                "stand": "Tilt_Stand",
+                "height": 1.25,
+                "positions": [
+                ]
+            }
+        },
+        "misc_assets_arrangement": [],
+        "lighting": {
+            "arrangement" : {"x": 5, "y": 2},
+            "light_source": {
+                "object" : "spot",
+                "iesfile": "lib/ies/spot1.ies",
+                "color" : {
+                    "r" : 1.0,
+                    "g" : 0.8,
+                    "b" : 0.8,
+                    "alpha" :1.0 
+                },
+                "intensity" : 5,
+                "mount": {
+                    "size": {
+                    "x": 0.1,
+                    "y": 0.1,
+                    "z": 0.12
+                    }
+                }
+            }
+        },
+        "camera": {
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": 1.5
+            },
+            "rotation": -90
+        }
+    }
+}

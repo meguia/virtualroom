@@ -55,6 +55,28 @@
                    "preset": "preset1"
                }
             },
+            "door": {
+                "wall_index": 2,
+                "position": 1,
+                "width": 1.2,
+                "height": 2.2,
+                "uv_scale": 2.0,
+                "material":  {
+                    "sbs_name": "basic",
+                    "category": "Plaster",
+                    "preset": "preset0"
+                },
+                "frame": {
+                    "width": 0.08,
+                    "thickness": 0.03,
+                    "uv_scale": 1.0,
+                    "material":  {
+                        "sbs_name": "basic",
+                        "category": "Plaster",
+                        "preset": "preset0"
+                    }
+                }
+            },
             "base": {
               "height": 0.12,
               "thickness" : 0.025,

@@ -127,6 +127,7 @@ class Room:
         wallString = self.wall.__str__()
         ceilingString = self.ceiling.__str__()
         floorString = self.floor.__str__()
+        doorString = self.door.__str__()
         lightingString = self.lighting.__str__()
         #curtainsArrangementString = self.curtain_arrangement.__str__()
         #cableTrayArrangementString = self.cable_tray_arrangement.__str__()
@@ -150,6 +151,8 @@ class Room:
                     f'{ceilingString}'
                     '\n------------------------------------------------------------\n'
                     f'{floorString}'
+                    '\n------------------------------------------------------------\n'
+                    f'{doorString}'
                     '\n------------------------------------------------------------\n'
                     f'{lightingString}'
                     '\n------------------------------------------------------------\n'
@@ -187,8 +190,8 @@ class Room:
                     self.wall.material,
                     self.floor.material,
                     self.ceiling.material,
-                    #self.door.material,
-                    #self.door.frame.material,
+                    self.door.material,
+                    self.door.frame.material,
                     self.base.material,
                     ]
         for material in self.wall.fetch_bands_materials():
@@ -205,8 +208,8 @@ class Room:
                     self.wall.material,
                     self.floor.material,
                     self.ceiling.material,
-                    #self.door.material,
-                    #self.door.frame.material,
+                    self.door.material,
+                    self.door.frame.material,
                     self.base.material,
                     ]
         return materials
