@@ -8,9 +8,6 @@ def validate_room_schema(desc = {}):
                     'name', 
                     'dimensions', 
                     'wall_thickness', 
-                    'elements', 
-                    'lighting',
-                    'camera'
                     ]
     keys_status = [key in desc for key in expected_keys]
     has_keys = reduce((lambda x, y: x and y), keys_status)
@@ -21,9 +18,6 @@ def validate_room_schema(desc = {}):
                     '\'name\', '
                     '\'dimensions\', '
                     '\'wall_thickness\', '
-                    '\'elements\', '
-                    '\'lighting\' ,'
-                    '\'camera\''
                     )
         raise KeyError(error_msg) 
 

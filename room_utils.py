@@ -34,12 +34,20 @@ def make_room(room, mat_dict=None, with_uv=True, with_tiles=False, asset_data=No
     (l,w,h,t) = [room.depth, room.width, room.height, room.wall_thickness] # length, width, height, thickness
     #(dp, dw, dh) = [room.door.position, room.door.width, room.door.height] # wall number, position from border, width, height
     # Makes floor and ceiling
-    floor = bm.floor(type(room.floor).__name__, mat_dict[room.floor.material.name],pos=[0,0,-t],dims=[l+2*t,w+2*t,t])
-    ceil = bm.floor(type(room.ceiling).__name__,mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
+    if hasattr(room.floor, 'material'):
+        floor = bm.floor(type(room.floor).__name__, mat_dict[room.floor.material.name],pos=[0,0,-t],dims=[l+2*t,w+2*t,t])
+    else:
+        floor = bm.floor(type(room.floor).__name__, pos=[0,0,-t],dims=[l+2*t,w+2*t,t])
+    if hasattr(room.ceiling, 'material'):
+        ceil = bm.floor(type(room.ceiling).__name__,mat_dict[room.ceiling.material.name],pos=[0,0,h],dims=[l+2*t,w+2*t,t])
+    else:
+        ceil = bm.floor(type(room.ceiling).__name__,pos=[0,0,h],dims=[l+2*t,w+2*t,t])
     if with_uv:
         # esto esta bien?
-        uv.uv_board(ceil.data, [l,w,t], front=1, scale = room.ceiling.uv_scale)
-        uv.uv_board(floor.data, [l+2*t,w+2*t,t], front=2, scale = room.floor.uv_scale)
+        if hasattr(room.ceiling, 'uv_scale'):
+            uv.uv_board(ceil.data, [l,w,t], front=1, scale = room.ceiling.uv_scale)
+        if hasattr(room.floor, 'uv_scale'):
+            uv.uv_board(floor.data, [l+2*t,w+2*t,t], front=2, scale = room.floor.uv_scale)
     room_list = [floor,ceil]    
     # Makes walls with bases in a loop
     # first define rotation, position, door position, main dimension (dim)
@@ -57,15 +65,19 @@ def make_room(room, mat_dict=None, with_uv=True, with_tiles=False, asset_data=No
     door_count = 0
     
     for n in range(4):
-        bandmats = [mat_dict[room.wall.material.name]]
+
+        bandmats = []
+        if hasattr(room.wall, 'material'):
+            bandmats = [mat_dict[room.wall.material.name]]
         bands = []
         bands_by_wall_index = room.wall.fetch_bands_by_wall_index(n)
         for band in bands_by_wall_index:
             bands.append([band.heights, band.thickness])
-            bandmats.append(mat_dict[band.material.name])
+            if hasattr(band, 'material'):
+                bandmats.append(mat_dict[band.material.name])
 
         wall = nm.wall('wall_' + str(n),pos=pos[n],rot=rots[n],dims=[dim[n],h,t/2],holes=holes[n],bandmats=bandmats,bands=bands)
-        if with_uv:
+        if with_uv and hasattr(room.wall, 'uv_scale'):
             #pendiente
             uv.uv_board_hbands(wall.data, scale=room.wall.uv_scale)
         room_list.append(wall)    

@@ -14,14 +14,21 @@ class Ceiling(ElementWithMaterial):
         """
         Constructs all the necessary attributes for the Ceiling object.
         """
-        super().__init__(desc['material'], desc['uv_scale'])
+        try:
+            super().__init__(desc['material'], desc['uv_scale'])
+        except KeyError as err:
+            print('No material declared for ceiling')
 
     def __str__(self):
 
         """
         Returns string with Ceiling object info.
         """
+        mat_str = ''
+        if hasattr(self, 'material') and hasattr(self,'uv_scale'):
+            mat_str += super().__str__()
         return(
-              f'Ceiling:\n'
-              f'{super().__str__()}'
+              'Ceiling:\n'
+              '{}'
+              .format(mat_str)
               )
