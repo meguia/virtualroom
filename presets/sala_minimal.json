@@ -1,0 +1,33 @@
+{
+    "room": {
+        "name": "Sala minimal",
+        "dimensions": {
+            "depth": 12,
+            "width": 7,
+            "height": 3.0
+        },
+        "wall_thickness" : 0.15,
+        "elements": {
+            "wall": {
+                "thickness": 0.15,
+                "uv_scale": 1.5,
+                "holes": [
+                    {
+                        "wall_index": 2,
+                        "hpos": 1.0,
+                        "hsize":1.2,
+                        "vpos": 0.0,
+                        "vsize":2.2
+                    }
+                ],
+                "bands": [
+                    {
+                        "wall_index": [0,1,2,3],
+                        "heights": [0.0, 3.0],
+                        "thickness" : [0.0, 0.0]
+                    }
+                ]
+            }
+        }
+    }
+}

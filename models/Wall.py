@@ -30,7 +30,10 @@ class Wall(ElementWithMaterial):
         """
         Constructs all the necessary attributes for the wall object.
         """
-        super().__init__(desc['material'], desc['uv_scale'])
+        try:
+            super().__init__(desc['material'], desc['uv_scale'])
+        except KeyError as err:
+            print('No material declared for wall')
         self.thickness = desc["thickness"]
         self.holes = []
         if 'holes' in desc:
@@ -47,6 +50,9 @@ class Wall(ElementWithMaterial):
         Returns string with Wall object info.
         """
         holes_string= ''
+        mat_str = ''
+        if hasattr(self, 'material') and hasattr(self,'uv_scale'):
+            mat_str += super().__str__()
         for hole in self.holes:
             holes_string += hole.__str__()
         bands_string = ''
@@ -55,11 +61,12 @@ class Wall(ElementWithMaterial):
         return(
               'Wall:\n'
               '\tThickness:     {:6.2f}\n'
-             f'{super().__str__()}'
+              '\t{}\n'
               '\tHoles:     \n{}\n'
               '\tBands:     \n{}\n'
               .format(
                      self.thickness,
+                     mat_str,
                      holes_string,
                      bands_string
                      )
@@ -113,9 +120,8 @@ class Wall(ElementWithMaterial):
         return wanted_bands
 
     def fetch_bands_materials(self):
-        materials = []
-        for band in self.bands:
-            materials.append(band.material)
+        # fetch bands materials if they have them
+        materials = [band.material for band in self.bands if hasattr(band, 'material')]
         return materials
 
     def fetch_doors(self):

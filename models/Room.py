@@ -12,7 +12,6 @@ from .Material import Material
 from .Lighting import Lighting
 from .ElementWithMaterial import ElementWithMaterial
 from .SoundSource import SoundSource
-from .CurtainArrangement import CurtainArrangement
 from .CableTrayArrangement import CableTrayArrangement
 from .MiscAssetArrangement import MiscAssetArrangement
 
@@ -86,16 +85,27 @@ class Room:
                 self.door = Door(elements[element])
             elif(element == 'base'):
                 self.base= Base(self.wall_thickness,elements[element]) 
-            elif(element == 'curtain_arrangement'):
-                self.curtain_arrangement = CurtainArrangement(elements[element]) 
             elif(element == 'cable_tray_arrangement'):
                 self.cable_tray_arrangement = CableTrayArrangement(elements[element]) 
             elif(element == 'misc_assets_arrangement'):
                 self.misc_assets_arrangement = MiscAssetArrangement(elements[element])
 
-        self.lighting = Lighting(desc['lighting'])
+        # check if ceiling or floor have not been created from config file
+        # then create them
+        if not hasattr(self, 'ceiling'):
+            self.ceiling = Ceiling()
+        if not hasattr(self, 'floor'):
+            self.floor = Floor()
 
-        self.camera = Camera(desc['camera'])
+        try:
+            self.lighting = Lighting(desc['lighting'])
+        except KeyError as err:
+            print('No lighting declared for floor')
+
+        try:
+            self.camera = Camera(desc['camera'])
+        except KeyError as err:
+            print('No camera declared for floor')
 
     def __str__(self):
         """
@@ -121,48 +131,36 @@ class Room:
         """
         Returns string with all room's info.
         """
-        roomString = self.__str__()
-        sourceString = self.source.__str__()
-        baseString = self.base.__str__()
-        wallString = self.wall.__str__()
-        ceilingString = self.ceiling.__str__()
-        floorString = self.floor.__str__()
-        lightingString = self.lighting.__str__()
-        #curtainsArrangementString = self.curtain_arrangement.__str__()
-        #cableTrayArrangementString = self.cable_tray_arrangement.__str__()
-        #miscAssetsArrengementString = ''
-        #if self.misc_assets_arrangement is not None:
-        #    miscAssetsArrengementString += self.misc_assets_arrangement.__str__()
-
-
-        cameraString = self.camera.__str__()
-        room_info = (
-                    '\n------------------------------------------------------------\n'
-                    '\n------------------------------------------------------------\n'
-                    f'{roomString}'
-                    '\n------------------------------------------------------------\n'
-                    f'{sourceString} ' 
-                    '\n------------------------------------------------------------\n'
-                    f'{baseString}'
-                    '\n------------------------------------------------------------\n'
-                    f'{wallString}'
-                    '\n------------------------------------------------------------\n'
-                    f'{ceilingString}'
-                    '\n------------------------------------------------------------\n'
-                    f'{floorString}'
-                    '\n------------------------------------------------------------\n'
-                    f'{lightingString}'
-                    '\n------------------------------------------------------------\n'
-                    f'{cameraString}'
-                    '\n------------------------------------------------------------\n'
-                    #f'{curtainsArrangementString}'
-                    #'\n------------------------------------------------------------\n'
-                    #f'{cableTrayArrangementString}'
-                    #'\n------------------------------------------------------------\n'
-                    #f'{miscAssetsArrengementString}'
-                    #'\n------------------------------------------------------------\n'
-                    )
-        return(room_info)
+        room_string = ''
+        room_string +='\n------------------------------------------------------------\n'
+        room_string += self.__str__()
+        room_string +='\n------------------------------------------------------------\n'
+        if hasattr(self, 'source'):
+            room_string +='\n------------------------------------------------------------\n'
+            room_string += self.source.__str__()
+        if hasattr(self, 'wall'):
+            room_string +='\n------------------------------------------------------------\n'
+            room_string += self.wall.__str__()
+        if hasattr(self, 'ceiling'):
+            room_string +='\n------------------------------------------------------------\n'
+            room_string += self.ceiling.__str__()
+        if hasattr(self, 'floor'):
+            room_string +='\n------------------------------------------------------------\n'
+            room_string += self.floor.__str__()
+        if hasattr(self, 'lighting'):
+            room_string +='\n------------------------------------------------------------\n'
+            room_string += self.lighting.__str__()
+            room_string +='\n------------------------------------------------------------\n'
+        if hasattr(self, 'cable_tray_arrangement'):
+            room_string +='\n------------------------------------------------------------\n'
+            room_string += self.cable_tray_arrangement.__str__()
+        if hasattr(self, 'misc_assets_arrangement'):
+            room_string +='\n------------------------------------------------------------\n'
+            room_string += self.misc_assets_arrangement.__str__()
+        if hasattr(self, 'camera'):
+            room_string +='\n------------------------------------------------------------\n'
+            room_string += self.camera.__str__()
+        return room_string
 
     def materials_names(self):
         """
@@ -183,14 +181,16 @@ class Room:
         return category_names
 
     def materials_from_elements(self):
-        materials = [
-                    self.wall.material,
-                    self.floor.material,
-                    self.ceiling.material,
-                    #self.door.material,
-                    #self.door.frame.material,
-                    self.base.material,
+        # check if elements have materials
+        elements = [
+                    self.wall,
+                    self.floor,
+                    self.ceiling,
+                    #self.door,
+                    #self.door.frame,
+                    #self.base,
                     ]
+        materials = [element.material for element in elements if hasattr(element, 'material')]
         for material in self.wall.fetch_bands_materials():
             materials.append(material)
         for material in self.wall.fetch_doors_materials():
@@ -199,14 +199,3 @@ class Room:
         for m in materials:
             mat_dict_substance[m.name] = m          
         return mat_dict_substance 
-
-    def material_helper(self):
-        materials = [
-                    self.wall.material,
-                    self.floor.material,
-                    self.ceiling.material,
-                    #self.door.material,
-                    #self.door.frame.material,
-                    self.base.material,
-                    ]
-        return materials

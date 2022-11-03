@@ -15,14 +15,21 @@ class Floor(ElementWithMaterial):
         """
         Constructs all the necessary attributes for the Floor object.
         """
-        super().__init__(desc['material'], desc['uv_scale'])
+        try:
+            super().__init__(desc['material'], desc['uv_scale'])
+        except KeyError as err:
+            print('No material declared for floor')
 
     def __str__(self):
 
         """
         Returns string with Floor object info.
         """
+        mat_str = ''
+        if hasattr(self, 'material') and hasattr(self,'uv_scale'):
+            mat_str += super().__str__()
         return(
-              f'Floor:\n'
-              f'{super().__str__()}'
+              'Floor:\n'
+              '{}'
+              .format(mat_str)
               )

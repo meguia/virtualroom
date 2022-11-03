@@ -31,7 +31,10 @@ class Band(ElementWithMaterial):
             desc: dict
                 dictionary representing Band information
         """
-        super().__init__(desc['material'], desc['uv_scale'])
+        try:
+            super().__init__(desc['material'], desc['uv_scale'])
+        except KeyError as err:
+            print('No material declared for wall')
 
         self.heights = []
         for height_value in desc['heights']:
@@ -65,15 +68,19 @@ class Band(ElementWithMaterial):
         """
         returns string with color object info.
         """
+        mat_str = ''
+        if hasattr(self, 'material') and hasattr(self,'uv_scale'):
+            mat_str += super().__str__()
         return(
                '\tBand:\n'
                '\t- Wall Index:    {}\n'
                '\t- Heights:       {}\n'
                '\t- Thickness:     {}\n'
-              f'\t{super().__str__()}'
+               '\t{}\n'
                .format(
                       self.wall_indexes,
                       self.heights,
                       self.thickness,
+                      mat_str,
                       )
                )
