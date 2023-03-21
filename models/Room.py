@@ -1,16 +1,12 @@
 from operator import itemgetter
 
-from .Speaker import Speaker
 from .Door import Door
 from .Base import Base 
-from .Spot import Spot
 from .Camera import Camera
 from .Wall import Wall
 from .Ceiling import Ceiling
 from .Floor import Floor
-from .Material import Material
 from .Lighting import Lighting
-from .ElementWithMaterial import ElementWithMaterial
 from .SoundSource import SoundSource
 from .CableTrayArrangement import CableTrayArrangement
 from .MiscAssetArrangement import MiscAssetArrangement
@@ -51,7 +47,7 @@ class Room:
     height = NumberValidator(additional_msg="Room height")
     wall_thickness = NumberValidator(additional_msg="Room wall thickness")
 
-    def __init__(self, desc = {}):
+    def __init__(self, desc = {}, depth = 1, width = 1, height= 1):
         """
         Constructs all the necessary attributes for the room object.
         
@@ -60,8 +56,13 @@ class Room:
             desc: dict
                 dictionary representing room's information
         """
-        validate_room_schema(desc)
-        self.name = desc['name']
+        try:
+            print("Checking json validation")
+            validate_room_schema(desc)
+            self.name = desc['name']
+        except KeyError: 
+            print("Accessing name from parameter")
+            self.name = "Unnamed Room"
         (
         self.depth, 
         self.width, 
@@ -99,12 +100,12 @@ class Room:
 
         try:
             self.lighting = Lighting(desc['lighting'])
-        except KeyError as err:
+        except KeyError:
             print('No lighting declared for floor')
 
         try:
             self.camera = Camera(desc['camera'])
-        except KeyError as err:
+        except KeyError:
             print('No camera declared for floor')
 
     def __str__(self):
