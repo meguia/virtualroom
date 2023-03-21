@@ -65,7 +65,6 @@ def make_room(room, mat_dict=None, with_uv=True, with_tiles=False, asset_data=No
     door_count = 0
     
     for n in range(4):
-
         bandmats = []
         if hasattr(room.wall, 'material'):
             bandmats = [mat_dict[room.wall.material.name]]
